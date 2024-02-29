@@ -22,8 +22,8 @@ namespace MovieApp
         public MainWindow()
         {
             InitializeComponent();
-            var a = DataProvider.Ins.DB.Users.ToList();
-            NavigateToBaseUI();
+            //var a = DataProvider.Ins.DB.Users.ToList();
+            //NavigateToBaseUI();
         }
 
         private void NavigateToBaseUI()
@@ -33,7 +33,7 @@ namespace MovieApp
 
         public void NavigateToLoginPage()
         {
-            ContentArea.Content = new Login(this);
+            ContentArea.Content = new LoginWindow();
         }
 
         public void LoginSuccessful()
@@ -41,6 +41,12 @@ namespace MovieApp
             // Handle login successful event here
             // For example, navigate back to the base UI
             NavigateToBaseUI();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.ShowDialog();
         }
     }
 }

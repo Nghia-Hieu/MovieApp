@@ -11,26 +11,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Linq;
 
 namespace MovieApp.Views
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for LoginWindow.xaml
     /// </summary>
-    public partial class Login : UserControl
+    public partial class LoginWindow : Window
     {
-        private readonly MainWindow mainWindow;
-
-        public Login(MainWindow mainWindow)
+        public LoginWindow()
         {
             InitializeComponent();
-            this.mainWindow = mainWindow;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.LoginSuccessful();
+           
         }
     }
 }
