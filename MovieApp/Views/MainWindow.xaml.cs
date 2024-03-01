@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,45 +10,76 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MovieApp.Models;
-using MovieApp.Views;
-namespace MovieApp
+
+namespace MovieApp.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    public class CarouselItem
+    {
+        public string ImagePath { get; set; }
+    }
+
     public partial class MainWindow : Window
     {
+        private int currentProfile = 0;
+
         public MainWindow()
         {
             InitializeComponent();
-            //var a = DataProvider.Ins.DB.Users.ToList();
-            //NavigateToBaseUI();
+            DataContext = this;            
         }
 
-        private void NavigateToBaseUI()
+
+        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ContentArea.Content = new BaseWindow(this);
+            int index = (int)slider.Value;
+
+            switch (index)
+            {
+                case 0:
+                    grid0.Visibility = Visibility.Visible;
+                    grid1.Visibility = Visibility.Collapsed;
+                    grid2.Visibility = Visibility.Collapsed;
+                    currentProfile = 0;
+                    break;
+                case 1:
+                    grid0.Visibility = Visibility.Collapsed;
+                    grid1.Visibility = Visibility.Visible;
+                    grid2.Visibility = Visibility.Collapsed;
+                    currentProfile = 1;
+                    break;
+                case 2:
+                    grid0.Visibility = Visibility.Collapsed;
+                    grid1.Visibility = Visibility.Collapsed;
+                    grid2.Visibility = Visibility.Visible;
+                    currentProfile = 2;
+                    break;
+                default:
+                    break;
+            }
         }
 
-        public void NavigateToLoginPage()
+        private void btnPrevious_Click(object sender, RoutedEventArgs e)
         {
-            ContentArea.Content = new LoginWindow();
+            currentProfile--;
+            if (currentProfile < 0)
+            {
+                currentProfile = 2;
+            }
+            slider.Value = currentProfile;
         }
 
-        public void LoginSuccessful()
+        private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            // Handle login successful event here
-            // For example, navigate back to the base UI
-            NavigateToBaseUI();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.ShowDialog();
+            currentProfile++;
+            if (currentProfile > 2)
+            {
+                currentProfile = 0;
+            }
+            slider.Value = currentProfile;
         }
     }
 }

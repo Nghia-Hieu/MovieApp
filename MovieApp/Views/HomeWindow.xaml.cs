@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace MovieApp.Views
 {
     /// <summary>
-    /// Interaction logic for BaseWindow.xaml
+    /// Interaction logic for HomeWindow.xaml
     /// </summary>
-    public partial class BaseWindow : UserControl
+    public partial class HomeWindow : Window
     {
-        private readonly MainWindow mainWindow;
-
-        public BaseWindow(MainWindow mainWindow)
+        public HomeWindow()
         {
             InitializeComponent();
-            this.mainWindow = mainWindow;
         }
-
-        
     }
 }
