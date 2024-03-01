@@ -8,9 +8,10 @@
         mc:Ignorable="d"
         DataContext="{StaticResource LoginVM}"
         Name="loginWindow"
-        Title="LoginWindow" Height="400" Width="400">
+        WindowStartupLocation="CenterScreen"
+        Title="LoginWindow" Height="600" Width="600">
     <Grid>
-        <materialDesign:Card Width="300" Height="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <materialDesign:Card Width="400" Height="400" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid>
                 <Grid.Resources>
                     <Style TargetType="Grid">
@@ -52,15 +53,30 @@
                 </Grid>
 
                 <Grid Grid.Row="3">
-                    <Button     
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button 
+                            Grid.Column="0"
                             IsDefault="True"
                             Style="{StaticResource MaterialDesignRaisedButton}"    
                             Width="110"  
                             Command="{Binding LoginCommand}"
                             CommandParameter="{Binding ElementName=loginWindow}"
+                            Background="CadetBlue"
                             ToolTip="Resource name: MaterialDesignRaisedButton" Content="Đăng nhập"></Button>
+                    <Button 
+                            Grid.Column="1"
+                            IsDefault="True"
+                            Style="{StaticResource MaterialDesignRaisedButton}"    
+                            Width="110"  
+                            Command="{Binding ToRegisterCommand}"
+                            CommandParameter="{Binding ElementName=loginWindow}"
+                            Background="LightCoral"
+                            ToolTip="Resource name: MaterialDesignRaisedButton" Content="Đăng ký"></Button>
                 </Grid>
-                
+
             </Grid>
         </materialDesign:Card>
     </Grid>

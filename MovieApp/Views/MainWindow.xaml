@@ -14,9 +14,11 @@
         xmlns:local="clr-namespace:MovieApp"
         mc:Ignorable="d"
         DataContext="{StaticResource MainVM}"
-        Title="MainWindow" Height="450" Width="800">
+        Name="mainWindow"
+        Title="MainWindow" 
+        WindowState="Maximized">
     <Grid>
         <ContentControl x:Name="ContentArea"/>
-        <Button Width="300" Click="Button_Click">Login</Button>
+        <Button Width="300"  Name="toLoginButton" Command="{Binding ToLoginCommand}" CommandParameter="{Binding ElementName=mainWindow}">Login</Button>
     </Grid>
 </Window>

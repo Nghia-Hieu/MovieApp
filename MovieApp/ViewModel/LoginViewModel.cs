@@ -1,5 +1,6 @@
 ﻿using MovieApp.Models;
 using MovieApp.ModelView;
+using MovieApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +17,9 @@ namespace MovieApp.ViewModel
     {
         public bool isLogin {  get; set; }
         public ICommand LoginCommand { get; set; }
+
+        public ICommand ToRegisterCommand { get; set; }
+
         public ICommand PasswordChangedCommand { get; set; }
 
 
@@ -30,7 +34,11 @@ namespace MovieApp.ViewModel
             isLogin = false;
             Password = "";
             Username = "";
+
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { Login(p); });
+
+            ToRegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterWindow registerWindow = new RegisterWindow(); registerWindow.ShowDialog();  });
+
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
         }
 

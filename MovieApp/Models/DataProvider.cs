@@ -15,8 +15,6 @@ namespace MovieApp.Models
         private DataProvider()
         {
             DB = new MovieManagementEntities();
-
-
         }
     }
 }
