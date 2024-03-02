@@ -3,49 +3,58 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MovieApp.Views" 
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:MovieApp.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         DataContext="{StaticResource LoginVM}"
         Name="loginWindow"
         WindowStartupLocation="CenterScreen"
-        Title="LoginWindow" Height="600" Width="600">
+        Title="LoginWindow"
+        Height="600"
+        Width="600">
     <Grid>
-        <materialDesign:Card Width="400" Height="400" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <materialDesign:Card Width="400"
+                             Height="400"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center">
             <Grid>
                 <Grid.Resources>
                     <Style TargetType="Grid">
-                        <Setter Property="Margin" Value="15 15 15 0"/>
+                        <Setter Property="Margin"
+                                Value="15 15 15 0" />
                     </Style>
                 </Grid.Resources>
-                
+
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBox FontWeight="Bold" Text="CNM MOVIE"></TextBox>
+                <Grid Grid.Row="0"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center">
+                    <TextBox FontWeight="Bold"
+                             Text="CNM MOVIE"></TextBox>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <TextBox
-                      x:Name="usernameBox"
-                      Text="{Binding Username}"
-                      VerticalAlignment="Center"
-                      materialDesign:HintAssist.Hint="Tên đăng nhập"
-                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />     
+                    <TextBox x:Name="usernameBox"
+                             Text="{Binding Username}"
+                             VerticalAlignment="Center"
+                             materialDesign:HintAssist.Hint="Tên đăng nhập"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
                 </Grid>
 
                 <Grid Grid.Row="2">
                     <PasswordBox x:Name="FloatingPasswordBox"
                                  materialDesign:HintAssist.Hint="Mật khẩu"
-                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" >
+                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PasswordChanged">
-                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" 
-                                   CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
+                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+                                                       CommandParameter="{Binding ElementName=FloatingPasswordBox}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </PasswordBox>
@@ -57,24 +66,24 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Button 
-                            Grid.Column="0"
+                    <Button Grid.Column="0"
                             IsDefault="True"
-                            Style="{StaticResource MaterialDesignRaisedButton}"    
-                            Width="110"  
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Width="110"
                             Command="{Binding LoginCommand}"
                             CommandParameter="{Binding ElementName=loginWindow}"
                             Background="CadetBlue"
-                            ToolTip="Resource name: MaterialDesignRaisedButton" Content="Đăng nhập"></Button>
-                    <Button 
-                            Grid.Column="1"
+                            ToolTip="Resource name: MaterialDesignRaisedButton"
+                            Content="Đăng nhập"></Button>
+                    <Button Grid.Column="1"
                             IsDefault="True"
-                            Style="{StaticResource MaterialDesignRaisedButton}"    
-                            Width="110"  
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Width="110"
                             Command="{Binding ToRegisterCommand}"
                             CommandParameter="{Binding ElementName=loginWindow}"
                             Background="LightCoral"
-                            ToolTip="Resource name: MaterialDesignRaisedButton" Content="Đăng ký"></Button>
+                            ToolTip="Resource name: MaterialDesignRaisedButton"
+                            Content="Đăng ký"></Button>
                 </Grid>
 
             </Grid>

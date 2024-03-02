@@ -8,225 +8,290 @@
         DataContext="{StaticResource MainVM}"
         Name="mainWindow"
         WindowState="Maximized"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow"
+        MinHeight="1000"
+        MinWidth="1000">
+    <ScrollViewer VerticalScrollBarVisibility="Visible"
+                  HorizontalScrollBarVisibility="Visible">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Title"></TextBlock>
-                <Button Name="toLoginButton" Grid.Column="1" Command="{Binding ToLoginCommand}" CommandParameter="{Binding ElementName=mainWindow}">Login</Button>
-            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Grid.Column="0"
+                                   Text="Title"></TextBlock>
+                        <Button Name="toLoginButton"
+                                Grid.Column="1"
+                                Width="50"
+                                Margin="0,0,0,20"
+                                Command="{Binding ToLoginCommand}"
+                                CommandParameter="{Binding ElementName=mainWindow}">Login</Button>
+                    </StackPanel>
+                </Grid>
 
-            <Grid Grid.Row="1">
-                <Border Background="{StaticResource cs_Background}"
-                CornerRadius="20"
-                BorderThickness="3"
-                BorderBrush="{StaticResource cs_BorderBrush}"/>
+                <Grid Grid.Row="1">
+                    <Border Background="{StaticResource cs_Background}"
+                            CornerRadius="20"
+                            BorderThickness="3"
+                            BorderBrush="{StaticResource cs_BorderBrush}" />
 
-                <Slider x:Name="slider" 
-                Minimum="0" 
-                Maximum="2" 
-                TickPlacement="BottomRight" 
-                TickFrequency="1" 
-                ValueChanged="slider_ValueChanged" 
-                Visibility="Hidden"/>
+                    <Slider x:Name="slider"
+                            Minimum="0"
+                            Maximum="4"
+                            TickPlacement="BottomRight"
+                            TickFrequency="1"
+                            ValueChanged="slider_ValueChanged"
+                            Visibility="Hidden" />
 
-                <StackPanel Orientation="Horizontal" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
 
-                    <Button x:Name="btnPrevious" 
-                    Style="{StaticResource BtnPrevStyle}"
-                    Click="btnPrevious_Click"/>
+                        <Button x:Name="btnPrevious"
+                                Style="{StaticResource BtnPrevStyle}"
+                                Click="btnPrevious_Click" />
 
-                    <StackPanel x:Name="stackPanel">
+                        <StackPanel x:Name="imageStackPanel">
 
-                        <Grid x:Name="grid0" 
-                      Visibility="Visible">
+                            <Grid x:Name="grid0"
+                                  Visibility="Visible">
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
 
-                            <Border Height="250"
-                            Width="200"
-                            BorderThickness="5"
-                            CornerRadius="10"
-                            BorderBrush="{StaticResource cs_ImgPas}"/>
+                                <StackPanel VerticalAlignment="Center">
+                                    <Image  Name="ImageGrid"
+                                            Source="../Images/02.jpg"
+                                            Grid.Row="0"
+                                            Width="800"
+                                            Height="400"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
 
-                            <StackPanel VerticalAlignment="Center">
-                                <Image Source="../Images/MonAct.png" 
-                           Grid.Row="0"
-                           Width="150" 
-                           Height="150" 
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center"/>
+                                    <TextBlock  Name="TextGrid"
+                                                Text="M O N K E Y"
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontFamily="Roboto"
+                                                FontWeight="SemiBold"
+                                                Foreground="{StaticResource cs_Txt}"
+                                                Margin="0 30 0 5" />
+                                </StackPanel>
 
-                                <TextBlock Text="M O N K E Y" 
-                               Grid.Row="1"
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"
-                               FontFamily="Roboto"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource cs_Txt}"
-                               Margin="0 30 0 5"/>
-                            </StackPanel>
+                            </Grid>
+
+                            <Grid x:Name="grid1"
+                                  Visibility="Collapsed">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel VerticalAlignment="Center">
+                                    <Image x:Name="ImageGrid1"
+                                           Source="../Images/WolfAct.png"
+                                           Grid.Row="0"
+                                           Width="800"
+                                           Height="400"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+
+                                    <TextBlock Name="TextGrid1"
+                                               Text="W O L F"
+                                               Grid.Row="1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontFamily="Roboto"
+                                               FontWeight="SemiBold"
+                                               Foreground="{StaticResource cs_Txt}"
+                                               Margin="0 30 0 0" />
+                                </StackPanel>
+
+                            </Grid>
+
+                            <Grid x:Name="grid2"
+                                  Visibility="Collapsed">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel VerticalAlignment="Center">
+                                    <Image Name="ImageGrid2"
+                                           Source="../Images/ZebraAct.png"
+                                           Grid.Row="0"
+                                           Width="800"
+                                           Height="400"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+
+                                    <TextBlock Text="Z E B R A"
+                                               Name="TextGrid2"
+                                               Grid.Row="1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontFamily="Roboto"
+                                               FontWeight="SemiBold"
+                                               Foreground="{StaticResource cs_Txt}"
+                                               Margin="0 30 0 0" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid x:Name="grid3"
+                                  Visibility="Collapsed">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel VerticalAlignment="Center">
+                                    <Image  Name="ImageGrid3"
+                                            Source="../Images/03.jpg"
+                                            Grid.Row="0"
+                                            Width="800"
+                                            Height="400"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+
+                                    <TextBlock  Name="TextGrid3"
+                                                Text="M O N K E Y"
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontFamily="Roboto"
+                                                FontWeight="SemiBold"
+                                                Foreground="{StaticResource cs_Txt}"
+                                                Margin="0 30 0 5" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid x:Name="grid4"
+                                  Visibility="Collapsed">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel VerticalAlignment="Center">
+                                    <Image  Name="ImageGrid4"
+                                            Source="../Images/04.jpg"
+                                            Grid.Row="0"
+                                            Width="800"
+                                            Height="400"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+
+                                    <TextBlock  Name="TextGrid4"
+                                                Text="M O N K E Y"
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontFamily="Roboto"
+                                                FontWeight="SemiBold"
+                                                Foreground="{StaticResource cs_Txt}"
+                                                Margin="0 30 0 5" />
+                                </StackPanel>
+
+                            </Grid>
 
                             <StackPanel Orientation="Horizontal"
-                                Grid.Row="1"
-                                HorizontalAlignment="Center"
-                                Margin="0 10 0 0">
-                                <Ellipse Height="10"
-                                 Width="10"
-                                 Fill="Black"
-                                 Opacity="1"
-                                 Margin="1"/>
-                                <Ellipse Height="10"
-                                 Width="10"
-                                 Fill="Black"
-                                 Opacity="0.25"
-                                 Margin="1"/>
-                                <Ellipse Height="10"
-                                 Width="10"
-                                 Fill="Black"
-                                 Opacity="0.25"
-                                 Margin="1"/>
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        Margin="0 10 0 0">
+                                <Button Name="ec1"
+                                        Click="ec1_Click">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Ellipse Name="ecb1"
+                                                     Height="10"
+                                                     Width="10"
+                                                     Fill="Black"
+                                                     Opacity="1"
+                                                     Margin="1" />
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <Button Name="ec2"
+                                        Click="ec2_Click">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Ellipse Name="ecb2"
+                                                     Height="10"
+                                                     Width="10"
+                                                     Fill="Black"
+                                                     Opacity="0.25"
+                                                     Margin="1" />
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <Button Name="ec3"
+                                        Click="ec3_Click">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Ellipse Name="ecb3"
+                                                     Height="10"
+                                                     Width="10"
+                                                     Fill="Black"
+                                                     Opacity="0.25"
+                                                     Margin="1" />
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <Button Name="ec4"
+                                        Click="ec4_Click">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Ellipse Name="ecb4"
+                                                     Height="10"
+                                                     Width="10"
+                                                     Fill="Black"
+                                                     Opacity="0.25"
+                                                     Margin="1" />
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <Button Name="ec5"
+                                        Click="ec5_Click">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Ellipse Name="ecb5"
+                                                     Height="10"
+                                                     Width="10"
+                                                     Fill="Black"
+                                                     Opacity="0.25"
+                                                     Margin="1" />
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+
                             </StackPanel>
 
-                        </Grid>
+                        </StackPanel>
 
-                        <Grid x:Name="grid1" 
-                      Visibility="Collapsed">
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Border Height="250"
-                            Width="200"
-                            BorderThickness="5"
-                            CornerRadius="10"
-                            BorderBrush="{StaticResource cs_ImgPas}"/>
-
-                            <StackPanel VerticalAlignment="Center">
-                                <Image Source="../Images/WolfAct.png" 
-                           Grid.Row="0"
-                           Width="150" 
-                           Height="150" 
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center"/>
-
-                                <TextBlock Text="W O L F" 
-                               Grid.Row="1"
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"
-                               FontFamily="Roboto"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource cs_Txt}"
-                               Margin="0 30 0 0"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal"
-                                Grid.Row="1"
-                                HorizontalAlignment="Center"
-                                Margin="0 10 0 0">
-                                <Ellipse Height="10"
-                                 Width="10"
-                                 Fill="Black"
-                                 Opacity="0.25"
-                                 Margin="1"/>
-                                <Ellipse Height="10"
-                                 Width="10"
-                                 Fill="Black"
-                                 Opacity="1"
-                                 Margin="1"/>
-                                <Ellipse Height="10"
-                                 Width="10"
-                                 Fill="Black"
-                                 Opacity="0.25"
-                                 Margin="1"/>
-                            </StackPanel>
-
-                        </Grid>
-
-                        <Grid x:Name="grid2" 
-                      Visibility="Collapsed">
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Border Height="250"
-                            Width="200"
-                            BorderThickness="5"
-                            CornerRadius="10"
-                            BorderBrush="{StaticResource cs_ImgPas}"/>
-
-                            <StackPanel VerticalAlignment="Center">
-                                <Image Source="../Images/ZebraAct.png" 
-                           Grid.Row="0"
-                           Width="150" 
-                           Height="150" 
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center"/>
-
-                                <TextBlock Text="Z E B R A" 
-                               Grid.Row="1"
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"
-                               FontFamily="Roboto"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource cs_Txt}"
-                               Margin="0 30 0 0"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal"
-                                Grid.Row="1"
-                                HorizontalAlignment="Center"
-                                Margin="0 10 0 0">
-                                <Ellipse Height="10"
-                                 Width="10"
-                                 Fill="Black"
-                                 Opacity="0.25"
-                                 Margin="1"/>
-                                <Ellipse Height="10"
-                                 Width="10"
-                                 Fill="Black"
-                                 Opacity="0.25"
-                                 Margin="1"/>
-                                <Ellipse Height="10"
-                                 Width="10"
-                                 Fill="Black"
-                                 Opacity="1"
-                                 Margin="1"/>
-                            </StackPanel>
-
-                        </Grid>
+                        <Button x:Name="btnNext"
+                                Style="{StaticResource BtnNextStyle}"
+                                Click="btnNext_Click" />
 
                     </StackPanel>
+                </Grid>
 
-                    <Button x:Name="btnNext" 
-                    Style="{StaticResource BtnNextStyle}" 
-                    Click="btnNext_Click"/>
+                <Grid Grid.Row="2">
 
-                </StackPanel>
+                </Grid>
+
+
             </Grid>
-
-            <Grid Grid.Row="2">
-                <ContentControl x:Name="ContentArea"/>
-            </Grid>
-
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </Window>
