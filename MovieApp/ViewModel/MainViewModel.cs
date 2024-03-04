@@ -1,9 +1,13 @@
-﻿using MovieApp.ModelView;
+﻿using MovieApp.Models;
+using MovieApp.ModelView;
 using MovieApp.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity.Migrations.Model;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,8 +15,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml.Linq;
 
 namespace MovieApp.ViewModel
 {
@@ -55,19 +61,30 @@ namespace MovieApp.ViewModel
         private double _OPC5;
         public double OPC5 { get { return _OPC5; } set { _OPC5 = value; OnPropertyChanged(); } }
 
+        private string _SearchKey;
+        public string SearchKey { get { return _SearchKey; } set { _SearchKey = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<Movie> _MovieSet;
+        public ObservableCollection<Movie> MovieSet
+        {
+            get { return _MovieSet; }
+            set
+            {
+                _MovieSet = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand SliderChangedCommand { get; set; }
-
         public ICommand PreviousImageCommand { get; set; }
-
         public ICommand NextImageCommand { get; set; }
-
         public ICommand ToLoginCommand { get; set; }
         public ICommand GetImage1Command { get; set; }
         public ICommand GetImage2Command { get; set; }
         public ICommand GetImage3Command { get; set; }
         public ICommand GetImage4Command { get; set; }
         public ICommand GetImage5Command { get; set; }
+        public ICommand SearchCommand { get; set; }
 
         public MainViewModel()
         {
@@ -82,6 +99,40 @@ namespace MovieApp.ViewModel
             OPC3 = 0.25;
             OPC4 = 0.25;
             OPC5 = 0.25;
+            MovieSet = new ObservableCollection<Movie>();
+
+            var countMovie = DataProvider.Ins.DB.Movies.Where(x=>x.release_date < DateTime.Today);
+
+
+            //MovieSet = (ObservableCollection<Movie>)countMovie.Select(movie => new Movie
+            //{
+            //    id = movie.id,
+            //    name = movie.name,
+            //    duration = movie.duration,
+            //    certification = movie.certification,
+            //    rating = movie.rating,
+            //    release_date = movie.release_date,
+            //    status = movie.status,
+            //    description = movie.description,
+            //}) ;
+
+            foreach(var i in countMovie)
+            {
+                Debug.WriteLine(i.name);
+                Movie movie = new Movie();
+                movie.id = i.id;
+                movie.name = i.name;
+                movie.duration = i.duration; 
+                movie.certification = i.certification;
+                movie.rating = i.rating;
+                movie.release_date = i.release_date;
+                movie.status = i.status;
+                movie.description = i.description;
+                MovieSet.Add(movie);
+            }
+
+
+
             if (isLoaded)
             {
                 isLoaded = true;
@@ -89,6 +140,7 @@ namespace MovieApp.ViewModel
                 mainWindow.ShowDialog();
             }
 
+            // Change image slider after 3 seconds
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(3);
             timer.Tick += Timer_Tick;
@@ -104,6 +156,8 @@ namespace MovieApp.ViewModel
             GetImage3Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 2; timer.Start(); });
             GetImage4Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 3; timer.Start(); });
             GetImage5Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 4; timer.Start(); });
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Search(); });
+
         }
 
         public void NextImage()
@@ -123,7 +177,7 @@ namespace MovieApp.ViewModel
             SliderValue = currentProfile;
         }
 
-        public void removeEllipse()
+        public void RemoveEllipse()
         {
             OPC1 = 0.25;
             OPC2 = 0.25;
@@ -133,20 +187,19 @@ namespace MovieApp.ViewModel
         }
         public void ExecuteSliderChange()
         {
-            Debug.WriteLine("Here");
 
             int index = (int)SliderValue;
             switch (index)
             {
                 case 0:
-                    Debug.WriteLine("0");
 
                     Image1Visibility = Visibility.Visible;
                     Image2Visibility = Visibility.Collapsed;
                     Image3Visibility = Visibility.Collapsed;
                     Image4Visibility = Visibility.Collapsed;
                     Image5Visibility = Visibility.Collapsed;
-                    removeEllipse(); OPC1 = 1;
+                    RemoveEllipse();
+                    OPC1 = 1;
                     //removeEllipse();
                     //Ellipse ect1 = (Ellipse)ec1.Template.FindName("ecb1", ec1);
                     //if (ect1 != null)
@@ -156,14 +209,12 @@ namespace MovieApp.ViewModel
                     currentProfile = 0;
                     break;
                 case 1:
-                    Debug.WriteLine("1");
-
                     Image1Visibility = Visibility.Collapsed;
                     Image2Visibility = Visibility.Visible;
                     Image3Visibility = Visibility.Collapsed;
                     Image4Visibility = Visibility.Collapsed;
                     Image5Visibility = Visibility.Collapsed;
-                    removeEllipse(); OPC2 = 1;
+                    RemoveEllipse(); OPC2 = 1;
 
                     //removeEllipse();
                     //Ellipse ect2 = (Ellipse)ec2.Template.FindName("ecb2", ec2);
@@ -174,14 +225,12 @@ namespace MovieApp.ViewModel
                     currentProfile = 1;
                     break;
                 case 2:
-                    Debug.WriteLine("2");
-
                     Image1Visibility = Visibility.Collapsed;
                     Image2Visibility = Visibility.Collapsed;
                     Image3Visibility = Visibility.Visible;
                     Image4Visibility = Visibility.Collapsed;
                     Image5Visibility = Visibility.Collapsed;
-                    removeEllipse(); OPC3 = 1;
+                    RemoveEllipse(); OPC3 = 1;
 
                     //removeEllipse();
                     //Ellipse ect3 = (Ellipse)ec3.Template.FindName("ecb3", ec3);
@@ -192,14 +241,12 @@ namespace MovieApp.ViewModel
                     currentProfile = 2;
                     break;
                 case 3:
-                    Debug.WriteLine("3");
-
                     Image1Visibility = Visibility.Collapsed;
                     Image2Visibility = Visibility.Collapsed;
                     Image3Visibility = Visibility.Collapsed;
                     Image4Visibility = Visibility.Visible;
                     Image5Visibility = Visibility.Collapsed;
-                    removeEllipse();  OPC4 = 1;
+                    RemoveEllipse(); OPC4 = 1;
 
                     //removeEllipse();
                     //Ellipse ect4 = (Ellipse)ec4.Template.FindName("ecb4", ec4);
@@ -210,14 +257,12 @@ namespace MovieApp.ViewModel
                     currentProfile = 3;
                     break;
                 case 4:
-                    Debug.WriteLine("4");
-
                     Image1Visibility = Visibility.Collapsed;
                     Image2Visibility = Visibility.Collapsed;
                     Image3Visibility = Visibility.Collapsed;
                     Image4Visibility = Visibility.Collapsed;
                     Image5Visibility = Visibility.Visible;
-                    removeEllipse();
+                    RemoveEllipse();
                     OPC5 = 1;
 
                     //removeEllipse();
@@ -229,10 +274,13 @@ namespace MovieApp.ViewModel
                     currentProfile = 4;
                     break;
                 default:
-                    Debug.WriteLine("bre");
-
                     break;
             }
+        }
+
+        public void Search()
+        {
+            Debug.WriteLine(SearchKey);
         }
 
         private void Timer_Tick(object sender, EventArgs e)
