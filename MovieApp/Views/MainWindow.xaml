@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MovieApp.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         DataContext="{StaticResource MainVM}"
         Name="mainWindow"
@@ -21,20 +23,65 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Grid.Column="0"
-                                   Text="Title"></TextBlock>
-                        <Button Name="toLoginButton"
-                                Grid.Column="1"
-                                Width="50"
-                                Margin="0,0,0,20"
-                                Command="{Binding ToLoginCommand}"
-                                CommandParameter="{Binding ElementName=mainWindow}">Login</Button>
-                    </StackPanel>
+                   
+                    <Grid VerticalAlignment="Center">
+                        <TextBlock HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Margin="10,10,10,10"
+                                   FontSize="25"
+                                   FontWeight="Bold"
+                                   FontStyle="Italic"
+                                   Foreground="MediumPurple"
+                                   FontFamily="Verdana">CINEMA STEAM</TextBlock>
+
+
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <TextBox x:Name="SearchTextBox"
+                                     materialDesign:HintAssist.Hint="Search"
+                                     Width="150"
+                                     Margin="0,10,0,10">
+                            </TextBox>
+                            <Button IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                    Style="{StaticResource MaterialDesignIconButton}"
+                                    ToolTip="MaterialDesignIconButton">
+                                <materialDesign:PackIcon  Kind="MovieSearchOutline" />
+                            </Button>
+                        </StackPanel>
+
+                        <Menu HorizontalAlignment="Right">
+                            <MenuItem Header="Movie"
+                                      Cursor="Hand">
+                            </MenuItem>
+                           
+                            <MenuItem Header="Tài khoản"
+                                      Name="LoginMenu"
+                                      Cursor="Hand"
+                                      Visibility="Visible">
+                                <MenuItem Header="Login">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding ToLoginCommand}"
+                                                                   />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </MenuItem>
+                            </MenuItem>
+
+
+                            <MenuItem Header="Hello, Mr"
+                                      Name="AvaMenu"
+                                      Cursor="Hand"
+                                      Visibility="Collapsed">
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="Account" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+
+
+                        </Menu>
+                    </Grid>
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -43,13 +90,25 @@
                             BorderThickness="3"
                             BorderBrush="{StaticResource cs_BorderBrush}" />
 
-                    <Slider x:Name="slider"
+                    <Slider x:Name="ImageSlider"
                             Minimum="0"
                             Maximum="4"
                             TickPlacement="BottomRight"
                             TickFrequency="1"
-                            ValueChanged="slider_ValueChanged"
-                            Visibility="Hidden" />
+                            Value="{Binding SliderValue}"
+                            Visibility="Hidden">
+                        <i:Interaction.Triggers>
+
+                            <i:EventTrigger EventName="ValueChanged">
+
+                                <i:InvokeCommandAction Command="{Binding SliderChangedCommand}"
+                                                       CommandParameter="{Binding mainVM}" />
+
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Slider>
+
+
 
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center"
@@ -57,12 +116,13 @@
 
                         <Button x:Name="btnPrevious"
                                 Style="{StaticResource BtnPrevStyle}"
-                                Click="btnPrevious_Click" />
+                                Command="{Binding PreviousImageCommand}"
+                                CommandParameter="{Binding ElementName=ImageSlider}"/>
 
                         <StackPanel x:Name="imageStackPanel">
 
                             <Grid x:Name="grid0"
-                                  Visibility="Visible">
+                                  Visibility="{Binding Image1Visibility}">
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
@@ -70,7 +130,7 @@
 
                                 <StackPanel VerticalAlignment="Center">
                                     <Image  Name="ImageGrid"
-                                            Source="../Images/02.jpg"
+                                            Source="../Images/01.jpg"
                                             Grid.Row="0"
                                             Width="800"
                                             Height="400"
@@ -91,7 +151,7 @@
                             </Grid>
 
                             <Grid x:Name="grid1"
-                                  Visibility="Collapsed">
+                                  Visibility="{Binding Image2Visibility}">
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
@@ -99,12 +159,47 @@
 
                                 <StackPanel VerticalAlignment="Center">
                                     <Image x:Name="ImageGrid1"
-                                           Source="../Images/WolfAct.png"
+                                           Source="../Images/02.jpg"
                                            Grid.Row="0"
                                            Width="800"
                                            Height="400"
                                            HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
+                                           VerticalAlignment="Center">
+                                        <i:Interaction.Triggers>
+
+                                            <i:EventTrigger EventName="MouseEnter">
+
+                                                <i:InvokeCommandAction Command="{Binding ImageMouseEnterCommand}"
+                                                                       CommandParameter="ViewImportProgress" />
+
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="MouseLeave">
+
+                                                <i:InvokeCommandAction Command="{Binding ImageMouseLeaveCommand}"
+                                                                       CommandParameter="ViewImportProgress" />
+
+                                            </i:EventTrigger>
+
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                    <MediaElement x:Name="mediaElement"
+                                                  Width="800"
+                                                  Height="400"
+                                                  Visibility="Collapsed"
+                                                  LoadedBehavior="Manual"
+                                                  UnloadedBehavior="Stop">
+                                        <MediaElement.Triggers>
+                                            <EventTrigger RoutedEvent="MediaElement.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <MediaTimeline Source="video.mp4"
+                                                                       Storyboard.TargetName="mediaElement" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </MediaElement.Triggers>
+                                    </MediaElement>
+
 
                                     <TextBlock Name="TextGrid1"
                                                Text="W O L F"
@@ -120,7 +215,7 @@
                             </Grid>
 
                             <Grid x:Name="grid2"
-                                  Visibility="Collapsed">
+                                  Visibility="{Binding Image3Visibility}">
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
@@ -128,7 +223,7 @@
 
                                 <StackPanel VerticalAlignment="Center">
                                     <Image Name="ImageGrid2"
-                                           Source="../Images/ZebraAct.png"
+                                           Source="../Images/03.jpg"
                                            Grid.Row="0"
                                            Width="800"
                                            Height="400"
@@ -148,7 +243,7 @@
                             </Grid>
 
                             <Grid x:Name="grid3"
-                                  Visibility="Collapsed">
+                                  Visibility="{Binding Image4Visibility}">
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
@@ -156,7 +251,7 @@
 
                                 <StackPanel VerticalAlignment="Center">
                                     <Image  Name="ImageGrid3"
-                                            Source="../Images/03.jpg"
+                                            Source="../Images/04.jpg"
                                             Grid.Row="0"
                                             Width="800"
                                             Height="400"
@@ -176,7 +271,7 @@
                             </Grid>
 
                             <Grid x:Name="grid4"
-                                  Visibility="Collapsed">
+                                  Visibility="{Binding Image5Visibility}">
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
@@ -184,7 +279,7 @@
 
                                 <StackPanel VerticalAlignment="Center">
                                     <Image  Name="ImageGrid4"
-                                            Source="../Images/04.jpg"
+                                            Source="../Images/05.jpg"
                                             Grid.Row="0"
                                             Width="800"
                                             Height="400"
@@ -209,66 +304,70 @@
                                         HorizontalAlignment="Center"
                                         Margin="0 10 0 0">
                                 <Button Name="ec1"
-                                        Click="ec1_Click">
+                                        Command="{Binding GetImage1Command}"
+                                        >
                                     <Button.Template>
                                         <ControlTemplate>
                                             <Ellipse Name="ecb1"
                                                      Height="10"
                                                      Width="10"
                                                      Fill="Black"
-                                                     Opacity="1"
+                                                     Opacity="{Binding OPC1}"
                                                      Margin="1" />
                                         </ControlTemplate>
                                     </Button.Template>
                                 </Button>
                                 <Button Name="ec2"
-                                        Click="ec2_Click">
+                                        Command="{Binding GetImage2Command}"
+                                        >
                                     <Button.Template>
                                         <ControlTemplate>
                                             <Ellipse Name="ecb2"
                                                      Height="10"
                                                      Width="10"
                                                      Fill="Black"
-                                                     Opacity="0.25"
+                                                     Opacity="{Binding OPC2}"
                                                      Margin="1" />
                                         </ControlTemplate>
                                     </Button.Template>
                                 </Button>
                                 <Button Name="ec3"
-                                        Click="ec3_Click">
+                                        Command="{Binding GetImage3Command}"
+                                        >
                                     <Button.Template>
                                         <ControlTemplate>
                                             <Ellipse Name="ecb3"
                                                      Height="10"
                                                      Width="10"
                                                      Fill="Black"
-                                                     Opacity="0.25"
+                                                     Opacity="{Binding OPC3}"
                                                      Margin="1" />
                                         </ControlTemplate>
                                     </Button.Template>
                                 </Button>
                                 <Button Name="ec4"
-                                        Click="ec4_Click">
+                                        Command="{Binding GetImage4Command}"
+                                        >
                                     <Button.Template>
                                         <ControlTemplate>
                                             <Ellipse Name="ecb4"
                                                      Height="10"
                                                      Width="10"
                                                      Fill="Black"
-                                                     Opacity="0.25"
+                                                     Opacity="{Binding OPC4}"
                                                      Margin="1" />
                                         </ControlTemplate>
                                     </Button.Template>
                                 </Button>
-                                <Button Name="ec5"
-                                        Click="ec5_Click">
+                                <Button Name="ec5" Command="{Binding GetImage5Command}"
+                                        >
                                     <Button.Template>
                                         <ControlTemplate>
                                             <Ellipse Name="ecb5"
                                                      Height="10"
                                                      Width="10"
                                                      Fill="Black"
-                                                     Opacity="0.25"
+                                                     Opacity="{Binding OPC5}"
                                                      Margin="1" />
                                         </ControlTemplate>
                                     </Button.Template>
@@ -281,7 +380,8 @@
 
                         <Button x:Name="btnNext"
                                 Style="{StaticResource BtnNextStyle}"
-                                Click="btnNext_Click" />
+                                Command="{Binding NextImageCommand}"
+                                CommandParameter="{Binding ElementName=ImageSlider}"/>
 
                     </StackPanel>
                 </Grid>
