@@ -132,6 +132,9 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="Views\AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BaseWindow.xaml.cs">
       <DependentUpon>BaseWindow.xaml</DependentUpon>
     </Compile>
@@ -155,6 +158,10 @@
     <Page Include="Styles\ColorStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomeWindow.xaml">
       <SubType>Designer</SubType>
@@ -224,7 +231,9 @@
     <Resource Include="Images\ASDV.jpg" />
     <Resource Include="Images\BMA.jpg" />
     <Resource Include="Images\BTBT.jpg" />
-    <Content Include="Images\demovideo.mp4" />
+    <Content Include="Images\demovideo.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Images\DN3.jpg" />
     <Resource Include="Images\GLCB.jpg" />
     <Resource Include="Images\KMY3.jpg" />
@@ -245,6 +254,9 @@
     <Resource Include="Images\QTD.jpg" />
     <Resource Include="Images\TSTP.jpg" />
     <Resource Include="Images\NTM.jpg" />
+    <Content Include="Images\demo.wmv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>

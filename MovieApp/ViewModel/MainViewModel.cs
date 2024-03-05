@@ -115,6 +115,12 @@ namespace MovieApp.ViewModel
         public ICommand SearchCommand { get; set; }
         public ICommand MovieClickCommand { get; set; }
 
+        public ICommand GridMouseEnterCommand { get; set; }
+        public ICommand GridMouseLeaveCommand { get; set; }
+
+
+
+
 
         public MainViewModel()
         {
@@ -158,7 +164,7 @@ namespace MovieApp.ViewModel
 
             // Change image slider after 3 seconds
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Interval = TimeSpan.FromSeconds(10);
             timer.Tick += Timer_Tick;
 
             timer.Start();
@@ -174,8 +180,8 @@ namespace MovieApp.ViewModel
             GetImage5Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 4; timer.Start(); });
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Search(); });
             MovieClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine("Clicked "+ SelectedMovie.name);  });
-
-
+            GridMouseEnterCommand = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 3; });
+            GridMouseLeaveCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SliderValue = 1; timer.Start(); });
         }
 
         public void NextImage()
