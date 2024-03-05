@@ -119,6 +119,9 @@
     <Compile Include="Models\ShowTime.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -216,7 +219,32 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\BDEM.jpg" />
+    <Resource Include="Images\CCDN.jpg" />
+    <Resource Include="Images\ASDV.jpg" />
+    <Resource Include="Images\BMA.jpg" />
+    <Resource Include="Images\BTBT.jpg" />
     <Content Include="Images\demovideo.mp4" />
+    <Resource Include="Images\DN3.jpg" />
+    <Resource Include="Images\GLCB.jpg" />
+    <Resource Include="Images\KMY3.jpg" />
+    <Resource Include="Images\LTT.jpg" />
+    <Resource Include="Images\MAI.jpg" />
+    <Resource Include="Images\MDW.jpg" />
+    <Resource Include="Images\NVDC.jpg" />
+    <Resource Include="Images\PRR.jpg" />
+    <Resource Include="Images\SPCW.jpg" />
+    <Resource Include="Images\TNR.jpg" />
+    <Resource Include="Images\DN2.jpg" />
+    <Resource Include="Images\DTMA.jpg" />
+    <Resource Include="Images\DTMT.jpg" />
+    <Resource Include="Images\HCTT.jpg" />
+    <Resource Include="Images\KPD4.jpg" />
+    <Resource Include="Images\QCTK.jpg" />
+    <Resource Include="Images\QMTM.jpg" />
+    <Resource Include="Images\QTD.jpg" />
+    <Resource Include="Images\TSTP.jpg" />
+    <Resource Include="Images\NTM.jpg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>

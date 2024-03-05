@@ -26,17 +26,7 @@ namespace MovieApp.Models
         public string password { get; set; }
         public System.DateTime day_of_birth { get; set; }
         public string gender { get; set; }
-
-        User(string id, string name, string username, string password, DateTime day_of_birth, string gender)
-        {
-            this.id = id;
-            this.name = name;
-            this.username = username;
-            this.password = password;
-            this.day_of_birth = day_of_birth;
-            this.gender = gender;
-        }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Seat> Seats { get; set; }
     }

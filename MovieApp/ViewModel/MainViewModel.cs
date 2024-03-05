@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Migrations.Model;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection;
@@ -14,14 +15,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
 
 namespace MovieApp.ViewModel
 {
+    public class DateConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is DateTime dateTime)
+            {
+                // Convert DateTime to Date (remove time component)
+                return dateTime.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // This converter does not support converting back
+            throw new NotImplementedException();
+        }
+    }
     public class MainViewModel : BaseViewModel
     {
         public bool isLoaded = false;
@@ -64,6 +86,12 @@ namespace MovieApp.ViewModel
         private string _SearchKey;
         public string SearchKey { get { return _SearchKey; } set { _SearchKey = value; OnPropertyChanged(); } }
 
+        private string _MovieImage;
+        public string MovieImage { get { return _MovieImage; } set { _MovieImage = value; OnPropertyChanged(); } }
+
+        private Movie _SelectedMovie;
+        public Movie SelectedMovie { get { return _SelectedMovie; } set { _SelectedMovie = value; OnPropertyChanged(); } }
+
         private ObservableCollection<Movie> _MovieSet;
         public ObservableCollection<Movie> MovieSet
         {
@@ -85,6 +113,8 @@ namespace MovieApp.ViewModel
         public ICommand GetImage4Command { get; set; }
         public ICommand GetImage5Command { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand MovieClickCommand { get; set; }
+
 
         public MainViewModel()
         {
@@ -103,19 +133,6 @@ namespace MovieApp.ViewModel
 
             var countMovie = DataProvider.Ins.DB.Movies.Where(x=>x.release_date < DateTime.Today);
 
-
-            //MovieSet = (ObservableCollection<Movie>)countMovie.Select(movie => new Movie
-            //{
-            //    id = movie.id,
-            //    name = movie.name,
-            //    duration = movie.duration,
-            //    certification = movie.certification,
-            //    rating = movie.rating,
-            //    release_date = movie.release_date,
-            //    status = movie.status,
-            //    description = movie.description,
-            //}) ;
-
             foreach(var i in countMovie)
             {
                 Debug.WriteLine(i.name);
@@ -128,10 +145,9 @@ namespace MovieApp.ViewModel
                 movie.release_date = i.release_date;
                 movie.status = i.status;
                 movie.description = i.description;
+                movie.image = $"/Images/{i.id}.jpg";
                 MovieSet.Add(movie);
             }
-
-
 
             if (isLoaded)
             {
@@ -157,6 +173,8 @@ namespace MovieApp.ViewModel
             GetImage4Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 3; timer.Start(); });
             GetImage5Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 4; timer.Start(); });
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Search(); });
+            MovieClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine("Clicked "+ SelectedMovie.name);  });
+
 
         }
 

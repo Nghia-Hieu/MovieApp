@@ -34,6 +34,7 @@ namespace MovieApp.Models
         public virtual DbSet<Movie> Movies { get; set; }
         public virtual DbSet<Seat> Seats { get; set; }
         public virtual DbSet<ShowTime> ShowTimes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
     }

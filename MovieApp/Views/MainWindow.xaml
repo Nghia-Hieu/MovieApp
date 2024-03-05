@@ -13,6 +13,7 @@
         Title="MainWindow"
         MinHeight="1000"
         MinWidth="1000">
+
     <ScrollViewer VerticalScrollBarVisibility="Visible"
                   HorizontalScrollBarVisibility="Visible"
                   CanContentScroll="True">
@@ -24,7 +25,6 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-
                     <Grid VerticalAlignment="Center">
                         <TextBlock HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
@@ -62,7 +62,8 @@
                                       Name="LoginMenu"
                                       Cursor="Hand"
                                       Visibility="Visible">
-                                <MenuItem Header="Login">
+                                <MenuItem Header="Login"
+                                          Cursor="Hand">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <i:InvokeCommandAction Command="{Binding ToLoginCommand}" />
@@ -109,8 +110,6 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Slider>
-
-
 
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center"
@@ -384,21 +383,59 @@
                     </StackPanel>
                 </Grid>
 
-                <Grid Grid.Row="2">
-                    <ListBox ItemsSource="{Binding MovieSet}">
+
+                <Grid Grid.Row="2"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center">
+                    <TextBlock Text="PHIM ĐANG CHIẾU"
+                               FontSize="20"
+                               FontWeight="DemiBold"
+                               Margin="10,10,10,50"></TextBlock>
+
+                    <ListBox ItemsSource="{Binding MovieSet}" SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
+                             Name="MovieCardSet"
+                             Margin="90,40,0,0"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Width="1000"
+                             Height="Auto">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DataContext.MovieClickCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                       CommandParameter="{Binding ElementName=MovieCardSet}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <!-- Empty template to allow ScrollViewer to capture mouse scroll -->
+                                <ItemsPresenter />
+                            </ControlTemplate>
+                        </ListBox.Template>
+
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True"
+                                           Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <materialDesign:Card Width="200">
+                                <materialDesign:Card Width="200"
+                                                     Margin="20,20,20,20">
+                                   
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="140" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
                                             <RowDefinition Height="*" />
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
-                                        <Image Width="196"
-                                               Height="140"
-                                               Source="../Images/WolfAct.png"
-                                               Stretch="UniformToFill" />
+                                        <Image Width="185"
+                                               Height="260"
+                                               Source="{Binding image}"
+                                               Stretch="Fill" />
                                         <Button Grid.Row="0"
                                                 Margin="0,0,16,-20"
                                                 HorizontalAlignment="Right"
@@ -407,14 +444,36 @@
                                             <materialDesign:PackIcon Kind="Bike" />
                                         </Button>
                                         <StackPanel Grid.Row="1"
-                                                    Margin="8,24,8,0">
-                                            <TextBlock Text="{Binding name}" FontWeight="Bold">
-                                                
+                                                    Margin="8,10,5,0">
+                                            <TextBlock Text="{Binding name}"
+                                                       FontWeight="Bold"
+                                                       FontSize="15"
+                                                       TextWrapping="Wrap">
+
                                             </TextBlock>
                                             <TextBlock VerticalAlignment="Center"
                                                        TextWrapping="Wrap" />
                                         </StackPanel>
                                         <StackPanel Grid.Row="2"
+                                                    Margin="8,0,0,0">
+                                            <TextBlock FontSize="13">
+                                                <Run Text="Thời lượng: "
+                                                     FontWeight="Bold"></Run>
+                                                <Run Text="{Binding duration}"></Run>
+                                            </TextBlock>
+                                            <TextBlock FontSize="13">
+                                                <Run Text="Ngày phát hành: "
+                                                     FontWeight="Bold"></Run>
+                                                <Run Text="{Binding release_date, StringFormat=dd/MM/yyyy}"></Run>
+                                            </TextBlock>
+                                            <TextBlock FontSize="13">
+                                                <Run Text="Đánh giá:"
+                                                     FontWeight="Bold"></Run>
+                                                <Run Text="{Binding rating}"></Run>
+
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="3"
                                                     Margin="8"
                                                     HorizontalAlignment="Right"
                                                     Orientation="Horizontal">
@@ -430,7 +489,7 @@
                                                     Style="{StaticResource MaterialDesignToolButton}">
                                                 <materialDesign:PackIcon Kind="Heart" />
                                             </Button>
-                                         
+
                                         </StackPanel>
                                     </Grid>
                                 </materialDesign:Card>
@@ -438,8 +497,6 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
-
-
             </Grid>
         </Grid>
     </ScrollViewer>
