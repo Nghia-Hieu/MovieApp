@@ -25,14 +25,14 @@ using System.Xml.Linq;
 
 namespace MovieApp.ViewModel
 {
-    public class MainViewModel : BaseViewModel
+
+    internal class MovieFrontViewModel:BaseViewModel
     {
-        public bool isLoaded = false;
         public double currentProfile = 0;
         private DispatcherTimer timer;
 
-        private Page _CurrentPage;
-        public Page CurrentPage { get { return _CurrentPage; } set { _CurrentPage = value; OnPropertyChanged(); } }
+        private BaseViewModel _CurrentPage;
+        public BaseViewModel CurrentPage { get { return _CurrentPage; } set { _CurrentPage = value; OnPropertyChanged(); } }
 
         private double _SliderValue;
         public double SliderValue { get { return _SliderValue; } set { _SliderValue = value; OnPropertyChanged(); } }
@@ -102,14 +102,9 @@ namespace MovieApp.ViewModel
         public ICommand GridMouseEnterCommand { get; set; }
         public ICommand GridMouseLeaveCommand { get; set; }
 
-        public ICommand ToMovieListCommand { get; set; }
-        public ICommand ToMainPageCommand { get; set; }
-
-
-
-        public MainViewModel()
+        public MovieFrontViewModel()
         {
-            CurrentPage = new MovieFront();
+            CurrentPage = new LoginViewModel();
             Image1Visibility = Visibility.Visible;
             Image2Visibility = Visibility.Collapsed;
             Image3Visibility = Visibility.Collapsed;
@@ -123,15 +118,15 @@ namespace MovieApp.ViewModel
             OPC5 = 0.25;
             MovieSet = new ObservableCollection<Movie>();
 
-            var countMovie = DataProvider.Ins.DB.Movies.Where(x=>x.release_date < DateTime.Today);
+            var countMovie = DataProvider.Ins.DB.Movies.Where(x => x.release_date < DateTime.Today);
 
-            foreach(var i in countMovie)
+            foreach (var i in countMovie)
             {
                 Debug.WriteLine(i.name);
                 Movie movie = new Movie();
                 movie.id = i.id;
                 movie.name = i.name;
-                movie.duration = i.duration; 
+                movie.duration = i.duration;
                 movie.certification = i.certification;
                 movie.rating = i.rating;
                 movie.release_date = i.release_date;
@@ -141,12 +136,7 @@ namespace MovieApp.ViewModel
                 MovieSet.Add(movie);
             }
 
-            if (isLoaded)
-            {
-                isLoaded = true;
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.ShowDialog();
-            }
+
 
             // Change image slider after 3 seconds
             timer = new DispatcherTimer();
@@ -154,7 +144,7 @@ namespace MovieApp.ViewModel
             timer.Tick += Timer_Tick;
 
             timer.Start();
-            
+
             ToLoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginWindow loginWindow = new LoginWindow(); loginWindow.ShowDialog(); });
             SliderChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ExecuteSliderChange(); });
             PreviousImageCommand = new RelayCommand<System.Windows.Controls.Slider>((p) => { return true; }, (p) => { PreviousImage(); });
@@ -165,12 +155,9 @@ namespace MovieApp.ViewModel
             GetImage4Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 3; timer.Start(); });
             GetImage5Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 4; timer.Start(); });
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Search(); });
-            MovieClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine("Clicked "+ SelectedMovie.name);  });
+            MovieClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine("Clicked " + SelectedMovie.name); });
             GridMouseEnterCommand = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 3; });
             GridMouseLeaveCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SliderValue = 1; timer.Start(); });
-            ToMovieListCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CurrentPage = new MovieSearch(); });
-            ToMainPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CurrentPage = new MovieFront(); });
-
         }
 
         public void NextImage()
