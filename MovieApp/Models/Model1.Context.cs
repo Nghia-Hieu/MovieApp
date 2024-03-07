@@ -29,9 +29,9 @@ namespace MovieApp.Models
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Certification> Certifications { get; set; }
         public virtual DbSet<Director> Directors { get; set; }
-        public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<GoldenHour> GoldenHours { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
+        public virtual DbSet<MovieGenre> MovieGenres { get; set; }
         public virtual DbSet<Seat> Seats { get; set; }
         public virtual DbSet<ShowTime> ShowTimes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }

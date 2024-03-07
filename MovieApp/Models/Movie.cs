@@ -19,8 +19,8 @@ namespace MovieApp.Models
         {
             this.Actors = new HashSet<Actor>();
             this.Directors = new HashSet<Director>();
+            this.MovieGenres = new HashSet<MovieGenre>();
             this.ShowTimes = new HashSet<ShowTime>();
-            this.Genres = new HashSet<Genre>();
         }
     
         public string id { get; set; }
@@ -40,8 +40,8 @@ namespace MovieApp.Models
         public virtual ICollection<Director> Directors { get; set; }
         public virtual GoldenHour GoldenHour { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShowTime> ShowTimes { get; set; }
+        public virtual ICollection<MovieGenre> MovieGenres { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Genre> Genres { get; set; }
+        public virtual ICollection<ShowTime> ShowTimes { get; set; }
     }
 }

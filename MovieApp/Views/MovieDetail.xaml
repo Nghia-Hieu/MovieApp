@@ -152,7 +152,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock FontSize="13"
-                                           Text="{Binding name}"
+                                           Text="{Binding genre_name}"
                                            Cursor="Hand"
                                            Margin="0,0,10,0">
                                 </TextBlock>

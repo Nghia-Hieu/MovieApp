@@ -26,8 +26,8 @@ namespace MovieApp.ViewModel
         private ObservableCollection<Actor> _MovieActors;
         public ObservableCollection<Actor> MovieActors { get { return _MovieActors; } set { _MovieActors = value; OnPropertyChanged(); } }
 
-        private ObservableCollection<Genre> _CurrentMovieGenres;
-        public ObservableCollection<Genre> CurrentMovieGenres { get { return _CurrentMovieGenres; } set { _CurrentMovieGenres = value; OnPropertyChanged(); } }
+        private ObservableCollection<MovieGenre> _CurrentMovieGenres;
+        public ObservableCollection<MovieGenre> CurrentMovieGenres { get { return _CurrentMovieGenres; } set { _CurrentMovieGenres = value; OnPropertyChanged(); } }
         public ICommand LoadMovieDetailCommand { get; set; }
 
         public MovieDetailViewModel() 
@@ -63,17 +63,15 @@ namespace MovieApp.ViewModel
                 MovieActors.Add(actor);
             }
 
-            CurrentMovieGenres = new ObservableCollection<Genre>();
-            //var genres = DataProvider.Ins.DB.Movies.Join(MovieGen, t1 => t1.id, t2 => t2.movie_id, (t1, t2)=> new {t1,t2});
-            foreach (var i in actors)
+            CurrentMovieGenres = new ObservableCollection<MovieGenre>();
+            var genres = DataProvider.Ins.DB.Movies.Join(DataProvider.Ins.DB.MovieGenres, t1 => t1.id, t2 => t2.movie_id, (t1, t2)=> new {Id = t1.id, Genre_name = t2.genre_name}).Where(x => x.Id == MovieInfo.id);
+            foreach (var i in genres)
             {
-                Actor actor = new Actor();
-                actor.id = i.id;
-                actor.name = i.name;
-                actor.description = i.description;
-                actor.movie_id = i.movie_id;
-                Debug.WriteLine(actor.name);
-                MovieActors.Add(actor);
+                MovieGenre genre = new MovieGenre();
+                genre.genre_name = i.Genre_name;
+                genre.movie_id = i.Id;
+
+                CurrentMovieGenres.Add(genre);
             }
         }
     }

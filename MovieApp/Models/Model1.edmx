@@ -37,13 +37,6 @@
           <Property Name="description" Type="nvarchar" MaxLength="1500" Nullable="false" />
           <Property Name="movie_id" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="Genre">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="GoldenHour">
           <Key>
             <PropertyRef Name="movie_id" />
@@ -68,10 +61,10 @@
         <EntityType Name="MovieGenre">
           <Key>
             <PropertyRef Name="movie_id" />
-            <PropertyRef Name="id" />
+            <PropertyRef Name="genre_name" />
           </Key>
           <Property Name="movie_id" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="genre_name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Seat">
           <Key>
@@ -171,18 +164,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MovieGenre_Genre">
-          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
-          <End Role="MovieGenre" Type="Self.MovieGenre" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genre">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="MovieGenre">
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MovieGenre_Movie">
           <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
           <End Role="MovieGenre" Type="Self.MovieGenre" Multiplicity="*" />
@@ -236,7 +217,6 @@
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Certification" EntityType="Self.Certification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Director" EntityType="Self.Director" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoldenHour" EntityType="Self.GoldenHour" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MovieGenre" EntityType="Self.MovieGenre" Schema="dbo" store:Type="Tables" />
@@ -260,10 +240,6 @@
           <AssociationSet Name="FK_Movie_Certification" Association="Self.FK_Movie_Certification">
             <End Role="Certification" EntitySet="Certification" />
             <End Role="Movie" EntitySet="Movie" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MovieGenre_Genre" Association="Self.FK_MovieGenre_Genre">
-            <End Role="Genre" EntitySet="Genre" />
-            <End Role="MovieGenre" EntitySet="MovieGenre" />
           </AssociationSet>
           <AssociationSet Name="FK_MovieGenre_Movie" Association="Self.FK_MovieGenre_Movie">
             <End Role="Movie" EntitySet="Movie" />
@@ -291,9 +267,9 @@
           <EntitySet Name="Admins" EntityType="MovieManagementModel.Admin" />
           <EntitySet Name="Certifications" EntityType="MovieManagementModel.Certification" />
           <EntitySet Name="Directors" EntityType="MovieManagementModel.Director" />
-          <EntitySet Name="Genres" EntityType="MovieManagementModel.Genre" />
           <EntitySet Name="GoldenHours" EntityType="MovieManagementModel.GoldenHour" />
           <EntitySet Name="Movies" EntityType="MovieManagementModel.Movie" />
+          <EntitySet Name="MovieGenres" EntityType="MovieManagementModel.MovieGenre" />
           <EntitySet Name="Seats" EntityType="MovieManagementModel.Seat" />
           <EntitySet Name="ShowTimes" EntityType="MovieManagementModel.ShowTime" />
           <EntitySet Name="sysdiagrams" EntityType="MovieManagementModel.sysdiagram" />
@@ -315,6 +291,10 @@
             <End Role="Movie" EntitySet="Movies" />
             <End Role="GoldenHour" EntitySet="GoldenHours" />
           </AssociationSet>
+          <AssociationSet Name="FK_MovieGenre_Movie" Association="MovieManagementModel.FK_MovieGenre_Movie">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="MovieGenre" EntitySet="MovieGenres" />
+          </AssociationSet>
           <AssociationSet Name="FK_ShowTime_Movie" Association="MovieManagementModel.FK_ShowTime_Movie">
             <End Role="Movie" EntitySet="Movies" />
             <End Role="ShowTime" EntitySet="ShowTimes" />
@@ -326,10 +306,6 @@
           <AssociationSet Name="FK_Seat_User" Association="MovieManagementModel.FK_Seat_User">
             <End Role="User" EntitySet="Users" />
             <End Role="Seat" EntitySet="Seats" />
-          </AssociationSet>
-          <AssociationSet Name="MovieGenre" Association="MovieManagementModel.MovieGenre">
-            <End Role="Genre" EntitySet="Genres" />
-            <End Role="Movie" EntitySet="Movies" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Actor">
@@ -367,14 +343,6 @@
           <Property Name="movie_id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Movie" Relationship="MovieManagementModel.FK_Director_Movie" FromRole="Director" ToRole="Movie" />
         </EntityType>
-        <EntityType Name="Genre">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Movies" Relationship="MovieManagementModel.MovieGenre" FromRole="Genre" ToRole="Movie" />
-        </EntityType>
         <EntityType Name="GoldenHour">
           <Key>
             <PropertyRef Name="movie_id" />
@@ -400,8 +368,17 @@
           <NavigationProperty Name="Certification1" Relationship="MovieManagementModel.FK_Movie_Certification" FromRole="Movie" ToRole="Certification" />
           <NavigationProperty Name="Directors" Relationship="MovieManagementModel.FK_Director_Movie" FromRole="Movie" ToRole="Director" />
           <NavigationProperty Name="GoldenHour" Relationship="MovieManagementModel.FK_GoldenHour_Movie" FromRole="Movie" ToRole="GoldenHour" />
+          <NavigationProperty Name="MovieGenres" Relationship="MovieManagementModel.FK_MovieGenre_Movie" FromRole="Movie" ToRole="MovieGenre" />
           <NavigationProperty Name="ShowTimes" Relationship="MovieManagementModel.FK_ShowTime_Movie" FromRole="Movie" ToRole="ShowTime" />
-          <NavigationProperty Name="Genres" Relationship="MovieManagementModel.MovieGenre" FromRole="Movie" ToRole="Genre" />
+        </EntityType>
+        <EntityType Name="MovieGenre">
+          <Key>
+            <PropertyRef Name="movie_id" />
+            <PropertyRef Name="genre_name" />
+          </Key>
+          <Property Name="movie_id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="genre_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Movie" Relationship="MovieManagementModel.FK_MovieGenre_Movie" FromRole="MovieGenre" ToRole="Movie" />
         </EntityType>
         <EntityType Name="Seat">
           <Key>
@@ -506,6 +483,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MovieGenre_Movie">
+          <End Type="MovieManagementModel.Movie" Role="Movie" Multiplicity="1" />
+          <End Type="MovieManagementModel.MovieGenre" Role="MovieGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MovieGenre">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ShowTime_Movie">
           <End Type="MovieManagementModel.Movie" Role="Movie" Multiplicity="1" />
           <End Type="MovieManagementModel.ShowTime" Role="ShowTime" Multiplicity="*" />
@@ -541,10 +530,6 @@
               <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="MovieGenre">
-          <End Type="MovieManagementModel.Genre" Role="Genre" Multiplicity="*" />
-          <End Type="MovieManagementModel.Movie" Role="Movie" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -588,14 +573,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Genres">
-            <EntityTypeMapping TypeName="MovieManagementModel.Genre">
-              <MappingFragment StoreEntitySet="Genre">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="GoldenHours">
             <EntityTypeMapping TypeName="MovieManagementModel.GoldenHour">
               <MappingFragment StoreEntitySet="GoldenHour">
@@ -616,6 +593,14 @@
                 <ScalarProperty Name="duration" ColumnName="duration" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieGenres">
+            <EntityTypeMapping TypeName="MovieManagementModel.MovieGenre">
+              <MappingFragment StoreEntitySet="MovieGenre">
+                <ScalarProperty Name="genre_name" ColumnName="genre_name" />
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -673,14 +658,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="MovieGenre" TypeName="MovieManagementModel.MovieGenre" StoreEntitySet="MovieGenre">
-            <EndProperty Name="Movie">
-              <ScalarProperty Name="id" ColumnName="movie_id" />
-            </EndProperty>
-            <EndProperty Name="Genre">
-              <ScalarProperty Name="id" ColumnName="id" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
