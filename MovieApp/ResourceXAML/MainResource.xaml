@@ -8,7 +8,7 @@
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
     <viewmodel:RegisterViewModel x:Key="RegisterVM"></viewmodel:RegisterViewModel>
     <viewmodel:MovieFrontViewModel x:Key="MovieFrontVM"></viewmodel:MovieFrontViewModel>
-
+    <viewmodel:MovieDetailViewModel x:Key="MovieDetailVM"></viewmodel:MovieDetailViewModel>
 
 
 </ResourceDictionary>

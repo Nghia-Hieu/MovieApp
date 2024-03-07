@@ -54,7 +54,7 @@
                                      Width="150"
                                      Margin="0,10,0,10">
                             </TextBox>
-                            <Button IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            <Button 
                                     Style="{StaticResource MaterialDesignIconButton}"
                                     ToolTip="MaterialDesignIconButton"
                                     Command="{Binding SearchCommand}">
@@ -103,8 +103,14 @@
 
                 <Grid Grid.Row="1">
                     <Frame x:Name="MainFrame"
-                           Content="{Binding CurrentPage, Mode=TwoWay}"
-                           NavigationUIVisibility="Hidden" />
+                           Content="{Binding CurrentPage}"
+                           NavigationUIVisibility="Hidden">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Loaded">
+                                <i:InvokeCommandAction Command="{Binding RemoveBackEntryCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Frame>
 
                 </Grid>
 

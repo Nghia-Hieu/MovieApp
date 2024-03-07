@@ -37,7 +37,7 @@
                 <i:EventTrigger EventName="ValueChanged">
 
                     <i:InvokeCommandAction Command="{Binding SliderChangedCommand}"
-                                           CommandParameter="{Binding MovieFrontPage}" />
+                                            />
 
                 </i:EventTrigger>
             </i:Interaction.Triggers>
@@ -395,19 +395,19 @@
                                 <StackPanel Grid.Row="2"
                                             Margin="8,0,0,0">
                                     <TextBlock FontSize="13">
-        <Run Text="Thời lượng: "
-                                        FontWeight="Bold"></Run>
-        <Run Text="{Binding duration}"></Run>
+                                        <Run Text="Thời lượng: "
+                                            FontWeight="Bold"></Run>
+                                        <Run Text="{Binding duration}"></Run>
                                     </TextBlock>
                                     <TextBlock FontSize="13">
-        <Run Text="Ngày phát hành: "
-                                        FontWeight="Bold"></Run>
-        <Run Text="{Binding release_date, StringFormat=dd/MM/yyyy}"></Run>
+                                        <Run Text="Ngày phát hành: "
+                                             FontWeight="Bold"></Run>
+                                        <Run Text="{Binding release_date, StringFormat=dd/MM/yyyy}"></Run>
                                     </TextBlock>
                                     <TextBlock FontSize="13">
-        <Run Text="Đánh giá:"
-                                        FontWeight="Bold"></Run>
-        <Run Text="{Binding rating}"></Run>
+                                        <Run Text="Đánh giá:"
+                                             FontWeight="Bold"></Run>
+                                        <Run Text="{Binding rating}"></Run>
 
                                     </TextBlock>
                                 </StackPanel>

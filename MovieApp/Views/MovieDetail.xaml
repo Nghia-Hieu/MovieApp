@@ -1,0 +1,97 @@
+﻿<Page x:Class="MovieApp.Views.MovieDetail"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:local="clr-namespace:MovieApp.Views"
+      mc:Ignorable="d"
+      Background="AliceBlue"
+      DataContext="{StaticResource MovieDetailVM}"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="MovieDetail">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Text="Nội dung phim"
+                   FontSize="18"
+                   FontWeight="SemiBold"></TextBlock>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="400"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0"
+                   Source="../Images/BDEM.jpg"
+                   Height="Auto" />
+            <StackPanel Grid.Column="1"
+                        Margin="20,0,0,20">
+
+                <TextBlock Text="{Binding MovieInfo.name}"
+                           FontSize="18"
+                           FontWeight="DemiBold"></TextBlock>
+                <Line X1="0"
+                      Y1="0"
+                      X2="1"
+                      Y2="0"
+                      Stretch="UniformToFill"
+                      Stroke="DimGray"
+                      StrokeThickness="1"
+                      Margin="0,10,0,10" />
+                <TextBlock FontSize="13">
+                    <Run Text="Đạo diễn:"
+                         FontWeight="Bold"></Run>
+                    <Run Text="Eiji Kojida"></Run>
+                </TextBlock>
+                <TextBlock FontSize="13">
+                    <Run Text="Diễn viên:"
+                         FontWeight="Bold"></Run>
+                    <Run Text="Moizewa, Tesuda"></Run>
+                </TextBlock>
+                <TextBlock FontSize="13">
+                    <Run Text="Thể loại:"
+                         FontWeight="Bold"></Run>
+                    <Run Text="Tâm lí, Tình cảm"></Run>
+                </TextBlock>
+
+                <TextBlock FontSize="13">
+                    <Run Text="Khởi chiếu:"
+                         FontWeight="Bold"></Run>
+                    <Run Text="11/03/2024"></Run>
+                </TextBlock>
+                <TextBlock FontSize="13">
+                    <Run Text="Thời lượng:"
+                         FontWeight="Bold"></Run>
+                    <Run Text="105 phút"></Run>
+                </TextBlock>
+                <TextBlock FontSize="13">
+                    <Run Text="Rated:"
+                         FontWeight="Bold"></Run>
+                    <Run Text="T16"></Run>
+                </TextBlock>
+                <TextBlock FontSize="13"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center">
+                    <Run Text="Chi tiết:"
+                         FontWeight="Bold"></Run>
+                </TextBlock>
+                <TextBlock FontSize="13"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap">
+                    Câu chuyện xoay quanh chàng trai trẻ Aoi (Ryosuke Yamada) thầm yêu nữ học viên Mika (Minami Hamabe) với khao khát trở thành nghệ sĩ piano. Một tai nạn bất ngờ đã khiến Mika mất đi thị lực, Aoi vẫn luôn âm thầm bên cạnh và dùng sự dịu dàng vụng về của mình bảo vệ cô. Nhưng số mệnh như một dòng nước đục ngầu cuốn đi chuyện tình thuần khiết đang còn dở dang.
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

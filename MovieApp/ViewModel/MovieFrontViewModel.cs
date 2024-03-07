@@ -122,7 +122,6 @@ namespace MovieApp.ViewModel
 
             foreach (var i in countMovie)
             {
-                Debug.WriteLine(i.name);
                 Movie movie = new Movie();
                 movie.id = i.id;
                 movie.name = i.name;
@@ -155,11 +154,18 @@ namespace MovieApp.ViewModel
             GetImage4Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 3; timer.Start(); });
             GetImage5Command = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 4; timer.Start(); });
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Search(); });
-            MovieClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine("Clicked " + SelectedMovie.name); });
+            MovieClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { ToMovieDetail(); });
             GridMouseEnterCommand = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 3; });
             GridMouseLeaveCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SliderValue = 1; timer.Start(); });
         }
 
+        public void ToMovieDetail()
+        {
+            Debug.WriteLine("Movie picked " + SelectedMovie.name);
+            MainWindow mainWindow = new MainWindow();
+            var data = mainWindow.DataContext as MainViewModel;
+            data.CurrentPage = new MovieDetail();
+        }
         public void NextImage()
         {
             currentProfile++;
