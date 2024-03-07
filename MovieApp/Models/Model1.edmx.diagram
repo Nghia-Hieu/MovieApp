@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="76ee4557f4574a318a11da58e0d92014" Name="Diagram1">
+      <Diagram DiagramId="76ee4557f4574a318a11da58e0d92014" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="MovieManagementModel.Actor" Width="1.5" PointX="5.25" PointY="7.125" />
         <EntityTypeShape EntityType="MovieManagementModel.Admin" Width="1.5" PointX="7.75" PointY="4.75" />
         <EntityTypeShape EntityType="MovieManagementModel.Certification" Width="1.5" PointX="0.75" PointY="2.625" />
         <EntityTypeShape EntityType="MovieManagementModel.Director" Width="1.5" PointX="5.25" PointY="4.375" />
         <EntityTypeShape EntityType="MovieManagementModel.Genre" Width="1.5" PointX="0.75" PointY="5.625" />
         <EntityTypeShape EntityType="MovieManagementModel.GoldenHour" Width="1.5" PointX="5.25" PointY="9.875" />
-        <EntityTypeShape EntityType="MovieManagementModel.Movie" Width="1.5" PointX="3" PointY="4.5" />
+        <EntityTypeShape EntityType="MovieManagementModel.Movie" Width="1.5" PointX="3" PointY="3" />
         <EntityTypeShape EntityType="MovieManagementModel.Seat" Width="1.5" PointX="7.5" PointY="1.375" />
         <EntityTypeShape EntityType="MovieManagementModel.ShowTime" Width="1.5" PointX="5.25" PointY="1.375" />
         <EntityTypeShape EntityType="MovieManagementModel.sysdiagram" Width="1.5" PointX="7.75" PointY="7.75" />

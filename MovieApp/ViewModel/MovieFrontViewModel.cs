@@ -98,13 +98,13 @@ namespace MovieApp.ViewModel
         public ICommand GetImage5Command { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand MovieClickCommand { get; set; }
-
         public ICommand GridMouseEnterCommand { get; set; }
         public ICommand GridMouseLeaveCommand { get; set; }
+        public ICommand LoadMovieCommand { get; set; }
+
 
         public MovieFrontViewModel()
         {
-            CurrentPage = new LoginViewModel();
             Image1Visibility = Visibility.Visible;
             Image2Visibility = Visibility.Collapsed;
             Image3Visibility = Visibility.Collapsed;
@@ -144,6 +144,9 @@ namespace MovieApp.ViewModel
 
             timer.Start();
 
+            LoadMovieCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {  LoadMainPage(); });
+
+
             ToLoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginWindow loginWindow = new LoginWindow(); loginWindow.ShowDialog(); });
             SliderChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ExecuteSliderChange(); });
             PreviousImageCommand = new RelayCommand<System.Windows.Controls.Slider>((p) => { return true; }, (p) => { PreviousImage(); });
@@ -158,10 +161,13 @@ namespace MovieApp.ViewModel
             GridMouseEnterCommand = new RelayCommand<object>((p) => { return true; }, (p) => { timer.Stop(); SliderValue = 3; });
             GridMouseLeaveCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SliderValue = 1; timer.Start(); });
         }
+        private void LoadMainPage()
+        {
+            
+        }
 
         public void ToMovieDetail()
         {
-            Debug.WriteLine("Movie picked " + SelectedMovie.name);
             MainWindow mainWindow = new MainWindow();
             var data = mainWindow.DataContext as MainViewModel;
             data.CurrentPage = new MovieDetail();
@@ -172,7 +178,6 @@ namespace MovieApp.ViewModel
             if (currentProfile > 4)
                 currentProfile = 0;
             SliderValue = currentProfile;
-
         }
 
         public void PreviousImage()

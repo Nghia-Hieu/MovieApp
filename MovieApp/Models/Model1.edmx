@@ -546,7 +546,7 @@
           <End Type="MovieManagementModel.Genre" Role="Genre" Multiplicity="*" />
           <End Type="MovieManagementModel.Movie" Role="Movie" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

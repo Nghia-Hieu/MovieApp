@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      xmlns:local="clr-namespace:MovieApp.Views"
+      xmlns:local="clr-namespace:MovieApp.ViewModel"
       mc:Ignorable="d"
       Background="AliceBlue"
       DataContext="{StaticResource MovieDetailVM}"
@@ -14,9 +14,33 @@
       Title="MovieDetail">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadCommand}" />
+            <i:InvokeCommandAction Command="{Binding LoadMovieDetailCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
+    <Page.Resources>
+        <Style TargetType="Run"
+               x:Key="RunHoverStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Foreground"
+                            Value="Blue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBlock"
+               x:Key="TextBlockHoverStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Foreground"
+                            Value="Blue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    
 
     <Grid HorizontalAlignment="Center">
         <Grid.RowDefinitions>
@@ -33,7 +57,7 @@
                 <ColumnDefinition Width="400"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0"
-                   Source="../Images/BDEM.jpg"
+                   Source="{Binding MovieInfo.image}"
                    Height="Auto" />
             <StackPanel Grid.Column="1"
                         Margin="20,0,0,20">
@@ -52,33 +76,106 @@
                 <TextBlock FontSize="13">
                     <Run Text="Đạo diễn:"
                          FontWeight="Bold"></Run>
-                    <Run Text="Eiji Kojida"></Run>
+                    <Run Text="{Binding MovieDirector.name}"
+                         Cursor="Hand"
+                         Style="{StaticResource RunHoverStyle}">
+                        <Run.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock>Thông tin đạo diễn: </TextBlock>
+                                    <TextBlock Text="{Binding MovieDirector.description}"></TextBlock>                              
+                                </StackPanel>
+                            </ToolTip>
+                        </Run.ToolTip>
+                    </Run>
                 </TextBlock>
-                <TextBlock FontSize="13">
-                    <Run Text="Diễn viên:"
-                         FontWeight="Bold"></Run>
-                    <Run Text="Moizewa, Tesuda"></Run>
-                </TextBlock>
-                <TextBlock FontSize="13">
-                    <Run Text="Thể loại:"
-                         FontWeight="Bold"></Run>
-                    <Run Text="Tâm lí, Tình cảm"></Run>
-                </TextBlock>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock FontSize="13"
+                               Text="Diễn viên: "
+                               Margin="0,0,0,0"
+                               FontWeight="Bold"></TextBlock>
+                    <ListBox ItemsSource="{Binding MovieActors}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="13"
+                                           Text="{Binding name}"
+                                           Cursor="Hand"
+                                           Margin="0,0,10,0"
+                                           Style="{StaticResource TextBlockHoverStyle}">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Content="{Binding description}" />
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <TextBlock FontSize="13"
+                               Text="Thể loại: "
+                               Margin="0,0,0,0"
+                               FontWeight="Bold"></TextBlock>
+                    <ListBox ItemsSource="{Binding CurrentMovieGenres}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="13"
+                                           Text="{Binding name}"
+                                           Cursor="Hand"
+                                           Margin="0,0,10,0">
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+
 
                 <TextBlock FontSize="13">
                     <Run Text="Khởi chiếu:"
                          FontWeight="Bold"></Run>
-                    <Run Text="11/03/2024"></Run>
+                    <Run Text="{Binding MovieInfo.release_date, StringFormat=dd/MM/yyyy}"></Run>
                 </TextBlock>
                 <TextBlock FontSize="13">
                     <Run Text="Thời lượng:"
                          FontWeight="Bold"></Run>
-                    <Run Text="105 phút"></Run>
+                    <Run Text="{Binding MovieInfo.duration}"></Run>
                 </TextBlock>
                 <TextBlock FontSize="13">
                     <Run Text="Rated:"
                          FontWeight="Bold"></Run>
-                    <Run Text="T16"></Run>
+                    <Run Text="{Binding MovieInfo.certification}"></Run>
                 </TextBlock>
                 <TextBlock FontSize="13"
                            VerticalAlignment="Center"
@@ -87,10 +184,19 @@
                          FontWeight="Bold"></Run>
                 </TextBlock>
                 <TextBlock FontSize="13"
+                           Text="{Binding MovieInfo.description}"
                            HorizontalAlignment="Center"
                            TextWrapping="Wrap">
-                    Câu chuyện xoay quanh chàng trai trẻ Aoi (Ryosuke Yamada) thầm yêu nữ học viên Mika (Minami Hamabe) với khao khát trở thành nghệ sĩ piano. Một tai nạn bất ngờ đã khiến Mika mất đi thị lực, Aoi vẫn luôn âm thầm bên cạnh và dùng sự dịu dàng vụng về của mình bảo vệ cô. Nhưng số mệnh như một dòng nước đục ngầu cuốn đi chuyện tình thuần khiết đang còn dở dang.
                 </TextBlock>
+                <Button Background="Red"
+                        Width="100">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <materialDesign:PackIcon Kind="Ticket"
+                                                 Margin="0,2,0,2" />
+                        <TextBlock>MUA VÉ</TextBlock>
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </Grid>
     </Grid>
