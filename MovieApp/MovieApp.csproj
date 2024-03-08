@@ -133,6 +133,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MovieDetailViewModel.cs" />
     <Compile Include="ViewModel\MovieFrontViewModel.cs" />
+    <Compile Include="ViewModel\MovieSearchViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="Views\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>

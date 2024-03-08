@@ -38,12 +38,8 @@
                 Value="{Binding SliderValue}"
                 Visibility="Hidden">
             <i:Interaction.Triggers>
-
                 <i:EventTrigger EventName="ValueChanged">
-
-                    <i:InvokeCommandAction Command="{Binding SliderChangedCommand}"
-                                            />
-
+                    <i:InvokeCommandAction Command="{Binding SliderChangedCommand}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Slider>
@@ -59,11 +55,8 @@
                     CommandParameter="{Binding ElementName=ImageSlider}" />
 
             <StackPanel x:Name="imageStackPanel">
-
                 <Grid x:Name="grid0"
                       Visibility="{Binding Image1Visibility}">
-
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
