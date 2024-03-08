@@ -29,7 +29,7 @@
                       SelectedItem="{Binding ChoosenReleaseYear}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding ChoosenReleaseYear}" />
+                        <i:InvokeCommandAction Command="{Binding SortReleaseYearCommand }" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>

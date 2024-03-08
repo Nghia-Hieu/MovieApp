@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,6 @@ namespace MovieApp.ViewModel
     {
 
         private int _id;
-
         public int Id
         {
             get { return _id; }
@@ -39,7 +39,6 @@ namespace MovieApp.ViewModel
     {
 
         private int _id;
-
         public int Id
         {
             get { return _id; }
@@ -57,12 +56,9 @@ namespace MovieApp.ViewModel
             return Date;
         }
     }
-
     public class Rating
     {
-
         private int _id;
-
         public int Id
         {
             get { return _id; }
@@ -78,6 +74,19 @@ namespace MovieApp.ViewModel
         public override string ToString()
         {
             return RateType;
+        }
+    }
+
+    public class MovieComparer : IEqualityComparer<Movie>
+    {
+        public bool Equals(Movie x, Movie y)
+        {
+            return x.id == y.id;
+        }
+
+        public int GetHashCode(Movie obj)
+        {
+            return obj.id.GetHashCode();
         }
     }
 
@@ -147,11 +156,19 @@ namespace MovieApp.ViewModel
             }
         }
 
+        private ObservableCollection<Movie> StoredMovieSet;
+
+
+        private string _SearchKey;
+        public string SearchKey { get { return _SearchKey; } set { _SearchKey = value; OnPropertyChanged(); } }
+
         public ICommand SortReleaseYearCommand { get; set; }
         public ICommand SortShowDateCommand { get; set; }
         public ICommand SortRatingCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
 
-        public MovieSearchViewModel() 
+
+        public MovieSearchViewModel()
         {
             MovieByReleaseYear = new ObservableCollection<ReleaseYear>()
             {
@@ -179,6 +196,8 @@ namespace MovieApp.ViewModel
             };
             ChoosenRatingType = MovieByRating.FirstOrDefault();
 
+            SearchKey = "";
+
             MovieSet = new ObservableCollection<Movie>();
 
             var countMovie = DataProvider.Ins.DB.Movies;
@@ -197,8 +216,140 @@ namespace MovieApp.ViewModel
                 movie.image = $"/Images/{i.id}.jpg";
                 MovieSet.Add(movie);
             }
+            //SortReleaseYearCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortMovieByYearRelease(); });
+            //SortRatingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortMovieByRate(); });
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SearchMovie(); });
 
-            SortRatingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine(ChoosenRatingType.Id); });
+        }
+
+        public void GetAllMovie()
+        {
+            var MovieDirector = DataProvider.Ins.DB.Movies;
+            foreach (var i in MovieDirector)
+            {
+                Movie movie = new Movie();
+                movie.id = i.id;
+                movie.name = i.name;
+                movie.duration = i.duration;
+                movie.certification = i.certification;
+                movie.rating = i.rating;
+                movie.release_date = i.release_date;
+                movie.status = i.status;
+                movie.description = i.description;
+                movie.image = $"/Images/{i.id}.jpg";
+                MovieSet.Add(movie);
+            }
+        }
+
+        public void SearchMovie()
+        {
+            if (SearchKey != "")
+            {
+                var MovieDirector = DataProvider.Ins.DB.Movies.Join(DataProvider.Ins.DB.Directors, c1 => c1.id, c2 => c2.movie_id, (c1, c2) => new { Movies = c1, Director = c2 })
+                                                               .Where(result => result.Movies.name.Contains(SearchKey) || result.Director.name.Contains(SearchKey))
+                                                               .Select(result => new { result.Movies, result.Director });
+                MovieSet.Clear();
+                foreach (var i in MovieDirector)
+                {
+                    Movie movie = new Movie();
+                    movie.id = i.Movies.id;
+                    movie.name = i.Movies.name;
+                    movie.duration = i.Movies.duration;
+                    movie.certification = i.Movies.certification;
+                    movie.rating = i.Movies.rating;
+                    movie.release_date = i.Movies.release_date;
+                    movie.status = i.Movies.status;
+                    movie.description = i.Movies.description;
+                    movie.image = $"/Images/{i.Movies.id}.jpg"; Debug.WriteLine(movie.release_date.Year.ToString());
+
+                    MovieSet.Add(movie);
+                }
+                //StoredMovieSet = MovieSet;
+                //SearchKey = "";
+            }
+            else
+            {
+                var MovieDirector = DataProvider.Ins.DB.Movies;
+                MovieSet.Clear();
+                foreach (var i in MovieDirector)
+                {
+                    Movie movie = new Movie();
+                    movie.id = i.id;
+                    movie.name = i.name;
+                    movie.duration = i.duration;
+                    movie.certification = i.certification;
+                    movie.rating = i.rating;
+                    movie.release_date = i.release_date;
+                    movie.status = i.status;
+                    movie.description = i.description;
+                    movie.image = $"/Images/{i.id}.jpg";
+                    MovieSet.Add(movie);
+                }
+                //StoredMovieSet = MovieSet;
+                //SearchKey = "";
+            }
+            SortMovieByRate();
+            SortMovieByYearRelease();
+            SortMovieByShowDate();
+            StoredMovieSet = MovieSet;
+        }
+
+        public void SortMovieByRate()
+        {
+            if (ChoosenRatingType.Id == 1)
+            {
+                MovieSet = new ObservableCollection<Movie>(MovieSet.OrderBy(x => x.rating));
+
+            }
+            else if (ChoosenRatingType.Id == 2)
+            {
+                MovieSet = new ObservableCollection<Movie>(MovieSet.OrderByDescending(x => x.rating));
+            }
+        }
+        public void SortMovieByYearRelease()
+        {
+            if(ChoosenReleaseYear.Id != 0)
+            {
+                Debug.WriteLine(ChoosenReleaseYear.Year);
+                var set = MovieSet.Where(item => item.release_date.Year.ToString() == ChoosenReleaseYear.Year);
+                MovieSet = new ObservableCollection<Movie>(set);
+            }
+        }
+
+        public void SortMovieByShowDate()
+        {
+            if(ChoosenShowDate.Id != 0)
+            {
+                var parseDate = DateTime.ParseExact(ChoosenShowDate.Date, "dd/MM/yyyy", null);
+                Debug.WriteLine(ChoosenShowDate.Date+ " "+parseDate);
+                var moviesInDate = DataProvider.Ins.DB.Movies.Join(DataProvider.Ins.DB.ShowTimes, movie => movie.id, showtime => showtime.movie_id, (movie, showTime) => new { Movie = movie, ShowTime = showTime })
+                                                             .Where(joinResult => joinResult.ShowTime.date == parseDate)
+                                                             .Select(joinResult => joinResult.Movie)
+                                                             .Distinct();
+                ObservableCollection<Movie> newMovieSet = new ObservableCollection<Movie>();
+                Debug.WriteLine(moviesInDate.Count()+" "+ MovieSet.Count());
+
+                if (moviesInDate.Count() > 0)
+                {
+                    foreach (var i in moviesInDate)
+                    {
+                        Movie movie = new Movie();
+                        movie.id = i.id;
+                        movie.name = i.name;
+                        movie.duration = i.duration;
+                        movie.certification = i.certification;
+                        movie.rating = i.rating;
+                        movie.release_date = i.release_date;
+                        movie.status = i.status;
+                        movie.description = i.description;
+                        movie.image = $"/Images/{i.id}.jpg";
+                        newMovieSet.Add(movie);
+                    }
+                    MovieSet = new ObservableCollection<Movie>(MovieSet.Intersect(newMovieSet, new MovieComparer()));
+
+                }
+            }
         }
     }
+
 }
