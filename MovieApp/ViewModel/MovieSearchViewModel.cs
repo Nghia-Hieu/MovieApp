@@ -158,14 +158,23 @@ namespace MovieApp.ViewModel
 
         private ObservableCollection<Movie> StoredMovieSet;
 
-
         private string _SearchKey;
         public string SearchKey { get { return _SearchKey; } set { _SearchKey = value; OnPropertyChanged(); } }
+
+
+        private int _CurrentPage = 1;
+        public int CurrentPage { get { return _CurrentPage; } set { _CurrentPage = value; OnPropertyChanged(); } }
+
+        private int pageSize = 6;
+
 
         public ICommand SortReleaseYearCommand { get; set; }
         public ICommand SortShowDateCommand { get; set; }
         public ICommand SortRatingCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand NextPageCommand { get; set; }
+        public ICommand PreviousPageCommand { get; set; }
+
 
 
         public MovieSearchViewModel()
@@ -216,12 +225,16 @@ namespace MovieApp.ViewModel
                 movie.image = $"/Images/{i.id}.jpg";
                 MovieSet.Add(movie);
             }
+            StoredMovieSet = MovieSet;
             //SortReleaseYearCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortMovieByYearRelease(); });
             //SortRatingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortMovieByRate(); });
+            Pagination(1, pageSize);
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SearchMovie(); });
+            NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine("OK"); CurrentPage = CurrentPage + 1; Pagination(CurrentPage, pageSize); });
+
+            PreviousPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine("OK"); CurrentPage = CurrentPage - 1; Pagination(CurrentPage, pageSize); });
 
         }
-
         public void GetAllMovie()
         {
             var MovieDirector = DataProvider.Ins.DB.Movies;
@@ -240,7 +253,6 @@ namespace MovieApp.ViewModel
                 MovieSet.Add(movie);
             }
         }
-
         public void SearchMovie()
         {
             if (SearchKey != "")
@@ -292,8 +304,8 @@ namespace MovieApp.ViewModel
             SortMovieByYearRelease();
             SortMovieByShowDate();
             StoredMovieSet = MovieSet;
+            Pagination(1, pageSize);
         }
-
         public void SortMovieByRate()
         {
             if (ChoosenRatingType.Id == 1)
@@ -315,7 +327,6 @@ namespace MovieApp.ViewModel
                 MovieSet = new ObservableCollection<Movie>(set);
             }
         }
-
         public void SortMovieByShowDate()
         {
             if(ChoosenShowDate.Id != 0)
@@ -350,6 +361,22 @@ namespace MovieApp.ViewModel
                 }
             }
         }
+        
+        private void Pagination(int page, int pageSize)
+        {
+            if (page > 0)
+            {
+                if (pageSize > 0)
+                {
+                    CurrentPage = page;
+                    Debug.WriteLine("OK");
+                    //MovieSet.Clear();
+                    int startIndex = (CurrentPage - 1) * pageSize;
+                    int count = Math.Min(pageSize, StoredMovieSet.Count - startIndex);
+                    MovieSet = new ObservableCollection<Movie> (StoredMovieSet.Skip(startIndex).Take(count) );
+                }
+            }
+        } 
     }
 
 }
