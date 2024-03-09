@@ -3,12 +3,40 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MovieApp.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:MovieApp.ViewModel" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Name="registerWindow"
         DataContext="{StaticResource RegisterVM}"
         WindowStartupLocation="CenterScreen"
         Title="RegisterWindow" Height="700" Width="800">
+    <Window.Resources>
+        <ControlTemplate x:Key="validationTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="20"></RowDefinition>
+                </Grid.RowDefinitions>
+                <AdornedElementPlaceholder Grid.Row="0" />
+                <TextBlock TextWrapping="Wrap" Grid.Row="1" Foreground="Red" Text="{Binding ErrorContent}"></TextBlock>
+            </Grid>
+        </ControlTemplate>
+        
+        <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                                                Path=(Validation.Errors)[0].ErrorContent}">
+                    </Setter>
+                    <Setter Property="Margin"
+                            Value="0 0 0 10" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+
+    </Window.Resources>
     <Grid>
         <materialDesign:Card Width="300" Height="600" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid>
@@ -20,8 +48,8 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -41,38 +69,56 @@
 
                 </Grid>
                 <Grid Grid.Row="2">
-                    <TextBox
-                      x:Name="usernameBox"
-                      Text="{Binding Username}"
-                      VerticalAlignment="Center"
-                      materialDesign:HintAssist.Hint="Tên đăng nhập"
-                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox x:Name="usernameBox"
+                             VerticalAlignment="Center"
+                             materialDesign:HintAssist.Hint="Tên đăng nhập"
+                             Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                             Style="{StaticResource textBoxInError}">
+                        
+                        <TextBox.Text>
+                            <Binding Path="Username" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <local:UserValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </Grid>
 
                 <Grid Grid.Row="3">
-                    <PasswordBox x:Name="FloatingPasswordBox"
-                                 materialDesign:HintAssist.Hint="Mật khẩu"
-                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,0,0,25" >
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="PasswordChanged">
-                                            <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" 
-                                                CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                    </PasswordBox>
+                    <TextBox x:Name="passwordBox"
+                             VerticalAlignment="Center"
+                             materialDesign:HintAssist.Hint="Mật khẩu"
+                             Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                             Style="{StaticResource textBoxInError}">
+
+                        <TextBox.Text>
+                            <Binding Path="Password"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <local:PassValidation />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </Grid>
 
                 <Grid Grid.Row="4">
-                    <PasswordBox x:Name="FloatingRePasswordBox"
-                    materialDesign:HintAssist.Hint="Nhập lại mật khẩu"
-                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,0,0,25" >
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PasswordChanged">
-                                <i:InvokeCommandAction Command="{Binding RePasswordChangedCommand}" 
-                                    CommandParameter="{Binding ElementName=FloatingRePasswordBox}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </PasswordBox>
+                    <TextBox x:Name="rePasswordBox"
+                             VerticalAlignment="Center"
+                             materialDesign:HintAssist.Hint="Xác nhận mật khẩu"
+                             Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                             Style="{StaticResource textBoxInError}">
+
+                        <TextBox.Text>
+                            <Binding Path="Repassword"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <local:PassValidation />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </Grid>
 
                 <Grid Grid.Row="5">
@@ -88,11 +134,17 @@
                 </Grid>
 
                 <Grid Grid.Row="6">
-                    <TextBox
-                      Text="{Binding Gender}"
-                      VerticalAlignment="Center"
-                      materialDesign:HintAssist.Hint="Giới tính"
-                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <!--<TextBox Text="{Binding Gender}"
+                             VerticalAlignment="Center"
+                             materialDesign:HintAssist.Hint="Giới tính"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />-->
+                    <ComboBox 
+                              materialDesign:HintAssist.Hint="Giới tính"
+                              Margin="0,0,0,0"
+                              ItemsSource="{Binding GenderTypes}"
+                              SelectedValue="{Binding Gender.Name}">
+                        
+                    </ComboBox>
 
                 </Grid>
 

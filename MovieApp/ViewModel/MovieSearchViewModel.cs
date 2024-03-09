@@ -1,5 +1,6 @@
 ﻿using MovieApp.Models;
 using MovieApp.ModelView;
+using MovieApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -174,6 +175,8 @@ namespace MovieApp.ViewModel
         public ICommand SearchCommand { get; set; }
         public ICommand NextPageCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
+        public ICommand MovieClickCommand { get; set; }
+
 
 
 
@@ -230,9 +233,9 @@ namespace MovieApp.ViewModel
             //SortRatingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortMovieByRate(); });
             Pagination(1, pageSize);
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SearchMovie(); });
-            NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine("OK"); CurrentPage = CurrentPage + 1; Pagination(CurrentPage, pageSize); });
-
-            PreviousPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Debug.WriteLine("OK"); CurrentPage = CurrentPage - 1; Pagination(CurrentPage, pageSize); });
+            NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { if (CurrentPage <= StoredMovieSet.Count / pageSize ) { CurrentPage = CurrentPage + 1; Pagination(CurrentPage, pageSize); } });
+            PreviousPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { if (CurrentPage > 1) { CurrentPage = CurrentPage - 1; Pagination(CurrentPage, pageSize); } });
+            MovieClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { ToMovieDetail(); });
 
         }
         public void GetAllMovie()
@@ -361,7 +364,6 @@ namespace MovieApp.ViewModel
                 }
             }
         }
-        
         private void Pagination(int page, int pageSize)
         {
             if (page > 0)
@@ -369,7 +371,6 @@ namespace MovieApp.ViewModel
                 if (pageSize > 0)
                 {
                     CurrentPage = page;
-                    Debug.WriteLine("OK");
                     //MovieSet.Clear();
                     int startIndex = (CurrentPage - 1) * pageSize;
                     int count = Math.Min(pageSize, StoredMovieSet.Count - startIndex);
@@ -377,6 +378,18 @@ namespace MovieApp.ViewModel
                 }
             }
         } 
+
+        public void ToMovieDetail()
+        {
+            Debug.WriteLine(SelectedMovie.name);
+            MovieFront movieFront = new MovieFront();
+            var movieFrontData = movieFront.DataContext as MovieFrontViewModel;
+            movieFrontData.SelectedMovie = SelectedMovie;
+
+            MainWindow mainWindow = new MainWindow();
+            var data = mainWindow.DataContext as MainViewModel;
+            data.CurrentPage = new MovieDetail();
+        }
     }
 
 }

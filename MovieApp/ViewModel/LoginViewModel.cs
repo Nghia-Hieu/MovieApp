@@ -49,8 +49,8 @@ namespace MovieApp.ViewModel
         {
             if (p == null)
                 return;
-
-            var accCount = DataProvider.Ins.DB.Users.Where(x=> x.username == Username && x.password == Password);
+            var encodePass = PassEncode(Password);
+            var accCount = DataProvider.Ins.DB.Users.Where(x=> x.username == Username && x.password == encodePass);
 
             if (accCount.Count() > 0)
             {
@@ -68,6 +68,11 @@ namespace MovieApp.ViewModel
                 MessageBox.Show("FAILED");
             }
 
+        }
+        public static string PassEncode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
         }
     }
 }
