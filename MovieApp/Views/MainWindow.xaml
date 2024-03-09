@@ -50,7 +50,7 @@
                         </TextBlock>
 
 
-                        <StackPanel Orientation="Horizontal"
+                        <!--<StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
                             <TextBox x:Name="SearchTextBox"
@@ -65,7 +65,7 @@
                                     Command="{Binding SearchCommand}">
                                 <materialDesign:PackIcon  Kind="MovieSearchOutline" />
                             </Button>
-                        </StackPanel>
+                        </StackPanel>-->
 
                         <Menu HorizontalAlignment="Right">
                             <MenuItem Header="Movie"

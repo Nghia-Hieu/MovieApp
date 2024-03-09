@@ -121,7 +121,7 @@
 
                     <StackPanel VerticalAlignment="Center">
                         <Image  Name="ImageGrid3"
-                                Source="../Images/04.jpg"
+                                Source="../Images/KFPA.jpg"
                                 Grid.Row="0"
                                 Width="1360"
                                 Height="450"
@@ -139,7 +139,7 @@
 
                     <StackPanel VerticalAlignment="Center">
                         <Image  Name="ImageGrid4"
-                                Source="../Images/05.jpg"
+                                Source="../Images/QCPA.jpg"
                                 Grid.Row="0"
                                 Width="1360"
                                 Height="450"
@@ -328,17 +328,17 @@
                                             Margin="8,0,0,0">
                                     <TextBlock FontSize="13">
                                         <Run Text="Thời lượng: "
-                                            FontWeight="Bold"></Run>
+                                             FontWeight="SemiBold"></Run>
                                         <Run Text="{Binding duration}"></Run>
                                     </TextBlock>
                                     <TextBlock FontSize="13">
                                         <Run Text="Ngày phát hành: "
-                                             FontWeight="Bold"></Run>
+                                             FontWeight="SemiBold"></Run>
                                         <Run Text="{Binding release_date, StringFormat=dd/MM/yyyy}"></Run>
                                     </TextBlock>
                                     <TextBlock FontSize="13">
                                         <Run Text="Đánh giá:"
-                                             FontWeight="Bold"></Run>
+                                             FontWeight="SemiBold"></Run>
                                         <Run Text="{Binding rating}"></Run>
 
                                     </TextBlock>
