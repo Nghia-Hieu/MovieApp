@@ -11,11 +11,12 @@
     <!--#region Solid Color-->
     <SolidColorBrush x:Key="cs_BorderBrush" Color="#cd6133"/>
 
-    <SolidColorBrush x:Key="cs_ImgAct" Color="#FFA4B883"/>
+    <SolidColorBrush x:Key="cs_ImgAct" Color="#324145"/>
 
     <SolidColorBrush x:Key="cs_ImgPas" Color="#FFE6F6CD"/>
 
-    <SolidColorBrush x:Key="cs_Txt" Color="#FFF5ECEB"/>
+    <SolidColorBrush x:Key="cs_Txt"
+                     Color="#324145"/>
     <!--#endregion-->
 
 </ResourceDictionary>

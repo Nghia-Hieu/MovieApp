@@ -13,6 +13,11 @@
         Title="MainWindow"
         MinHeight="1000"
         MinWidth="1000">
+    
+    <Window.Background>
+        <ImageBrush ImageSource="../Images/wallpaper.jpg"/>
+    </Window.Background>
+    
 
     <ScrollViewer VerticalScrollBarVisibility="Visible"
                   HorizontalScrollBarVisibility="Visible"
@@ -75,7 +80,7 @@
                             <MenuItem Header="Tài khoản"
                                       Name="LoginMenu"
                                       Cursor="Hand"
-                                      Visibility="Visible">
+                                      Visibility="{Binding NotLoggedInMenu}">
                                 <MenuItem Header="Login"
                                           Cursor="Hand">
                                     <i:Interaction.Triggers>
@@ -87,12 +92,12 @@
                             </MenuItem>
 
 
-                            <MenuItem Header="Hello, Mr"
+                            <MenuItem Header="{Binding UserInfo.name}"
                                       Name="AvaMenu"
                                       Cursor="Hand"
-                                      Visibility="Collapsed">
+                                      Visibility="{Binding LoggedInMenu}">
                                 <MenuItem.Icon>
-                                    <materialDesign:PackIcon Kind="Account" />
+                                    <materialDesign:PackIcon Kind="Account"  />
                                 </MenuItem.Icon>
                             </MenuItem>
 

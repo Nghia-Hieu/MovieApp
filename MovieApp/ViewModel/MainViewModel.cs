@@ -38,6 +38,15 @@ namespace MovieApp.ViewModel
         public string MovieImage { get { return _MovieImage; } set { _MovieImage = value; OnPropertyChanged(); } }
         private Movie _SelectedMovie;
         public Movie SelectedMovie { get { return _SelectedMovie; } set { _SelectedMovie = value; OnPropertyChanged(); } }
+
+        private Visibility _LoggedInMenu;
+        public Visibility LoggedInMenu { get { return _LoggedInMenu; } set { _LoggedInMenu = value; OnPropertyChanged(); } }
+
+        private Visibility _NotLoggedInMenu;
+        public Visibility NotLoggedInMenu { get { return _NotLoggedInMenu; } set { _NotLoggedInMenu = value; OnPropertyChanged(); } }
+
+        private User _UserInfo;
+        public User UserInfo { get { return _UserInfo; } set { _UserInfo = value; OnPropertyChanged(); } }
         public ICommand SearchCommand { get; set; }
         public ICommand ToLoginCommand { get; set; }
         public ICommand ToMovieListCommand { get; set; }
@@ -47,6 +56,8 @@ namespace MovieApp.ViewModel
 
         public MainViewModel()
         {
+            LoggedInMenu = Visibility.Collapsed;
+            NotLoggedInMenu = Visibility.Visible;
             CurrentPage = new MovieFront();  
             
             if (isLoaded)
@@ -56,7 +67,7 @@ namespace MovieApp.ViewModel
                 mainWindow.ShowDialog();
             }
 
-            ToLoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginWindow loginWindow = new LoginWindow(); loginWindow.ShowDialog(); });
+            ToLoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LogIn(); });
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { Search(); });
             ToMovieListCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CurrentPage = new MovieSearch(); });
             ToMainPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CurrentPage = new MovieFront(); });
@@ -64,7 +75,26 @@ namespace MovieApp.ViewModel
 
         }
 
-       
+        public void LogIn()
+        {
+            LoginWindow loginWindow = new LoginWindow(); 
+            loginWindow.ShowDialog();
+
+
+            var loginData = loginWindow.DataContext as LoginViewModel;
+
+            var LoginStatus = loginData.isLogin;
+
+            if (LoginStatus == true)
+            {
+                Debug.WriteLine("DONE");
+                UserInfo = loginData.UserAccount;
+                LoggedInMenu = Visibility.Visible;
+                NotLoggedInMenu = Visibility.Collapsed;
+            }
+            else Debug.WriteLine("Fail");
+
+        }
         public void Search()
         {
             Debug.WriteLine(SearchKey);

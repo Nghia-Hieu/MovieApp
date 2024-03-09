@@ -16,6 +16,9 @@ namespace MovieApp.ViewModel
     internal class LoginViewModel :BaseViewModel
     {
         public bool isLogin {  get; set; }
+
+        private User _UserAccount;
+        public User UserAccount { get { return _UserAccount; } set { _UserAccount = value; OnPropertyChanged(); } }
         public ICommand LoginCommand { get; set; }
 
         public ICommand ToRegisterCommand { get; set; }
@@ -47,12 +50,16 @@ namespace MovieApp.ViewModel
             if (p == null)
                 return;
 
-            var accCount = DataProvider.Ins.DB.Users.Where(x=> x.username == Username && x.password == Password).Count();
+            var accCount = DataProvider.Ins.DB.Users.Where(x=> x.username == Username && x.password == Password);
 
-            if (accCount > 0)
+            if (accCount.Count() > 0)
             {
                 isLogin = true;
                 MessageBox.Show("LOGIN SUCCESS");
+                isLogin = true;
+                UserAccount = new User();
+                UserAccount = accCount.First();
+                
                 p.Close();
             }
             else

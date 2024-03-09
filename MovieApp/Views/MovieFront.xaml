@@ -18,9 +18,9 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid>
+    <Grid Margin="0,30,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
 
@@ -47,10 +47,11 @@
         <StackPanel Orientation="Horizontal"
                     Grid.Row="0"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+                    >
 
             <Button x:Name="btnPrevious"
                     Style="{StaticResource BtnPrevStyle}"
+                    Foreground="Black"
                     Command="{Binding PreviousImageCommand}"
                     CommandParameter="{Binding ElementName=ImageSlider}" />
 
@@ -58,27 +59,17 @@
                 <Grid x:Name="grid0"
                       Visibility="{Binding Image1Visibility}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel VerticalAlignment="Center">
+                    <StackPanel >
                         <Image  Name="ImageGrid"
-                                Source="../Images/01.jpg"
+                                Source="../Images/KFPA.jpg"
                                 Grid.Row="0"
-                                Width="800"
-                                Height="400"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
+                                Width="1360"
+                                Height="450"
+                                HorizontalAlignment="Center">
                         </Image>
-                        <TextBlock  Name="TextGrid"
-                                    Text="M O N K E Y"
-                                    Grid.Row="1"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontFamily="Roboto"
-                                    FontWeight="SemiBold"
-                                    Foreground="{StaticResource cs_Txt}"
-                                    Margin="0 30 0 5" />
                     </StackPanel>
 
                 </Grid>
@@ -92,41 +83,13 @@
 
                     <StackPanel VerticalAlignment="Center">
                         <Image x:Name="ImageGrid1"
-                               Source="../Images/02.jpg"
+                               Source="../Images/QCPA.jpg"
                                Grid.Row="0"
-                               Width="800"
-                               Height="400"
+                               Width="1360"
+                               Height="450"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center">
                         </Image>
-                        <MediaElement x:Name="mediaElement"
-                                      Width="800"
-                                      Height="400"
-                                      Visibility="Collapsed"
-                                      LoadedBehavior="Manual"
-                                      UnloadedBehavior="Stop">
-                            <MediaElement.Triggers>
-                                <EventTrigger RoutedEvent="MediaElement.Loaded">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <MediaTimeline Source="video.mp4"
-                                                           Storyboard.TargetName="mediaElement" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </MediaElement.Triggers>
-                        </MediaElement>
-
-
-                        <TextBlock Name="TextGrid1"
-                                   Text="W O L F"
-                                   Grid.Row="1"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontFamily="Roboto"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource cs_Txt}"
-                                   Margin="0 30 0 0" />
                     </StackPanel>
 
                 </Grid>
@@ -140,22 +103,12 @@
 
                     <StackPanel VerticalAlignment="Center">
                         <Image Name="ImageGrid2"
-                               Source="../Images/03.jpg"
+                               Source="../Images/DUPA.jpg"
                                Grid.Row="0"
-                               Width="800"
-                               Height="400"
+                               Width="1360"
+                               Height="450"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center" />
-
-                        <TextBlock Text="Z E B R A"
-                                   Name="TextGrid2"
-                                   Grid.Row="1"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontFamily="Roboto"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource cs_Txt}"
-                                   Margin="0 30 0 0" />
                     </StackPanel>
                 </Grid>
 
@@ -170,20 +123,10 @@
                         <Image  Name="ImageGrid3"
                                 Source="../Images/04.jpg"
                                 Grid.Row="0"
-                                Width="800"
-                                Height="400"
+                                Width="1360"
+                                Height="450"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
-
-                        <TextBlock  Name="TextGrid3"
-                                    Text="M O N K E Y"
-                                    Grid.Row="1"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontFamily="Roboto"
-                                    FontWeight="SemiBold"
-                                    Foreground="{StaticResource cs_Txt}"
-                                    Margin="0 30 0 5" />
                     </StackPanel>
                 </Grid>
 
@@ -198,20 +141,10 @@
                         <Image  Name="ImageGrid4"
                                 Source="../Images/05.jpg"
                                 Grid.Row="0"
-                                Width="800"
-                                Height="400"
+                                Width="1360"
+                                Height="450"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
-
-                        <TextBlock  Name="TextGrid4"
-                                    Text="M O N K E Y"
-                                    Grid.Row="1"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontFamily="Roboto"
-                                    FontWeight="SemiBold"
-                                    Foreground="{StaticResource cs_Txt}"
-                                    Margin="0 30 0 5" />
                     </StackPanel>
 
                 </Grid>
@@ -342,7 +275,8 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <materialDesign:Card Width="200"
-                                             Margin="20,20,20,20">
+                                             Margin="20,20,20,20"
+                                             Background="Transparent">
 
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -382,7 +316,7 @@
                                 <StackPanel Grid.Row="1"
                                             Margin="8,10,5,0">
                                     <TextBlock Text="{Binding name}"
-                                               FontWeight="Bold"
+                                               FontWeight="DemiBold"
                                                FontSize="15"
                                                TextWrapping="Wrap">
 

@@ -7,8 +7,8 @@
     <ImageBrush x:Key="PrevPas" ImageSource="/Images/PrevPas.png"/>
 
     <Style x:Key="BtnPrevStyle" TargetType="{x:Type Button}">
-        <Setter Property="Height" Value="25"/>
-        <Setter Property="Width" Value="25"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Width" Value="50"/>
         <Setter Property="Margin" Value="10"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -40,8 +40,8 @@
     <ImageBrush x:Key="NextPas" ImageSource="/Images/NextPas.png"/>
 
     <Style x:Key="BtnNextStyle" TargetType="{x:Type Button}">
-        <Setter Property="Height" Value="25"/>
-        <Setter Property="Width" Value="25"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Width" Value="50"/>
         <Setter Property="Margin" Value="10"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Center"/>

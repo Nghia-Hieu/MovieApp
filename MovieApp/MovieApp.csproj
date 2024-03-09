@@ -281,6 +281,11 @@
     <Content Include="Images\demo.wmv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\kfpa.png" />
+    <Resource Include="Images\DUPA.jpg" />
+    <Resource Include="Images\KFPA.jpg" />
+    <Resource Include="Images\QCPA.jpg" />
+    <Resource Include="Images\wallpaper.jpg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
