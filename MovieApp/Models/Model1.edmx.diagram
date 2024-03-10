@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="76ee4557f4574a318a11da58e0d92014" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="MovieManagementModel.Actor" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="MovieManagementModel.Actor" Width="1.5" PointX="5.25" PointY="6.25" />
         <EntityTypeShape EntityType="MovieManagementModel.Admin" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MovieManagementModel.Certification" Width="1.5" PointX="0.75" PointY="6.875" />
-        <EntityTypeShape EntityType="MovieManagementModel.Director" Width="1.5" PointX="5.25" PointY="6.25" />
-        <EntityTypeShape EntityType="MovieManagementModel.GoldenHour" Width="1.5" PointX="5.25" PointY="3.875" />
+        <EntityTypeShape EntityType="MovieManagementModel.Director" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="MovieManagementModel.GoldenHour" Width="1.5" PointX="5.25" PointY="1.5" />
         <EntityTypeShape EntityType="MovieManagementModel.Movie" Width="1.5" PointX="3" PointY="5.75" />
-        <EntityTypeShape EntityType="MovieManagementModel.MovieGenre" Width="1.5" PointX="5.25" PointY="1.5" />
+        <EntityTypeShape EntityType="MovieManagementModel.MovieGenre" Width="1.5" PointX="5.25" PointY="3.875" />
         <EntityTypeShape EntityType="MovieManagementModel.Seat" Width="1.5" PointX="7.5" PointY="8.875" />
         <EntityTypeShape EntityType="MovieManagementModel.ShowTime" Width="1.5" PointX="5.25" PointY="9" />
         <EntityTypeShape EntityType="MovieManagementModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" />

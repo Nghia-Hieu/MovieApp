@@ -99,6 +99,22 @@
                                 <MenuItem.Icon>
                                     <materialDesign:PackIcon Kind="Account"  />
                                 </MenuItem.Icon>
+                                <MenuItem Header="Trang cá nhân"
+                                          Cursor="Hand">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding ToProfileCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </MenuItem>
+                                <MenuItem Header="Đăng xuất"
+                                          Cursor="Hand">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding LogOutCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </MenuItem>
                             </MenuItem>
 
 

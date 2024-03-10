@@ -10,6 +10,7 @@
     <viewmodel:MovieFrontViewModel x:Key="MovieFrontVM"></viewmodel:MovieFrontViewModel>
     <viewmodel:MovieDetailViewModel x:Key="MovieDetailVM"></viewmodel:MovieDetailViewModel>
     <viewmodel:MovieSearchViewModel x:Key="MovieSearchVM"></viewmodel:MovieSearchViewModel>
+    <viewmodel:ProfileViewModel x:Key="ProfileVM"></viewmodel:ProfileViewModel>
 
 
 </ResourceDictionary>

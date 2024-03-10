@@ -51,6 +51,9 @@ namespace MovieApp.ViewModel
         public ICommand ToLoginCommand { get; set; }
         public ICommand ToMovieListCommand { get; set; }
         public ICommand ToMainPageCommand { get; set; }
+        public ICommand ToProfileCommand { get; set; }
+        public ICommand LogOutCommand { get; set; }
+
         public ICommand RemoveBackEntryCommand { get; set; }
 
 
@@ -72,6 +75,8 @@ namespace MovieApp.ViewModel
             ToMovieListCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CurrentPage = new MovieSearch(); });
             ToMainPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CurrentPage = new MovieFront(); });
             RemoveBackEntryCommand = new RelayCommand<object>((p) => { return true; }, (p) => {  });
+            ToProfileCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CurrentPage = new ProfilePage(); });
+            LogOutCommand = new RelayCommand<object>((p) => { return true; }, (p) => { LogOut(); });
 
         }
 
@@ -93,6 +98,18 @@ namespace MovieApp.ViewModel
                 NotLoggedInMenu = Visibility.Collapsed;
             }
             else Debug.WriteLine("Fail");
+
+        }
+        public void LogOut()
+        {
+
+            LoginWindow loginWindow = new LoginWindow();
+            var loginData = loginWindow.DataContext as LoginViewModel;
+
+            loginData.isLogin = false;
+            UserInfo = new User();
+            LoggedInMenu = Visibility.Collapsed;
+            NotLoggedInMenu = Visibility.Visible;
 
         }
         public void Search()

@@ -105,7 +105,7 @@
           <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="day_of_birth" Type="date" Nullable="false" />
-          <Property Name="gender" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="gender" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Voucher">
           <Key>
@@ -423,7 +423,7 @@
           <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="day_of_birth" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="gender" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Seats" Relationship="MovieManagementModel.FK_Seat_User" FromRole="User" ToRole="Seat" />
         </EntityType>
         <EntityType Name="Voucher">
