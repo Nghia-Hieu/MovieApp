@@ -11,6 +11,7 @@
     <viewmodel:MovieDetailViewModel x:Key="MovieDetailVM"></viewmodel:MovieDetailViewModel>
     <viewmodel:MovieSearchViewModel x:Key="MovieSearchVM"></viewmodel:MovieSearchViewModel>
     <viewmodel:ProfileViewModel x:Key="ProfileVM"></viewmodel:ProfileViewModel>
+    <viewmodel:TicketViewModel x:Key="TicketVM"></viewmodel:TicketViewModel>
 
 
 </ResourceDictionary>

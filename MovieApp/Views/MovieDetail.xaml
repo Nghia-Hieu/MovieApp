@@ -205,41 +205,42 @@
                 <StackPanel Orientation="Vertical"
                             VerticalAlignment="Center">
                     <TextBlock FontSize="13"
-                               Text="{Binding Date1}"
+                               Text="{Binding Date1, StringFormat=dd/MM/yyyy}"
                                Margin="0,0,0,0"
                                FontWeight="Bold"></TextBlock>
                     <ListBox ItemsSource="{Binding ListShowTime1}"
-                             HorizontalAlignment="Stretch"
-                             SelectedItem="{Binding SelectedShowTime}">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="HorizontalContentAlignment"
-                                        Value="Center" />
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding ShowTimeClickCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                             HorizontalAlignment="Stretch">
+                       
+                  
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
-
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock FontSize="13"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Text="{Binding time}"
-                                           Foreground="Black"
-                                           FontWeight="SemiBold"
-                                           TextDecorations="Underline"
-                                           Padding="20,10,10,10"
-                                           Margin="0,0,10,0">
-                                </TextBlock>
+                                <Button FontSize="13"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Content="{Binding time}"
+                                        Command="{Binding DataContext.ShowTimeClickCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Foreground="Black"
+                                        Background="Transparent"
+                                        FontWeight="SemiBold"
+                                        Margin="0,10,10,10">
+                                </Button>
 
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -248,40 +249,40 @@
                 <StackPanel Orientation="Vertical"
                             VerticalAlignment="Center">
                     <TextBlock FontSize="13"
-                               Text="{Binding Date2}"
+                               Text="{Binding Date2, StringFormat=dd/MM/yyyy}"
                                Margin="0,0,0,0"
                                FontWeight="Bold"></TextBlock>
                     <ListBox ItemsSource="{Binding ListShowTime2}"
-                             SelectedItem="{Binding SelectedShowTime1}">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="HorizontalContentAlignment"
-                                        Value="Center" />
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding DataContext.ShowTimeClickCommand1, RelativeSource={RelativeSource AncestorType=StackPanel}}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                            >
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
-
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock FontSize="13"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Text="{Binding time}"
-                                           Foreground="Black"
-                                           FontWeight="SemiBold"
-                                           TextDecorations="Underline"
-                                           Padding="20,10,10,10"
-                                           Margin="0,0,10,0">
-                                </TextBlock>
+                                <Button FontSize="13"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Content="{Binding time}"
+                                        Command="{Binding DataContext.ShowTimeClickCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Foreground="Black"
+                                        FontWeight="SemiBold"
+                                        Background="Transparent"
+                                        Margin="0,10,10,10">
+                                </Button>
 
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -290,40 +291,40 @@
                 <StackPanel Orientation="Vertical"
                             VerticalAlignment="Center">
                     <TextBlock FontSize="13"
-                               Text="{Binding Date3}"
+                               Text="{Binding Date3, StringFormat=dd/MM/yyyy}"
                                Margin="0,0,0,0"
                                FontWeight="Bold"></TextBlock>
                     <ListBox ItemsSource="{Binding ListShowTime3}"
-                             SelectedItem="{Binding SelectedShowTime2}">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="HorizontalContentAlignment"
-                                        Value="Center" />
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding DataContext.ShowTimeClickCommand2, RelativeSource={RelativeSource AncestorType=StackPanel}}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                             >
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
-
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock FontSize="13"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Text="{Binding time}"
-                                           Foreground="Black"
-                                           FontWeight="SemiBold"
-                                           TextDecorations="Underline"
-                                           Padding="20,10,10,10"
-                                           Margin="0,0,10,0">
-                                </TextBlock>
+                                <Button FontSize="13"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Content="{Binding time}"
+                                        Command="{Binding DataContext.ShowTimeClickCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Foreground="Black"
+                                        FontWeight="SemiBold"
+                                        Background="Transparent"
+                                        Margin="0,10,10,10">
+                                </Button>
 
                             </DataTemplate>
                         </ListBox.ItemTemplate>

@@ -58,8 +58,7 @@ namespace MovieApp.ViewModel
 
         public ICommand LoadMovieDetailCommand { get; set; }
         public ICommand ShowTimeClickCommand { get; set; }
-        public ICommand ShowTimeClickCommand1 { get; set; }
-        public ICommand ShowTimeClickCommand2 { get; set; }
+       
 
 
 
@@ -68,27 +67,20 @@ namespace MovieApp.ViewModel
             //SelectedShowTime = new ShowTime();
 
             LoadMovieDetailCommand = new RelayCommand<object>((p) => { return true; }, (p) => { LoadingMovie(); }) ;
-            ShowTimeClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { ShowUp1(); });
-            ShowTimeClickCommand1 = new RelayCommand<object>((p) => { return true; }, (p) => { ShowUp2(); });
-            ShowTimeClickCommand2 = new RelayCommand<object>((p) => { return true; }, (p) => { ShowUp3(); });
+            ShowTimeClickCommand = new RelayCommand<ShowTime>((p) => { return true; }, (p) => { ShowUp(p); });
+           
 
         }
 
-        public void ShowUp1()
+        public void ShowUp(ShowTime show)
         {
-            if(SelectedShowTime != null)
-                Debug.WriteLine(SelectedShowTime.time);
+            Debug.WriteLine(show.time + " " + show.date);
+            SelectedShowTime = show;
+            TicketWindow ticketWindow = new TicketWindow();
+            
+            ticketWindow.ShowDialog();   
         }
-        public void ShowUp2()
-        {
-            if (SelectedShowTime1 != null)
-                Debug.WriteLine(SelectedShowTime1.time);
-        }
-        public void ShowUp3()
-        {
-            if (SelectedShowTime2 != null)
-                Debug.WriteLine(SelectedShowTime2.time);
-        }
+        
 
         private void LoadingMovie()
         {
