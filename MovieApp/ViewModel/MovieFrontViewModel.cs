@@ -118,7 +118,8 @@ namespace MovieApp.ViewModel
             OPC5 = 0.25;
             MovieSet = new ObservableCollection<Movie>();
 
-            var countMovie = DataProvider.Ins.DB.Movies.Where(x => x.release_date < DateTime.Today);
+            DateTime limitDate = DateTime.Parse("03/01/2024");
+            var countMovie = DataProvider.Ins.DB.Movies.Where(x => x.release_date < DateTime.Today && x.release_date >= limitDate);
 
             foreach (var i in countMovie)
             {
