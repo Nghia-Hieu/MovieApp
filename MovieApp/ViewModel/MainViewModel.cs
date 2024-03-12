@@ -107,10 +107,11 @@ namespace MovieApp.ViewModel
             var loginData = loginWindow.DataContext as LoginViewModel;
 
             loginData.isLogin = false;
-            UserInfo = new User();
+            UserInfo = null;
             LoggedInMenu = Visibility.Collapsed;
             NotLoggedInMenu = Visibility.Visible;
-
+            if(CurrentPage.GetType() == new ProfilePage().GetType())
+                CurrentPage = new MovieFront();
         }
         public void Search()
         {

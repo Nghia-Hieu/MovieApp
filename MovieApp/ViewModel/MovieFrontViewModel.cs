@@ -140,7 +140,7 @@ namespace MovieApp.ViewModel
 
             // Change image slider after 3 seconds
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(10);
+            timer.Interval = TimeSpan.FromSeconds(5);
             timer.Tick += Timer_Tick;
 
             timer.Start();

@@ -86,7 +86,7 @@
                        Grid.Row="0"
                        FontSize="20"
                        FontWeight="DemiBold"
-                       Margin="30,10,10,50"></TextBlock>
+                       Margin="30,10,10,20"></TextBlock>
 
             <ListBox ItemsSource="{Binding MovieSet}"
                      Grid.Row="1"
@@ -133,6 +133,7 @@
                                 <Image Name="MovieImage"
                                        Width="185"
                                        Height="260"
+                                       Grid.Row="0"
                                        Source="{Binding image}"
                                        Stretch="Fill"
                                        ToolTipService.Placement="Right"
@@ -151,13 +152,13 @@
                                 </Image>
 
 
-                                <Button Grid.Row="0"
+                                <!--<Button Grid.Row="0"
                                         Margin="0,0,16,-20"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
                                         Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
                                     <materialDesign:PackIcon Kind="Bike" />
-                                </Button>
+                                </Button>-->
                                 <StackPanel Grid.Row="1"
                                             Margin="8,10,5,0">
                                     <TextBlock Text="{Binding name}"
@@ -216,14 +217,15 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
                         Margin="0,10,300,0">
-                <Button Background="CadetBlue"
+                <Button Background="Transparent"
+                        Foreground="Black"
                         Command="{Binding PreviousPageCommand}">
                     <materialDesign:PackIcon Kind="ArrowLeft" />    
                 </Button>
                 <TextBlock Text="{Binding CurrentPage}"
-                           Margin="10" />
-                <Button 
-                        Background="CadetBlue"
+                           Margin="10" FontSize="15" FontWeight="DemiBold" />
+                <Button Background="Transparent"
+                        Foreground="Black"
                         Command="{Binding NextPageCommand}">
                     <materialDesign:PackIcon Kind="ArrowRight" />
                 </Button>
