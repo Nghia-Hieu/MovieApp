@@ -4,6 +4,7 @@ using MovieApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -12,10 +13,18 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MovieApp.ViewModel
 {
+    public class ShowTimeSeatMovie
+    {
+        public ShowTime ShowTime { get; set; }
+        public Seat Seat { get; set; }
+        public string MovieName { get; set; }
+    }
     public class UserValidation2 : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
@@ -45,6 +54,65 @@ namespace MovieApp.ViewModel
                 return ValidationResult.ValidResult;
             else
                 return new ValidationResult(false, "Ít nhất 8 kí tự bao gồm kí tự HOA và SỐ!");
+        }
+    }
+    public class CurrencyConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Debug.WriteLine(value.GetType());
+            if (value is System.Int64 amount)
+            {
+                return amount.ToString("#,##0") + " VND";
+            }
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class StatusConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool amount)
+            {
+                if (amount == true)
+                {
+                    return "Đã thanh toán";
+                }
+                else
+                    return "Chưa thanh toán";
+            }
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class StatusColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool amount)
+            {
+                if (amount == true)
+                {
+                    return Brushes.Green;
+                }
+                else
+                    return Brushes.Yellow ;
+            }
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
     internal class ProfileViewModel : BaseViewModel
@@ -84,6 +152,9 @@ namespace MovieApp.ViewModel
 
         private GenderType _Gender;
         public GenderType Gender { get => _Gender; set { _Gender = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<ShowTimeSeatMovie> _TicketSeats;
+        public ObservableCollection<ShowTimeSeatMovie> TicketSeats { get => _TicketSeats; set { _TicketSeats = value; OnPropertyChanged(); } }
         public ProfileViewModel()
         {
             CurrentUser = new User();
@@ -95,8 +166,7 @@ namespace MovieApp.ViewModel
                new GenderType {Name="Khác"}
             };
 
-            Fullname = ""; Password = ""; Repassword = ""; DOB = new DateTime().ToString(); Gender = GenderTypes.FirstOrDefault(g => g.Name == "Nam")
-            ; Index = 1;
+            Fullname = ""; Password = ""; Repassword = ""; DOB = new DateTime().ToString(); Gender = GenderTypes.FirstOrDefault(g => g.Name == "Nam"); Index = 1;
 
             LoadProfileCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { LoadPage(); });
             SaveInfoCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SaveInfo(); });
@@ -107,13 +177,48 @@ namespace MovieApp.ViewModel
         private void LoadPage()
         {
             MainWindow mainWindow = new MainWindow();
-            var mainData  = mainWindow.DataContext as MainViewModel;
+            var mainData = mainWindow.DataContext as MainViewModel;
             CurrentUser = mainData.UserInfo;
             Fullname = CurrentUser.name;
             Username = CurrentUser.username;
             DOB = CurrentUser.day_of_birth.ToShortDateString();
-            Debug.WriteLine(CurrentUser.gender);
-            Gender = GenderTypes.FirstOrDefault(g=>g.Name==CurrentUser.gender);
+            Gender = GenderTypes.FirstOrDefault(g => g.Name == CurrentUser.gender);
+
+            var result = DataProvider.Ins.DB.ShowTimes
+            .Join(
+                DataProvider.Ins.DB.Seats,
+                showTime => showTime.id,
+                seat => seat.show_id,
+                (showTime, seat) => new { ShowTime = showTime, Seat = seat }
+            )
+            .Join(
+                DataProvider.Ins.DB.Movies,
+                joinedTables => joinedTables.ShowTime.movie_id,
+                movie => movie.id,
+                (joinedTables, movie) => new
+                {
+                    ShowTime = joinedTables.ShowTime,
+                    Seat = joinedTables.Seat,
+                    MovieName = movie.name
+                }
+            )
+            .Where(data => data.Seat.user_id == CurrentUser.id)
+            .Select(data => new
+            {
+                data.ShowTime,
+                data.Seat,
+                data.MovieName
+            });
+
+            TicketSeats = new ObservableCollection<ShowTimeSeatMovie>();
+            if (result.Count() > 0)
+            {
+                foreach(var i in result)
+                {               
+                    TicketSeats.Add(new ShowTimeSeatMovie() { Seat = i.Seat, MovieName = i.MovieName, ShowTime=i.ShowTime });
+                    
+                }
+            }
         }
 
         private void SaveInfo()
@@ -133,18 +238,18 @@ namespace MovieApp.ViewModel
 
         private void SavePassword()
         {
-            if(PassEncode(Password) != CurrentUser.password)
+            if (PassEncode(Password) != CurrentUser.password)
             {
                 MessageBox.Show("Password CŨ không đúng!", "Cảnh báo");
             }
-            else if(NewPassword != Repassword)
+            else if (NewPassword != Repassword)
             {
                 MessageBox.Show("Password chưa TRÙNG KHỚP!", "Cảnh báo");
             }
             else
             {
-                var connectUser = DataProvider.Ins.DB.Users.FirstOrDefault(x=>x.id == CurrentUser.id);
-                if(connectUser != null)
+                var connectUser = DataProvider.Ins.DB.Users.FirstOrDefault(x => x.id == CurrentUser.id);
+                if (connectUser != null)
                 {
                     connectUser.password = PassEncode(NewPassword);
                     DataProvider.Ins.DB.SaveChanges();

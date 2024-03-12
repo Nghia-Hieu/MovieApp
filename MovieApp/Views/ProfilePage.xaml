@@ -1,15 +1,16 @@
 ﻿<Page x:Class="MovieApp.Views.ProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:MovieApp.ViewModel"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       DataContext="{StaticResource ProfileVM}"
       Name="profilePage"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
       Title="ProfilePage">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -19,7 +20,7 @@
     <Page.Background>
         <ImageBrush ImageSource="../Images/wallpaper.jpg" />
     </Page.Background>
-    
+
     <Page.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <Grid>
@@ -51,13 +52,16 @@
             </Style.Triggers>
         </Style>
 
+        <local:CurrencyConverter x:Key="CurrencyConverter" />
+        <local:StatusConverter x:Key="StatusConverter" />
+        <local:StatusColorConverter x:Key="StatusColorConverter" />
 
     </Page.Resources>
-    <Grid>
-        <TabControl Width="500">
+    <Grid Background="Transparent" Margin="50">
+        <TabControl Width="800">
             <TabItem Header="ĐỔI THÔNG TIN">
                 <materialDesign:Card Width="500"
-                                     Height="800"
+                                     Height="700"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center">
                     <materialDesign:Card.Background>
@@ -82,8 +86,9 @@
                         <Grid Grid.Row="0"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Center">
-                            <TextBlock FontWeight="Bold" FontSize="20"
-                                     Text="Thông tin người dùng"></TextBlock>
+                            <TextBlock FontWeight="Bold"
+                                       FontSize="20"
+                                       Text="Thông tin người dùng"></TextBlock>
                         </Grid>
                         <Grid Grid.Row="1">
                             <TextBox x:Name="fullnameBox"
@@ -93,7 +98,7 @@
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
                         </Grid>
-                        <Grid Grid.Row="2">
+                        <Grid Grid.Row="2" Margin="10,10,0,50">
                             <TextBox x:Name="usernameBox"
                                      VerticalAlignment="Center"
                                      materialDesign:HintAssist.Hint="Tên đăng nhập"
@@ -110,11 +115,12 @@
                                 </TextBox.Text>
                             </TextBox>
                         </Grid>
-                       
+
 
                         <Grid Grid.Row="3">
                             <DatePicker Name="dobPicker"
                                         materialDesign:HintAssist.Hint="Ngày sinh"
+                                        materialDesign:HintAssist.Background="Orange"
                                         Style="{StaticResource MaterialDesignOutlinedDatePicker}"
                                         SelectedDate="{Binding DOB}">
 
@@ -144,11 +150,10 @@
 
                     </Grid>
                 </materialDesign:Card>
-
             </TabItem>
             <TabItem Header="ĐỔI MẬT KHẨU">
                 <materialDesign:Card Width="500"
-                                     Height="800"
+                                     Height="700"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center">
                     <materialDesign:Card.Background>
@@ -172,8 +177,9 @@
                         <Grid Grid.Row="0"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Center">
-                            <TextBlock FontWeight="Bold" FontSize="20"
-                                     Text="Đổi mật khẩu"></TextBlock>
+                            <TextBlock FontWeight="Bold"
+                                       FontSize="20"
+                                       Text="Đổi mật khẩu"></TextBlock>
                         </Grid>
                         <Grid Grid.Row="1">
                             <TextBox x:Name="passwordBox"
@@ -192,7 +198,7 @@
                                 </TextBox.Text>
                             </TextBox>
                         </Grid>
-                        <Grid Grid.Row="2">
+                        <Grid Grid.Row="2" >
                             <TextBox x:Name="newPasswordBox"
                                      VerticalAlignment="Center"
                                      materialDesign:HintAssist.Hint="Mật khẩu mới"
@@ -226,7 +232,7 @@
                                 </TextBox.Text>
                             </TextBox>
                         </Grid>
-                 
+
 
                         <Grid Grid.Row="4">
                             <Button IsDefault="True"
@@ -240,7 +246,43 @@
 
                     </Grid>
                 </materialDesign:Card>
-
+            </TabItem>
+            <TabItem Header="VÉ ĐÃ MUA">
+                <DataGrid ItemsSource="{Binding TicketSeats}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          Width="650"
+                          Height="700"
+                          Margin="0,50,0,0"
+                          Background="Transparent">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Suất chiếu"
+                                            Binding="{Binding ShowTime.date, StringFormat=dd/MM/yyyy}" />
+                        <DataGridTextColumn Header="Số ghế"
+                                            Binding="{Binding Seat.seat_id}" />
+                        <DataGridTextColumn Header="Tên phim"
+                                            Width="250"
+                                            Binding="{Binding MovieName}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping"
+                                            Value="Wrap" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Giá tiền"
+                                            Binding="{Binding Seat.price, Converter={StaticResource CurrencyConverter}}" />
+                        <DataGridTextColumn Header="Tình trạng"
+                                            Binding="{Binding Seat.status, Converter={StaticResource StatusConverter}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground"
+                                            Value="{Binding Seat.status, Converter={StaticResource StatusColorConverter}}" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
         </TabControl>
 
