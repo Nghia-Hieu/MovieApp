@@ -4,20 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-        xmlns:local="clr-namespace:MovieApp.Views"
+        xmlns:local="clr-namespace:MovieApp.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         Background="Wheat"
         DataContext="{StaticResource AdminVM}"
         mc:Ignorable="d"
         Title="AdminWindow"
-        Height="450"
+        Height="700"
         Width="1000">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadChartCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
+    <Window.Resources>
+        <local:BooleanToColorConverter x:Key="CurrencyConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -170,38 +173,24 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
+
             <Grid Grid.Column="0"
                   Height="500"
                   Margin="20,0,20,0"
                   Background="AliceBlue">
                 <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <lvc:PieChart Margin="20"
-                              Name="Hello"
-                              Grid.Column="0"
-                              LegendLocation="Right"
-                              Background="AliceBlue"
-                              Series="{Binding SeriesCollection}">
-                </lvc:PieChart>
-                <TextBlock Grid.Row="1"
-                           HorizontalAlignment="Center">Hello
-                </TextBlock>
-            </Grid>
-            
-
-            <Grid Grid.Column="1"
-                  Height="500"
-                  Margin="20,0,20,0"
-                  Background="AliceBlue">
-                <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <DockPanel Grid.Row="0" VerticalAlignment="Center" Margin="20">
-                    <TextBlock DockPanel.Dock="Left" HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="15" FontStyle="Italic">Bảng Doanh Thu theo Tuần
+                <DockPanel Grid.Row="0"
+                           VerticalAlignment="Center"
+                           Margin="20">
+                    <TextBlock DockPanel.Dock="Left"
+                               HorizontalAlignment="Center"
+                               FontWeight="DemiBold"
+                               FontSize="15"
+                               FontStyle="Italic">Bảng Doanh Thu theo Tuần
                     </TextBlock>
                     <DatePicker Width="200"
                                 DockPanel.Dock="Right"
@@ -235,6 +224,119 @@
 
 
             </Grid>
+
+            <Grid Grid.Column="1"
+                  Height="500"
+                  Margin="20,0,20,0"
+                  Background="AliceBlue">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <DockPanel Grid.Row="0"
+                           VerticalAlignment="Center"
+                           Margin="20">
+                    <TextBlock DockPanel.Dock="Left"
+                               HorizontalAlignment="Center"
+                               FontWeight="DemiBold"
+                               FontSize="15"
+                               FontStyle="Italic">Bảng Doanh Thu theo Tuần
+                    </TextBlock>
+                    <DatePicker Width="200"
+                                DockPanel.Dock="Right"
+                                materialDesign:HintAssist.Hint="Chọn ngày bắt đầu"
+                                materialDesign:TextFieldAssist.HasClearButton="True"
+                                SelectedDate="{Binding MonthChartDate, StringFormat=dd/MM/yyyy}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedDateChanged">
+                                <i:InvokeCommandAction Command="{Binding GetMonthCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                    </DatePicker>
+                </DockPanel>
+
+
+                <lvc:CartesianChart Series="{Binding SeriesCollection}"
+                                    Grid.Row="1"
+                                    Height="200"
+                                    LegendLocation="Right">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Sales"
+                                  LabelFormatter="{Binding Formatter2}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Month"
+                                  Labels="{Binding Labels2}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+
+
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
+                       Text="Phim bán được nhiều vé nhất"
+                       Margin="20"
+                       HorizontalAlignment="Center"
+                       FontSize="15"
+                       FontWeight="DemiBold" />
+            <ListView Grid.Row="1"
+                      Margin="20"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch"
+                      ItemsSource="{Binding ListTopMovie}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding MovieId}"
+                                               HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding MovieName}"
+                                        Header="Tên phim" />
+                        <GridViewColumn Header="Ngày khởi chiếu">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ReleaseDate, StringFormat=dd/MM/yyyy}"
+                                               HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Số vé đã bán được">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding NumberOfSeats, StringFormat={}{0:N0}}"
+                                               HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Tổng doanh thu">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TotalPrice, StringFormat={}{0:N0} VND}"
+                                               HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
 
     </Grid>

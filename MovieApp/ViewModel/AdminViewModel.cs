@@ -4,21 +4,29 @@ using MovieApp.Models;
 using MovieApp.ModelView;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MovieApp.ViewModel
 {
-    public class PieChartData
+     
+    public class MovieViewData
     {
-        public string Title { get; set; }
-        public double Value { get; set; }
+        public string MovieId { get; set; }
+        public string MovieName { get; set;}
+        public string ReleaseDate { get; set; }
+        public long NumberOfSeats { get; set; }
+        public long TotalPrice { get; set; }
+
     }
     internal class AdminViewModel : BaseViewModel
     {
@@ -40,64 +48,48 @@ namespace MovieApp.ViewModel
         private string _WeekChartDate;
         public string WeekChartDate { get => _WeekChartDate; set { _WeekChartDate = value; OnPropertyChanged(); } }
 
-        public List<string> Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
+        private string _MonthChartDate;
+        public string MonthChartDate { get => _MonthChartDate; set { _MonthChartDate = value; OnPropertyChanged(); } }
+
+        private List<string> _Labels { get; set; }
+        public List<string> Labels { get => _Labels; set { _Labels = value; OnPropertyChanged(); } }
+
+        private Func<double, string> _Formatter { get; set; }
+        public Func<double, string> Formatter { get => _Formatter; set { _Formatter = value; OnPropertyChanged(); } }
+
+        private List<string> _Labels2 { get; set; }
+        public List<string> Labels2 { get => _Labels2; set { _Labels2 = value; OnPropertyChanged(); } }
+        private Func<double, string> _Formatter2 { get; set; }
+        public Func<double, string> Formatter2 { get => _Formatter2; set { _Formatter2 = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<MovieViewData> _ListTopMovie { get; set; }
+        public ObservableCollection<MovieViewData> ListTopMovie { get => _ListTopMovie; set { _ListTopMovie = value; OnPropertyChanged(); } }
+
+
 
         public ICommand LoadChartCommand { get; set; }
         public ICommand GetDateCommand { get; set; }
+        public ICommand GetMonthCommand { get; set; }
 
 
         public AdminViewModel()
         {
-            SeriesCollection = new SeriesCollection
-            {
-                new PieSeries
-                {
-                    Title = "Category 1",
-                    Values = new ChartValues<double> { 3 },
-                    DataLabels = true
-                },
-                new PieSeries
-                {
-                    Title = "Category 2",
-                    Values = new ChartValues<double> { 4 },
-                    DataLabels = true
-                },
-            };
+            ListTopMovie = new ObservableCollection<MovieViewData>();
 
-            CartesianSeriesCollection = new SeriesCollection
-            {
-                new LineSeries
-                {
-                    Title = "Series 1",
-                    Values = new ChartValues<double> { 4000000, 60000, 50000, 20000, 40000 }
-                },
-                new LineSeries
-                {
-                    Title = "Series 2",
-                    Values = new ChartValues<double> { 60000, 70000, 30000, 40000, 60000 },
-                    PointGeometry = null
-                },
-                new LineSeries
-                {
-                    Title = "Series 3",
-                    Values = new ChartValues<double> { 40000, 20000, 70000, 20000, 70000 },
-                    PointGeometry = DefaultGeometries.Square,
-                    PointGeometrySize = 10
-                }
-            };
+            Formatter2 = value => value.ToString("#,0");
 
-            //Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
+
             Formatter = value => value.ToString("#,0");
             LoadChartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoadChart(); });
 
-            GetDateCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { Debug.WriteLine(WeekChartDate); });
+            GetDateCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { WeeklyRevenueChart(); });
 
+            GetMonthCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { Debug.WriteLine(MonthChartDate); MonthlyRevenueChart(); });
 
         }
         public void LoadChart()
         {
-            DateTime currentDate =  DateTime.Parse("03/13/2024");
+            DateTime currentDate = DateTime.Parse("03/12/2024");
             var moviesCount = DataProvider.Ins.DB.ShowTimes.Where(show => show.date == currentDate).
                                                             Select(show => show.movie_id).Distinct().Count();
             AvailableMovies = moviesCount;
@@ -108,12 +100,14 @@ namespace MovieApp.ViewModel
             var weeklyCount = DataProvider.Ins.DB.ShowTimes.Where(show => show.date >= currentDate && show.date <= weekDate).
                                                             Select(show => show.id).Count();
             WeeklyShows = weeklyCount;
+
+            // Get data chart for weekly chart 
             Labels = new List<string>();
             CartesianSeriesCollection = new SeriesCollection();
-            List <double> doubles = new List<double>();
+            List<double> weekData = new List<double>();
 
             WeekChartDate = currentDate.ToString();
-            for (int i = 0; i<6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 DateTime checkDate = currentDate.AddDays(i);
                 Labels.Add(checkDate.ToShortDateString());
@@ -121,24 +115,162 @@ namespace MovieApp.ViewModel
                                                                 Join(DataProvider.Ins.DB.Seats.Where(seat => seat.status == true),
                                                                         showTime => showTime.id,
                                                                         seat => seat.show_id,
-                                                                        (showTime, seat) => seat.price).Sum();
-                Double daily = (double)dailyRevenue;
+                                                                        (showTime, seat) => seat.price);
+                if (dailyRevenue.Count() > 0)
+                {
 
-                doubles.Add(daily);
+                    Double daily = dailyRevenue.Sum();
 
-               
+                    weekData.Add(daily);
+                }
+                else
+                {
+                    weekData.Add(0);
+                }
             }
             var newLine = new StackedColumnSeries
             {
                 DataLabels = true,
-                Values = new ChartValues<double> (doubles),
+                Values = new ChartValues<double>(weekData),
             };
             CartesianSeriesCollection.Add(newLine);
+
+            //Get data chart for monthly chart
+            Labels2 = new List<string>();
+            SeriesCollection = new SeriesCollection();
+            List<double> monthData = new List<double>();
+            MonthChartDate = currentDate.ToString();
+            for (int i = -1; i < 3; i++)
+            {
+                DateTime checkDate = currentDate.AddDays(i * 7);
+                DateTime aWeekDate = checkDate.AddDays(6);
+                Labels2.Add(checkDate.ToShortDateString());
+                var weeklyRevenue = DataProvider.Ins.DB.ShowTimes.Where(show => show.date >= checkDate && show.date <= aWeekDate).
+                                                                Join(DataProvider.Ins.DB.Seats.Where(seat => seat.status == true),
+                                                                        showTime => showTime.id,
+                                                                        seat => seat.show_id,
+                                                                        (showTime, seat) => seat.price);
+                if (weeklyRevenue.Count() > 0)
+                {
+
+                    Double daily = weeklyRevenue.Sum();
+
+                    monthData.Add(daily);
+                }
+                else
+                {
+                    monthData.Add(0);
+                }
+            }
+            var newDataLine = new StackedColumnSeries
+            {
+                Title = "WeekRevenue",
+                Values = new ChartValues<double>(monthData),
+            };
+            SeriesCollection.Add(newDataLine);
+
+            //Get top ticket movies
+            var result = DataProvider.Ins.DB.Seats
+                                    .Where(seat => seat.status == true)
+                                    .Join(DataProvider.Ins.DB.ShowTimes, seat => seat.show_id, showtime => showtime.id, (seat, showtime) => new { Seat = seat, ShowTime = showtime })
+                                    .Join(DataProvider.Ins.DB.Movies, join => join.ShowTime.movie_id, movie => movie.id, (join, movie) => new { Movie = movie, Seat = join.Seat })
+                                    .GroupBy(join => new { join.Movie.id, join.Movie.name, join.Movie.release_date })
+                                    .Select(group => new
+                                    {
+                                        MovieId = group.Key.id,
+                                        MovieName = group.Key.name,
+                                        ReleaseDate = group.Key.release_date,
+                                        NumberOfSeats = group.Count(),
+                                        TotalPrice = group.Sum(x => x.Seat.price)
+                                    }).OrderByDescending(item => item.NumberOfSeats);
+            
+            foreach (var item in result)
+            {
+                MovieViewData data = new MovieViewData();
+                data.MovieId = item.MovieId;
+                data.MovieName = item.MovieName;
+                data.ReleaseDate = item.ReleaseDate.ToShortDateString();
+                data.NumberOfSeats = item.NumberOfSeats;
+                data.TotalPrice = item.TotalPrice;
+                ListTopMovie.Add(data);
+
+                Console.WriteLine($"Movie Name: {item.MovieName}, Number of Seats: {item.NumberOfSeats}, Total Price: {item.TotalPrice}");
+            }
+
         }
 
         public void WeeklyRevenueChart()
         {
+            Labels = new List<string>();
+            CartesianSeriesCollection = new SeriesCollection();
+            List<double> weekData = new List<double>();
 
+            DateTime selectedDate = DateTime.Parse(WeekChartDate); Debug.WriteLine(selectedDate);
+            for (int i = 0; i < 6; i++)
+            {
+                DateTime checkDate = selectedDate.AddDays(i);
+                Labels.Add(checkDate.ToShortDateString());
+                var dailyRevenue = DataProvider.Ins.DB.ShowTimes.Where(show => show.date == checkDate).
+                                                                Join(DataProvider.Ins.DB.Seats.Where(seat => seat.status == true),
+                                                                        showTime => showTime.id,
+                                                                        seat => seat.show_id,
+                                                                        (showTime, seat) => seat.price);
+                Debug.WriteLine("Count" + dailyRevenue.Count());
+                if (dailyRevenue.Count() > 0)
+                {
+
+                    Double daily = dailyRevenue.Sum();
+
+                    weekData.Add(daily);
+                }
+                else
+                {
+                    weekData.Add(0);
+                }
+            }
+            var newLine = new StackedColumnSeries
+            {
+                DataLabels = true,
+                Values = new ChartValues<double>(weekData),
+            };
+            CartesianSeriesCollection.Add(newLine);
+
+        }
+
+        public void MonthlyRevenueChart()
+        {
+            Labels2 = new List<string>();
+            SeriesCollection = new SeriesCollection();
+            List<double> monthData = new List<double>();
+            DateTime selectedDate = DateTime.Parse(MonthChartDate);
+            for (int i = -1; i < 3; i++)
+            {
+                DateTime checkDate = selectedDate.AddDays(i * 7);
+                DateTime aWeekDate = checkDate.AddDays(6);
+                Labels2.Add(checkDate.ToShortDateString());
+                var weeklyRevenue = DataProvider.Ins.DB.ShowTimes.Where(show => show.date >= checkDate && show.date <= aWeekDate).
+                                                                Join(DataProvider.Ins.DB.Seats.Where(seat => seat.status == true),
+                                                                        showTime => showTime.id,
+                                                                        seat => seat.show_id,
+                                                                        (showTime, seat) => seat.price);
+                if (weeklyRevenue.Count() > 0)
+                {
+
+                    Double daily = weeklyRevenue.Sum();
+
+                    monthData.Add(daily);
+                }
+                else
+                {
+                    monthData.Add(0);
+                }
+            }
+            var newDataLine = new StackedColumnSeries
+            {
+                Title = "WeekRevenue",
+                Values = new ChartValues<double>(monthData),
+            };
+            SeriesCollection.Add(newDataLine);
         }
 
     }
