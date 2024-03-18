@@ -212,12 +212,7 @@ namespace MovieApp.ViewModel
                     Image5Visibility = Visibility.Collapsed;
                     RemoveEllipse();
                     OPC1 = 1;
-                    //removeEllipse();
-                    //Ellipse ect1 = (Ellipse)ec1.Template.FindName("ecb1", ec1);
-                    //if (ect1 != null)
-                    //{
-                    //    ect1.Opacity = 1;
-                    //}
+                   
                     currentProfile = 0;
                     break;
                 case 1:
@@ -227,13 +222,7 @@ namespace MovieApp.ViewModel
                     Image4Visibility = Visibility.Collapsed;
                     Image5Visibility = Visibility.Collapsed;
                     RemoveEllipse(); OPC2 = 1;
-
-                    //removeEllipse();
-                    //Ellipse ect2 = (Ellipse)ec2.Template.FindName("ecb2", ec2);
-                    //if (ect2 != null)
-                    //{
-                    //    ect2.Opacity = 1;
-                    //}
+                   
                     currentProfile = 1;
                     break;
                 case 2:
@@ -243,13 +232,7 @@ namespace MovieApp.ViewModel
                     Image4Visibility = Visibility.Collapsed;
                     Image5Visibility = Visibility.Collapsed;
                     RemoveEllipse(); OPC3 = 1;
-
-                    //removeEllipse();
-                    //Ellipse ect3 = (Ellipse)ec3.Template.FindName("ecb3", ec3);
-                    //if (ect3 != null)
-                    //{
-                    //    ect3.Opacity = 1;
-                    //}
+                   
                     currentProfile = 2;
                     break;
                 case 3:
@@ -259,13 +242,7 @@ namespace MovieApp.ViewModel
                     Image4Visibility = Visibility.Visible;
                     Image5Visibility = Visibility.Collapsed;
                     RemoveEllipse(); OPC4 = 1;
-
-                    //removeEllipse();
-                    //Ellipse ect4 = (Ellipse)ec4.Template.FindName("ecb4", ec4);
-                    //if (ect4 != null)
-                    //{
-                    //    ect4.Opacity = 1;
-                    //}
+                  
                     currentProfile = 3;
                     break;
                 case 4:
@@ -276,13 +253,7 @@ namespace MovieApp.ViewModel
                     Image5Visibility = Visibility.Visible;
                     RemoveEllipse();
                     OPC5 = 1;
-
-                    //removeEllipse();
-                    //Ellipse ect5 = (Ellipse)ec5.Template.FindName("ecb5", ec5);
-                    //if (ect5 != null)
-                    //{
-                    //    ect5.Opacity = 1;
-                    //}
+                  
                     currentProfile = 4;
                     break;
                 default:

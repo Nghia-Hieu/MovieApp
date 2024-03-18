@@ -55,7 +55,7 @@ namespace MovieApp.ViewModel
             if (accCount.Count() > 0)
             {
                 isLogin = true;
-                MessageBox.Show("LOGIN SUCCESS");
+                MessageBox.Show("LOGIN SUCCESS", "Đăng nhập");
                 isLogin = true;
                 UserAccount = new User();
                 UserAccount = accCount.First();
@@ -65,7 +65,7 @@ namespace MovieApp.ViewModel
             else
             {
                 isLogin = false;
-                MessageBox.Show("FAILED");
+                MessageBox.Show("FAILED", "Đăng nhập");
             }
 
         }

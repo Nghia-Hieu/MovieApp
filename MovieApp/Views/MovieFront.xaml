@@ -25,10 +25,6 @@
             <RowDefinition></RowDefinition>
 
         </Grid.RowDefinitions>
-        <!--<Border Background="{StaticResource cs_Background}"
-        CornerRadius="20"
-        BorderThickness="3"
-        BorderBrush="{StaticResource cs_BorderBrush}" />-->
 
         <Slider x:Name="ImageSlider"
                 Minimum="0"

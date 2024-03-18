@@ -1,0 +1,69 @@
+﻿<Window x:Class="MovieApp.Views.MovieInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MovieApp.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        Background="AliceBlue"
+        DataContext="{StaticResource MovieInfoVM}"
+        mc:Ignorable="d"
+        Name="movieinfoWindow"
+        WindowStartupLocation="CenterScreen"
+        Title="MovieInfoWindow"
+        Height="500"
+        Width="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadMovieInfoCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <ScrollViewer>
+        <StackPanel>
+            <TextBox Margin="30"
+                     Text="{Binding EditMovie.name}"
+                     VerticalAlignment="Center"
+                     materialDesign:HintAssist.Hint="Tên phim"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox Margin="30"
+                     Text="{Binding EditMovie.rating}"
+                     VerticalAlignment="Center"
+                     materialDesign:HintAssist.Hint="Đánh giá"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox Margin="30"
+                     Text="{Binding EditMovie.duration}"
+                     VerticalAlignment="Center"
+                     materialDesign:HintAssist.Hint="Thời lượng"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <DatePicker Margin="30"
+                        Name="dobPicker"
+                        materialDesign:HintAssist.Hint="Ngày công chiếu"
+                        materialDesign:HintAssist.Background="Orange"
+                        Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                        SelectedDate="{Binding EditMovie.release_date}" />
+            <TextBox Margin="30"
+                     Height="80"
+                     MinWidth="280"
+                     VerticalAlignment="Stretch"
+                     materialDesign:HintAssist.Hint="Mô tả"
+                     materialDesign:HintAssist.HelperText="Mô tả"
+                     AcceptsReturn="True"
+                     SpellCheck.IsEnabled="True"
+                     Text="{Binding EditMovie.description}"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
+            <TextBox Text="{Binding image}"
+                     Margin="30"
+                     VerticalAlignment="Center"
+                     materialDesign:HintAssist.Hint="Ảnh"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <Button Margin="30"
+                    Width="200"
+                    Background="ForestGreen"
+                    Command="{Binding SelectImageCommand }"
+                    CommandParameter="{Binding ElementName=movieinfoWindow}">Lưu</Button>
+
+        </StackPanel>
+    </ScrollViewer>
+</Window>

@@ -23,6 +23,8 @@ namespace MovieApp.Views
         {
             InitializeComponent();
             //videoa.Source = new Uri(System.IO.Directory.GetCurrentDirectory().ToString() + @"/Images/demovideo.mp4");
+            MainFrame.NavigationService.Navigate(new MovieAdmin());
+
         }
     }
 }

@@ -10,20 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MovieApp.Views
 {
     /// <summary>
-    /// Interaction logic for MovieFront.xaml
+    /// Interaction logic for MovieInfoWindow.xaml
     /// </summary>
-    public partial class MovieFront : Page
+    public partial class MovieInfoWindow : Window
     {
-        public MovieFront()
+        public MovieInfoWindow()
         {
             InitializeComponent();
-
         }
     }
 }

@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace MovieApp.Views
 {
     /// <summary>
-    /// Interaction logic for MovieFront.xaml
+    /// Interaction logic for MovieAdmin.xaml
     /// </summary>
-    public partial class MovieFront : Page
+    public partial class MovieAdmin : Page
     {
-        public MovieFront()
+        public MovieAdmin()
         {
             InitializeComponent();
-
         }
     }
 }

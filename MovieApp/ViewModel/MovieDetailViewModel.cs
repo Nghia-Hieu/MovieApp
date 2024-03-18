@@ -64,12 +64,8 @@ namespace MovieApp.ViewModel
 
         public MovieDetailViewModel()
         {
-            //SelectedShowTime = new ShowTime();
-
             LoadMovieDetailCommand = new RelayCommand<object>((p) => { return true; }, (p) => { LoadingMovie(); }) ;
             ShowTimeClickCommand = new RelayCommand<ShowTime>((p) => { return true; }, (p) => { ShowUp(p); });
-           
-
         }
 
         public void ShowUp(ShowTime show)

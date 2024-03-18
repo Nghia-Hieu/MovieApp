@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace MovieApp.ModelView
 {
-    /// <summary>
-    /// Interaction logic for Window1.xaml
-    /// </summary>
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
