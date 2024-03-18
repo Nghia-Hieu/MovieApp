@@ -225,12 +225,11 @@ namespace MovieApp.ViewModel
                 movie.release_date = i.release_date;
                 movie.status = i.status;
                 movie.description = i.description;
-                movie.image = $"/Images/{i.id}.jpg";
+                movie.image = $"{AppDomain.CurrentDomain.BaseDirectory}/Images/{i.id}.jpg";
                 MovieSet.Add(movie);
             }
             StoredMovieSet = MovieSet;
-            //SortReleaseYearCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortMovieByYearRelease(); });
-            //SortRatingCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SortMovieByRate(); });
+          
             Pagination(1, pageSize);
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SearchMovie(); });
             NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { if (CurrentPage <= StoredMovieSet.Count / pageSize ) { CurrentPage = CurrentPage + 1; Pagination(CurrentPage, pageSize); } });

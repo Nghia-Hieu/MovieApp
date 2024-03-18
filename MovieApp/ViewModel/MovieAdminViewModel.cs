@@ -25,8 +25,8 @@ namespace MovieApp.ViewModel
         public ICommand AddMovieCommand { get; set; }
         public ICommand EditMovieCommand { get; set; }
         public ICommand DeleteMovieCommand { get; set; }
-
         public ICommand LoadMovieCommand { get; set; }
+        public ICommand NewMovieCommand  { get; set; }
 
 
         public MovieAdminViewModel()
@@ -36,13 +36,20 @@ namespace MovieApp.ViewModel
             AddMovieCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {  });
             EditMovieCommand = new RelayCommand<Movie>((p) => { return true; }, (p) => { SelectedMovie = p; MovieInfoWindow movieInfo = new MovieInfoWindow(); movieInfo.ShowDialog(); });
             DeleteMovieCommand = new RelayCommand<Movie>((p) => { return true; }, (p) => { Debug.WriteLine(p.name); });
+            NewMovieCommand = new RelayCommand<Movie>((p) => { return true; }, (p) => { ToNewMovie(); });
 
         }
 
-        private void LoadMovieList()
+        public void LoadMovieList()
         {
             var listMovie = DataProvider.Ins.DB.Movies.ToList();
             ListMovie = new ObservableCollection<Movie>(listMovie);
+        }
+
+        private void ToNewMovie()
+        {
+            AddMovieWindow addMovieWindow = new AddMovieWindow();
+            addMovieWindow.ShowDialog();
         }
 
     }

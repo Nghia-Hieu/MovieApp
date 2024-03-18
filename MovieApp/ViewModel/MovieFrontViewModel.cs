@@ -132,7 +132,7 @@ namespace MovieApp.ViewModel
                 movie.release_date = i.release_date;
                 movie.status = i.status;
                 movie.description = i.description;
-                movie.image = $"/Images/{i.id}.jpg";
+                movie.image = $"{AppDomain.CurrentDomain.BaseDirectory}/Images/{i.id}.jpg";    
                 MovieSet.Add(movie);
             }
 

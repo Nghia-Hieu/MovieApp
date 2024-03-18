@@ -27,13 +27,14 @@
                    Text="DANH SÁCH CÁC PHIM"
                    Margin="20"
                    HorizontalAlignment="Center"
-                   FontSize="15"
+                   FontSize="25"
                    FontWeight="DemiBold" />
         <Button Grid.Row="1"
-                Width="150"
+                Width="160"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Background="LightCoral"
+                Command="{Binding NewMovieCommand}"
                 Margin="0,0,10,0">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="Plus"

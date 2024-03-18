@@ -5,18 +5,61 @@ using MovieApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace MovieApp.ViewModel
 {
-    internal class MovieInfoViewModel : BaseViewModel
+    public class MovieIdValidation : ValidationRule
     {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            Regex regex = new Regex("^[A-Z]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            if (regex.IsMatch((string)value))
+            {
+                var checkID = DataProvider.Ins.DB.Movies.Where(c => c.id == (string)value).FirstOrDefault();
+                if (checkID != null)
+                {
+                    return new ValidationResult(false, "Id đã tồn tại, vui lòng chọn id khác");
+                }
+                return ValidationResult.ValidResult;
+
+            }
+            else
+                return new ValidationResult(false, "Id gồm các kí tự in hoa");
+        }
+    }
+    public class DoubleValidationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            string input = value as string;
+
+            double result;
+            if (double.TryParse(input, NumberStyles.Any, CultureInfo.InvariantCulture, out result))
+            {
+                return ValidationResult.ValidResult;
+            }
+            else
+            {
+                return new ValidationResult(false, "Input must be a valid double.");
+            }
+        }
+    }
+    internal class AddMovieViewModel : BaseViewModel
+    {
+        private Movie _NewMovie;
+        public Movie NewMovie { get => _NewMovie; set { _NewMovie = value; OnPropertyChanged(); } }
 
         private string _MovieName;
         public string MovieName { get => _MovieName; set { _MovieName = value; OnPropertyChanged(); } }
@@ -56,22 +99,23 @@ namespace MovieApp.ViewModel
             }
         }
 
-
         public ICommand GetImageCommand { get; set; }
         public ICommand SaveMovieCommand { get; set; }
-        public ICommand LoadMovieInfoCommand { get; set; }
+        public ICommand LoadAddCommand { get; set; }
 
-        public MovieInfoViewModel()
+
+        public AddMovieViewModel()
         {
-            LoadMovieInfoCommand = new RelayCommand<object>((p) => { return true; }, (p) => { LoadMovie(); });
-            GetImageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SelectImage(); });
+            NewMovie = new Movie() { name = "", certification = "", id = "", duration = "", rating = null, release_date = DateTime.Today, status = false, description = "", image = "" };
+            MovieName = ""; MovieId = ""; MovieDescription = ""; MovieDuration = ""; MovieRating = 0; MovieRelease = DateTime.Today;
             SaveMovieCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { SaveMovie(p); });
+            GetImageCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SelectImage(); });
+            LoadAddCommand = new RelayCommand<object>((p) => { return true; }, (p) => { LoadAddWindow(); });
 
         }
-        private void LoadMovie()
+
+        private void LoadAddWindow()
         {
-            MovieAdmin movieAdmin = new MovieAdmin();
-            var data = movieAdmin.DataContext as MovieAdminViewModel;
             CertType = new ObservableCollection<string>();
             DisplayedImage = null;
             selectedImagePath = "";
@@ -83,42 +127,34 @@ namespace MovieApp.ViewModel
                     CertType.Add(cert.id);
                 }
             }
-            if (data != null)
-            {
-                var movieData = data.SelectedMovie;
-                MovieId = movieData.id;
-                MovieName = movieData.name;
-                MovieDuration = movieData.duration;
-                MovieCert = movieData.certification;
-                MovieRating = (double)movieData.rating;
-                MovieRelease = movieData.release_date;
-                MovieDescription = movieData.description;
-                DisplayedImage = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{movieData.id}.jpg"));
-            }
         }
 
         private void SaveMovie(Window p)
         {
-            var movieInfo = DataProvider.Ins.DB.Movies.Where(m => m.id == MovieId).FirstOrDefault();
-            if(movieInfo != null)
+            if (MovieName == "" || MovieCert == "" || MovieId == "" || MovieDuration == "" || DisplayedImage==null)
             {
-                movieInfo.name = MovieName;
-                movieInfo.description = MovieDescription;
-                movieInfo.rating = MovieRating; 
-                movieInfo.release_date = MovieRelease;
-                movieInfo.duration = MovieDuration;
-                movieInfo.certification = MovieCert;
-                if(selectedImagePath != "")
-                    SaveImageToResourceFolder(selectedImagePath);
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin", "Cảnh báo");
+            }
+            else
+            {
+                string durationMovie = "";
+                if(MovieDuration.Contains("phút"))
+                    durationMovie = MovieDuration;
+                else
+                    durationMovie = MovieDuration+ " phút";
+                //Debug.WriteLine($"{MovieName}+{MovieCert}+{MovieId}+{MovieDuration}+{MovieRelease}+{MovieDescription}+{MovieCert}");
+                SaveImageToResourceFolder(selectedImagePath);
+                NewMovie = new Movie() { id = MovieId, name = MovieName, certification=MovieCert, duration = durationMovie, rating = MovieRating, release_date = MovieRelease, status=false, description = MovieDescription, image = null };
+                DataProvider.Ins.DB.Movies.Add(NewMovie);
                 DataProvider.Ins.DB.SaveChanges();
-                MessageBox.Show("Cập nhật phim thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Thêm Phim thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 MovieAdmin movieAdminWindow = new MovieAdmin();
                 var data = movieAdminWindow.DataContext as MovieAdminViewModel;
                 if (data != null)
                 {
                     var listMovie = DataProvider.Ins.DB.Movies.ToList();
                     data.ListMovie = new ObservableCollection<Movie>(listMovie);
-
+                   
                 }
                 p.Close();
             }
@@ -131,7 +167,9 @@ namespace MovieApp.ViewModel
             {
                 selectedImagePath = openFileDialog.FileName;
                 DisplayedImage = new BitmapImage(new Uri(selectedImagePath));
-               
+                //Selected
+                // Save the selected image to the resource folder
+                //SaveImageToResourceFolder(selectedImagePath);
             }
         }
         private void SaveImageToResourceFolder(string selectedImagePath)
@@ -141,8 +179,12 @@ namespace MovieApp.ViewModel
             {
                 Directory.CreateDirectory(resourceFolderPath);
             }
+
+            //string fileName = Path.GetFileName(selectedImagePath);
             string fileName = $"{MovieId}.jpg";
             string destinationPath = Path.Combine(resourceFolderPath, fileName);
+            Debug.WriteLine(destinationPath);
+
             File.Copy(selectedImagePath, destinationPath, true);
         }
     }

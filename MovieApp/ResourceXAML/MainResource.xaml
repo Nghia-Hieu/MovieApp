@@ -15,5 +15,6 @@
     <viewmodel:AdminViewModel x:Key="AdminVM"></viewmodel:AdminViewModel>
     <viewmodel:MovieAdminViewModel x:Key="MovieAdminVM"></viewmodel:MovieAdminViewModel>
     <viewmodel:MovieInfoViewModel x:Key="MovieInfoVM"></viewmodel:MovieInfoViewModel>
+    <viewmodel:AddMovieViewModel x:Key="AddMovieVM"></viewmodel:AddMovieViewModel>
 
 </ResourceDictionary>
