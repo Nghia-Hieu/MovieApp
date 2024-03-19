@@ -15,17 +15,13 @@ using System.Windows.Shapes;
 namespace MovieApp.Views
 {
     /// <summary>
-    /// Interaction logic for AdminWindow.xaml
+    /// Interaction logic for DirectorInfoWindow.xaml
     /// </summary>
-    public partial class AdminWindow : Window
+    public partial class DirectorInfoWindow : Window
     {
-        public AdminWindow()
+        public DirectorInfoWindow()
         {
             InitializeComponent();
-            //videoa.Source = new Uri(System.IO.Directory.GetCurrentDirectory().ToString() + @"/Images/demovideo.mp4");
-            FilmFrame.NavigationService.Navigate(new MovieAdmin());
-            AttendantFrame.NavigationService.Navigate(new MovieAttendant());
-
         }
     }
 }

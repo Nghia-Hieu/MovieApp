@@ -134,12 +134,15 @@
     <Compile Include="Models\Voucher.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AddDirectorViewModel.cs" />
     <Compile Include="ViewModel\AddMovieViewModel.cs" />
     <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\DirectorInfoViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MovieAdminViewModel.cs" />
+    <Compile Include="ViewModel\MovieAttendantViewModel.cs" />
     <Compile Include="ViewModel\MovieDetailViewModel.cs" />
     <Compile Include="ViewModel\MovieFrontViewModel.cs" />
     <Compile Include="ViewModel\MovieInfoViewModel.cs" />
@@ -147,6 +150,9 @@
     <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\TicketViewModel.cs" />
+    <Compile Include="Views\AddDirectorWindow.xaml.cs">
+      <DependentUpon>AddDirectorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddMovieWindow.xaml.cs">
       <DependentUpon>AddMovieWindow.xaml</DependentUpon>
     </Compile>
@@ -156,6 +162,9 @@
     <Compile Include="Views\BaseWindow.xaml.cs">
       <DependentUpon>BaseWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DirectorInfoWindow.xaml.cs">
+      <DependentUpon>DirectorInfoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomeWindow.xaml.cs">
       <DependentUpon>HomeWindow.xaml</DependentUpon>
     </Compile>
@@ -164,6 +173,9 @@
     </Compile>
     <Compile Include="Views\MovieAdmin.xaml.cs">
       <DependentUpon>MovieAdmin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovieAttendant.xaml.cs">
+      <DependentUpon>MovieAttendant.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MovieDetail.xaml.cs">
       <DependentUpon>MovieDetail.xaml</DependentUpon>
@@ -198,11 +210,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\AddDirectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddMovieWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DirectorInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -230,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MovieAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MovieAttendant.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,5 +16,8 @@
     <viewmodel:MovieAdminViewModel x:Key="MovieAdminVM"></viewmodel:MovieAdminViewModel>
     <viewmodel:MovieInfoViewModel x:Key="MovieInfoVM"></viewmodel:MovieInfoViewModel>
     <viewmodel:AddMovieViewModel x:Key="AddMovieVM"></viewmodel:AddMovieViewModel>
+    <viewmodel:MovieAttendantViewModel x:Key="MovieAttendantVM"></viewmodel:MovieAttendantViewModel>
+    <viewmodel:AddDirectorViewModel x:Key="AddDirectorVM"></viewmodel:AddDirectorViewModel>
+    <viewmodel:DirectorInfoViewModel x:Key="DirectorInfoVM"></viewmodel:DirectorInfoViewModel>
 
 </ResourceDictionary>

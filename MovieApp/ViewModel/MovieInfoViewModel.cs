@@ -143,6 +143,8 @@ namespace MovieApp.ViewModel
             }
             string fileName = $"{MovieId}.jpg";
             string destinationPath = Path.Combine(resourceFolderPath, fileName);
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
             File.Copy(selectedImagePath, destinationPath, true);
         }
     }

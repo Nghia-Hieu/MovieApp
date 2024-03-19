@@ -156,6 +156,8 @@ namespace MovieApp.ViewModel
                     data.ListMovie = new ObservableCollection<Movie>(listMovie);
                    
                 }
+                NewMovie = new Movie() { name = "", certification = "", id = "", duration = "", rating = null, release_date = DateTime.Today, status = false, description = "", image = "" };
+                MovieName = ""; MovieId = ""; MovieDescription = ""; MovieDuration = ""; MovieRating = 0; MovieRelease = DateTime.Today;
                 p.Close();
             }
         }

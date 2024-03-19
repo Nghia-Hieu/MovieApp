@@ -43,7 +43,7 @@
                         <materialDesign:PackIcon Width="24"
                                                  Height="24"
                                                  HorizontalAlignment="Center"
-                                                 Kind="Folder" />
+                                                 Kind="ChartBar" />
                         <TextBlock HorizontalAlignment="Center"
                                    Text="Thống kê" />
                     </StackPanel>
@@ -524,14 +524,14 @@
                         <materialDesign:PackIcon Width="24"
                                                  Height="24"
                                                  HorizontalAlignment="Center"
-                                                 Kind="ClockOutline" />
+                                                 Kind="MovieRoll" />
                         <TextBlock HorizontalAlignment="Center"
                                    TextWrapping="Wrap"
-                                   Text="Quản lí Phim" />
+                                   Text="Phim" />
                     </StackPanel>
                 </TabItem.Header>
                 <ScrollViewer VerticalScrollBarVisibility="Visible">
-                    <Frame Name="MainFrame" />
+                    <Frame Name="FilmFrame" />
                 </ScrollViewer>
             </TabItem>
             <TabItem>
@@ -541,11 +541,14 @@
                         <materialDesign:PackIcon Width="24"
                                                  Height="24"
                                                  HorizontalAlignment="Center"
-                                                 Kind="Images" />
+                                                 Kind="CameraIris" />
                         <TextBlock HorizontalAlignment="Center"
-                                   Text="Photos" />
+                                   Text="Diễn viên" />
                     </StackPanel>
                 </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <Frame Name="AttendantFrame" />
+                </ScrollViewer>
             </TabItem>
             <TabItem>
                 <TabItem.Header>
@@ -554,11 +557,14 @@
                         <materialDesign:PackIcon Width="24"
                                                  Height="24"
                                                  HorizontalAlignment="Center"
-                                                 Kind="MusicBoxMultiple" />
+                                                 Kind="Seat" />
                         <TextBlock HorizontalAlignment="Center"
-                                   Text="Sounds" />
+                                   Text="Suất" />
                     </StackPanel>
                 </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <Frame Name="ShowFrame" />
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </materialDesign:Card>
