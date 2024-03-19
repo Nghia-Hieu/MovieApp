@@ -50,7 +50,7 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
         <ScrollViewer>
-            <StackPanel>
+            <StackPanel Width="450">
                 <TextBlock HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold">THÊM PHIM MỚI</TextBlock>
                 <TextBox Margin="30"
                          VerticalAlignment="Center"

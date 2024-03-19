@@ -19,5 +19,7 @@
     <viewmodel:MovieAttendantViewModel x:Key="MovieAttendantVM"></viewmodel:MovieAttendantViewModel>
     <viewmodel:AddDirectorViewModel x:Key="AddDirectorVM"></viewmodel:AddDirectorViewModel>
     <viewmodel:DirectorInfoViewModel x:Key="DirectorInfoVM"></viewmodel:DirectorInfoViewModel>
+    <viewmodel:AddActorViewModel x:Key="AddActorVM"></viewmodel:AddActorViewModel>
+    <viewmodel:ActorInfoViewModel x:Key="ActorInfoVM"></viewmodel:ActorInfoViewModel>
 
 </ResourceDictionary>

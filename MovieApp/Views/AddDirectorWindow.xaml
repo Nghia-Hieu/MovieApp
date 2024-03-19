@@ -50,7 +50,7 @@
     </Window.Resources>
     <Grid>
         <ScrollViewer>
-            <StackPanel>
+            <StackPanel Width="450">
                 <TextBlock HorizontalAlignment="Center"
                            FontSize="20"
                            FontWeight="DemiBold">THÊM ĐẠO DIỄN MỚI</TextBlock>
@@ -63,7 +63,7 @@
 
              
                 <TextBox Margin="30"
-                         Height="50"
+                         Height="80"
                          MinWidth="280"
                          VerticalAlignment="Stretch"
                          materialDesign:HintAssist.Hint="Mô tả"

@@ -51,7 +51,7 @@
         </Style>
     </Window.Resources>
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Width="450">
             <TextBlock HorizontalAlignment="Center"
                        FontSize="20"
                        FontWeight="DemiBold">THÊM PHIM MỚI</TextBlock>

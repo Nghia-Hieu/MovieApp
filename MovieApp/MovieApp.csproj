@@ -134,6 +134,8 @@
     <Compile Include="Models\Voucher.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ActorInfoViewModel.cs" />
+    <Compile Include="ViewModel\AddActorViewModel.cs" />
     <Compile Include="ViewModel\AddDirectorViewModel.cs" />
     <Compile Include="ViewModel\AddMovieViewModel.cs" />
     <Compile Include="ViewModel\AdminViewModel.cs" />
@@ -150,6 +152,12 @@
     <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\TicketViewModel.cs" />
+    <Compile Include="Views\ActorInfoWindow.xaml.cs">
+      <DependentUpon>ActorInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddActorWindow.xaml.cs">
+      <DependentUpon>AddActorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddDirectorWindow.xaml.cs">
       <DependentUpon>AddDirectorWindow.xaml</DependentUpon>
     </Compile>
@@ -209,6 +217,14 @@
     <Page Include="Styles\ColorStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ActorInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddActorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddDirectorWindow.xaml">
       <SubType>Designer</SubType>
