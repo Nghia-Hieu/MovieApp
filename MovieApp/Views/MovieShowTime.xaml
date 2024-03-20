@@ -108,7 +108,7 @@
                                     <Button Content="Vé chiếu"
                                             Command="{Binding DataContext.ToSeatCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                             CommandParameter="{Binding}"
-                                            Background="ForestGreen"
+                                            Background="DodgerBlue"
                                             Margin="5" />
                                     <Button Content="Edit"
                                             Command="{Binding DataContext.EditShowTimeCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"

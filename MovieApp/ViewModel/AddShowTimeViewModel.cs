@@ -117,7 +117,7 @@ namespace MovieApp.ViewModel
                     ShowTime newShow = new ShowTime() { id = newId, date = ShowDate, movie_id = SelectedMovie.Movie.id, time = time };
 
                     
-
+                    // Generate seat 
                     var seatData = new List<(string show_id, string seat_id, int price, bool status, string user_id)>();
 
                     seatData.AddRange(CreateSeatRange(newId, 'A', 'C')); // A-C: 60000
@@ -132,9 +132,24 @@ namespace MovieApp.ViewModel
                         //Console.WriteLine($"{statement.seat_id} {statement.price} {statement.user_id} ");
                     }
 
-                     DataProvider.Ins.DB.ShowTimes.Add(newShow);
-                     DataProvider.Ins.DB.SaveChanges();
-                    MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                    DataProvider.Ins.DB.ShowTimes.Add(newShow);
+                    DataProvider.Ins.DB.SaveChanges();
+                    MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    //Update listview ShowTime
+                    MovieApp.Views.MovieShowTime movieShowTime = new Views.MovieShowTime();
+                    var showInfo = movieShowTime.DataContext as MovieShowTimeViewModel;
+                    var showTimeMovieData = DataProvider.Ins.DB.ShowTimes
+                              .Join(DataProvider.Ins.DB.Movies,
+                                     showtime => showtime.movie_id,
+                                     movie => movie.id,
+                                     (showtime, movie) => new MovieShowTime
+                                     {
+                                         ShowTimeInfo = showtime,
+                                         MovieName = movie.name,
+                                     }).OrderByDescending(entry => entry.ShowTimeInfo.date);
+
+                    showInfo.ListShowTime = new ObservableCollection<MovieShowTime>(showTimeMovieData);
 
                     p.Close();
                 }

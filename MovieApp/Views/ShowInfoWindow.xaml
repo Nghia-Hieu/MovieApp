@@ -1,0 +1,59 @@
+﻿<Window x:Class="MovieApp.Views.ShowInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MovieApp.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        Background="AliceBlue"
+        DataContext="{StaticResource ShowInfoVM}"
+        WindowStartupLocation="CenterScreen"
+        Name="showInfoWindow"
+        mc:Ignorable="d"
+        Title="ShowInfoWindow" Height="450" Width="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadPageCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <ScrollViewer>
+            <StackPanel Width="450">
+                <TextBlock HorizontalAlignment="Center"
+                           FontSize="20"
+                           FontWeight="DemiBold">CHỈNH SỬA SUẤT CHIẾU</TextBlock>
+
+
+                <DatePicker Name="datePicker"
+                            Width="400"
+                            Margin="20"
+                            materialDesign:HintAssist.Hint="Ngày chiếu"
+                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                            SelectedDate="{Binding ShowDate}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDateChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedDateCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DatePicker>
+                <ComboBox ItemsSource="{Binding MovieList}"
+                          Margin="30,40,30,40"
+                          materialDesign:HintAssist.Hint="Phim"
+                          SelectedItem="{Binding SelectedMovie}" />
+                <materialDesign:TimePicker SelectedTime="{Binding ShowTime}"
+                                           materialDesign:HintAssist.Hint="Thời gian"
+                                           Width="400"
+                                           Margin="20"
+                                           Style="{StaticResource MaterialDesignOutlinedTimePicker}" />
+                <Button Margin="30"
+                        Width="200"
+                        Background="ForestGreen"
+                        Command="{Binding UpdateShowCommand}"
+                        CommandParameter="{Binding ElementName=showInfoWindow}">Lưu</Button>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Window>

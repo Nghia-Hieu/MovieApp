@@ -23,5 +23,7 @@
     <viewmodel:ActorInfoViewModel x:Key="ActorInfoVM"></viewmodel:ActorInfoViewModel>
     <viewmodel:MovieShowTimeViewModel x:Key="MovieShowTimeVM"></viewmodel:MovieShowTimeViewModel>
     <viewmodel:AddShowTimeViewModel x:Key="AddShowTimeVM"></viewmodel:AddShowTimeViewModel>
+    <viewmodel:ShowInfoViewModel x:Key="ShowInfoVM"></viewmodel:ShowInfoViewModel>
+    <viewmodel:ShowTicketViewModel x:Key="ShowTicketVM"></viewmodel:ShowTicketViewModel>
 
 </ResourceDictionary>

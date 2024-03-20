@@ -1,0 +1,198 @@
+﻿<Window x:Class="MovieApp.Views.ShowTicketWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MovieApp.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Name="showTicketWindow"
+        DataContext="{StaticResource ShowTicketVM}"
+        WindowStartupLocation="CenterScreen"
+        Title="ShowTicketWindow"
+        Height="850"
+        Width="850">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadSeatCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <local:BooleanToColorConverter x:Key="BooleanToColorConverter" />
+        <local:ReverseBoolean x:Key="ReverseBoolean" />
+    </Window.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <TextBlock HorizontalAlignment="Center"
+                           FontSize="15"
+                           FontWeight="DemiBold"
+                           Margin="15">Chọn ghế ngồi</TextBlock>
+                <Grid HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Column="0"
+                                Margin="20,10,20,0">
+                        <Button IsEnabled="False"
+                                Background="Red"></Button>
+                        <TextBlock Margin="10">
+                        Ghế đã được đặt
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Column="1"
+                                Margin="20,10,20,0">
+                        <Button IsEnabled="False"
+                                Background="Green"></Button>
+                        <TextBlock Margin="10">
+                        Ghế chưa được đặt
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Column="2"
+                                Margin="20,10,20,0">
+                        <Button IsEnabled="False"
+                                Background="Gray"></Button>
+                        <TextBlock Margin="10">
+                        Ghế đã chọn
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Column="3"
+                                Margin="20,10,20,0">
+                        <Button IsEnabled="False"
+                                Background="LightGreen"></Button>
+                        <TextBlock Margin="10">
+                        Ghế được hủy
+                        </TextBlock>
+                    </StackPanel>
+
+                </Grid>
+            </StackPanel>
+            <ListBox Grid.Row="1"
+                     Margin="0,-100,0,0"
+                     ItemsSource="{Binding SeatPosition}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="12"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Top" />
+
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding seat_id}"
+                                Background="{Binding background}"
+                                Width="60"
+                                Command="{Binding DataContext.OccupySeatCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Grid.Row="2"
+                        Margin="20"
+                        Width="500">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Ghế đặt:</TextBlock>
+                    <ListBox ItemsSource="{Binding ChoosenUnBookedSeats}"
+                             Margin="50,0,0,10">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Text="{Binding seat_id}"
+                                           Cursor="Hand"
+                                           Margin="0,0,10,0">
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,30,0,30">
+                    <TextBlock>Ghế Hủy:</TextBlock>
+                    <ListBox ItemsSource="{Binding ChoosenBookedSeats}"
+                             Margin="50,0,0,10">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Text="{Binding seat_id}"
+                                           Cursor="Hand"
+                                           Margin="0,0,10,0">
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+
+                <Button Margin="0"
+                        Width="200"
+                        Background="ForestGreen"
+                        IsEnabled="{Binding EnableOccupy}"
+                        Command="{Binding UpdateTicketCommand}"
+                        CommandParameter="{Binding ElementName=showTicketWindow}"
+                        >Chuyển trạng thái</Button>
+            </StackPanel>
+
+
+        </Grid>
+
+    </Grid>
+</Window>

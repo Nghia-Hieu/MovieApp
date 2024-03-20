@@ -153,6 +153,8 @@
     <Compile Include="ViewModel\MovieShowTimeViewModel.cs" />
     <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\ShowInfoViewModel.cs" />
+    <Compile Include="ViewModel\ShowTicketViewModel.cs" />
     <Compile Include="ViewModel\TicketViewModel.cs" />
     <Compile Include="Views\ActorInfoWindow.xaml.cs">
       <DependentUpon>ActorInfoWindow.xaml</DependentUpon>
@@ -210,6 +212,12 @@
     </Compile>
     <Compile Include="Views\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowInfoWindow.xaml.cs">
+      <DependentUpon>ShowInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowTicketWindow.xaml.cs">
+      <DependentUpon>ShowTicketWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TicketWindow.xaml.cs">
       <DependentUpon>TicketWindow.xaml</DependentUpon>
@@ -310,6 +318,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RegisterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowTicketWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -200,7 +200,6 @@ namespace MovieApp.ViewModel
                 else
                     i.background = Brushes.Green;
             }
-            Debug.WriteLine(SeatList.ToList().Count);
         }
 
         private void CheckVoucher()
