@@ -21,5 +21,7 @@
     <viewmodel:DirectorInfoViewModel x:Key="DirectorInfoVM"></viewmodel:DirectorInfoViewModel>
     <viewmodel:AddActorViewModel x:Key="AddActorVM"></viewmodel:AddActorViewModel>
     <viewmodel:ActorInfoViewModel x:Key="ActorInfoVM"></viewmodel:ActorInfoViewModel>
+    <viewmodel:MovieShowTimeViewModel x:Key="MovieShowTimeVM"></viewmodel:MovieShowTimeViewModel>
+    <viewmodel:AddShowTimeViewModel x:Key="AddShowTimeVM"></viewmodel:AddShowTimeViewModel>
 
 </ResourceDictionary>

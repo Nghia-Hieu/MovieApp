@@ -26,7 +26,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" MaxHeight="800">
+        <Grid Grid.Column="0" MaxHeight="750">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -104,12 +104,13 @@
         </Grid>
         <GridSplitter Grid.Column="1"
                       Width="5"
+                      
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Center"
                       ResizeBehavior="PreviousAndNext" />
 
         <Grid Grid.Column="2"
-              MaxHeight="800">
+              MaxHeight="750">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>

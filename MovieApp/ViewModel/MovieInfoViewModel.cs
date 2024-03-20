@@ -93,7 +93,9 @@ namespace MovieApp.ViewModel
                 MovieRating = (double)movieData.rating;
                 MovieRelease = movieData.release_date;
                 MovieDescription = movieData.description;
-                DisplayedImage = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}/Images/{movieData.id}.jpg"));
+                string path = $"{AppDomain.CurrentDomain.BaseDirectory}/Images/{movieData.id}.jpg";
+                if(File.Exists(path))
+                    DisplayedImage = new BitmapImage(new Uri(path));
             }
         }
 

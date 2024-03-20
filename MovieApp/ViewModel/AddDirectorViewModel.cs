@@ -76,7 +76,7 @@ namespace MovieApp.ViewModel
                         .FirstOrDefault();
 
             // Extract the numeric part of the id and increment it
-            int nextIdNumber = 2;
+            int nextIdNumber = 1;
             if (!string.IsNullOrEmpty(maxId) && maxId.Length > 2 && int.TryParse(maxId.Substring(1), out int maxNumericId))
             {
                 nextIdNumber = maxNumericId + 1;

@@ -17,6 +17,9 @@ namespace MovieApp.ViewModel
     {
         public bool isLogin {  get; set; }
 
+        public bool isAdmin { get; set; }
+
+
         private User _UserAccount;
         public User UserAccount { get { return _UserAccount; } set { _UserAccount = value; OnPropertyChanged(); } }
         public ICommand LoginCommand { get; set; }
@@ -35,6 +38,7 @@ namespace MovieApp.ViewModel
 
         public LoginViewModel() {
             isLogin = false;
+            isAdmin = false;
             Password = "";
             Username = "";
 
@@ -51,12 +55,12 @@ namespace MovieApp.ViewModel
                 return;
             var encodePass = PassEncode(Password);
             var accCount = DataProvider.Ins.DB.Users.Where(x=> x.username == Username && x.password == encodePass);
+            var adminAcc = DataProvider.Ins.DB.Admins.Where(a => a.id ==  Username && a.password == encodePass);
 
             if (accCount.Count() > 0)
             {
                 isLogin = true;
                 MessageBox.Show("LOGIN SUCCESS", "Đăng nhập");
-                isLogin = true;
                 UserAccount = new User();
                 UserAccount = accCount.First();
                 
@@ -64,8 +68,20 @@ namespace MovieApp.ViewModel
             }
             else
             {
-                isLogin = false;
-                MessageBox.Show("FAILED", "Đăng nhập");
+                if(adminAcc.Count() > 0)
+                {
+                    isLogin = true;
+                    isAdmin = true;
+                    MessageBox.Show("LOGIN SUCCESS", "Đăng nhập");
+                    UserAccount = DataProvider.Ins.DB.Users.Where(x => x.id=="U000").First();
+                    p.Close();
+                }
+                else
+                {
+                    isLogin = false;
+                    MessageBox.Show("FAILED", "Đăng nhập");
+                }
+              
             }
 
         }

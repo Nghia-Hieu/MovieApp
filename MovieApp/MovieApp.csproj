@@ -140,6 +140,7 @@
     <Compile Include="ViewModel\AddMovieViewModel.cs" />
     <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\AddShowTimeViewModel.cs" />
     <Compile Include="ViewModel\DirectorInfoViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="ViewModel\MovieFrontViewModel.cs" />
     <Compile Include="ViewModel\MovieInfoViewModel.cs" />
     <Compile Include="ViewModel\MovieSearchViewModel.cs" />
+    <Compile Include="ViewModel\MovieShowTimeViewModel.cs" />
     <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\TicketViewModel.cs" />
@@ -163,6 +165,9 @@
     </Compile>
     <Compile Include="Views\AddMovieWindow.xaml.cs">
       <DependentUpon>AddMovieWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddShowTimeWindow.xaml.cs">
+      <DependentUpon>AddShowTimeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
@@ -196,6 +201,9 @@
     </Compile>
     <Compile Include="Views\MovieSearch.xaml.cs">
       <DependentUpon>MovieSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MovieShowTime.xaml.cs">
+      <DependentUpon>MovieShowTime.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
@@ -231,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddMovieWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddShowTimeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -286,6 +298,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MovieSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MovieShowTime.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

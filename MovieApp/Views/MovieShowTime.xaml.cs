@@ -10,22 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MovieApp.Views
 {
     /// <summary>
-    /// Interaction logic for AdminWindow.xaml
+    /// Interaction logic for MovieShowTime.xaml
     /// </summary>
-    public partial class AdminWindow : Window
+    public partial class MovieShowTime : Page
     {
-        public AdminWindow()
+        public MovieShowTime()
         {
             InitializeComponent();
-            //videoa.Source = new Uri(System.IO.Directory.GetCurrentDirectory().ToString() + @"/Images/demovideo.mp4");
-            FilmFrame.NavigationService.Navigate(new MovieAdmin());
-            AttendantFrame.NavigationService.Navigate(new MovieAttendant());
-            ShowFrame.NavigationService.Navigate(new MovieShowTime());
         }
     }
 }

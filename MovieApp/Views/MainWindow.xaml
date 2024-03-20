@@ -98,6 +98,20 @@
                                 </MenuItem>
                             </MenuItem>
 
+                            <MenuItem Header="Admin"
+                                      Name="AdminMenu"
+                                      Cursor="Hand"
+                                      Visibility="{Binding AdminMenu}">
+                                <MenuItem Header="Login"
+                                          Cursor="Hand">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding ToAdminCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </MenuItem>
+                            </MenuItem>
+
 
                         </Menu>
                     </Grid>

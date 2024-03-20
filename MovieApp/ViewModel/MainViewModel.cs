@@ -45,6 +45,9 @@ namespace MovieApp.ViewModel
         private Visibility _NotLoggedInMenu;
         public Visibility NotLoggedInMenu { get { return _NotLoggedInMenu; } set { _NotLoggedInMenu = value; OnPropertyChanged(); } }
 
+        private Visibility _AdminMenu;
+        public Visibility AdminMenu { get { return _AdminMenu; } set { _AdminMenu = value; OnPropertyChanged(); } }
+
         private User _UserInfo;
         public User UserInfo { get { return _UserInfo; } set { _UserInfo = value; OnPropertyChanged(); } }
         public ICommand SearchCommand { get; set; }
@@ -53,6 +56,8 @@ namespace MovieApp.ViewModel
         public ICommand ToMainPageCommand { get; set; }
         public ICommand ToProfileCommand { get; set; }
         public ICommand LogOutCommand { get; set; }
+        public ICommand ToAdminCommand { get; set; }
+
 
         public ICommand RemoveBackEntryCommand { get; set; }
 
@@ -61,6 +66,7 @@ namespace MovieApp.ViewModel
         {
             LoggedInMenu = Visibility.Collapsed;
             NotLoggedInMenu = Visibility.Visible;
+            AdminMenu = Visibility.Collapsed;
             CurrentPage = new MovieFront();  
             
             if (isLoaded)
@@ -77,6 +83,7 @@ namespace MovieApp.ViewModel
             RemoveBackEntryCommand = new RelayCommand<object>((p) => { return true; }, (p) => {  });
             ToProfileCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CurrentPage = new ProfilePage(); });
             LogOutCommand = new RelayCommand<object>((p) => { return true; }, (p) => { LogOut(); });
+            ToAdminCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AdminWindow adminWindow = new AdminWindow(); adminWindow.ShowDialog(); });
 
         }
 
@@ -89,16 +96,20 @@ namespace MovieApp.ViewModel
             var loginData = loginWindow.DataContext as LoginViewModel;
 
             var LoginStatus = loginData.isLogin;
+            
 
             if (LoginStatus == true)
             {
+                if(loginData.isAdmin == true)
+                {
+                    AdminMenu = Visibility.Visible;
+                }
                 Debug.WriteLine("DONE");
                 UserInfo = loginData.UserAccount;
                 LoggedInMenu = Visibility.Visible;
                 NotLoggedInMenu = Visibility.Collapsed;
             }
             else Debug.WriteLine("Fail");
-
         }
         public void LogOut()
         {
@@ -107,9 +118,11 @@ namespace MovieApp.ViewModel
             var loginData = loginWindow.DataContext as LoginViewModel;
 
             loginData.isLogin = false;
+            loginData.isAdmin = false;
             UserInfo = null;
             LoggedInMenu = Visibility.Collapsed;
             NotLoggedInMenu = Visibility.Visible;
+            AdminMenu = Visibility.Collapsed;
             if(CurrentPage.GetType() == new ProfilePage().GetType())
                 CurrentPage = new MovieFront();
         }
