@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
                    Text="DANH SÁCH CÁC PHIM"
-                   Margin="20"
+                   Margin="10"
                    HorizontalAlignment="Center"
                    FontSize="25"
                    FontWeight="DemiBold" />

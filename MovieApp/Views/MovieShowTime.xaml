@@ -56,7 +56,7 @@
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Plus"
                                              Margin="0,1,5,0" />
-                    <TextBlock Text="Thêm phim mới"
+                    <TextBlock Text="Thêm suất chiếu"
                                VerticalAlignment="Center" />
                 </StackPanel>
             </Button>

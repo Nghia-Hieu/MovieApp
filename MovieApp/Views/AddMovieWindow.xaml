@@ -92,6 +92,26 @@
                          VerticalAlignment="Center"
                          materialDesign:HintAssist.Hint="Thời lượng (phút)"
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <Label Content="Chọn thể loại:"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="30,0,0,5" />
+                <StackPanel Margin="30,0,0,0">
+                    <ItemsControl ItemsSource="{Binding ListGenre}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Name}"
+                                          IsChecked="{Binding IsSelected}"
+                                          Margin="0,0,20,10" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
                 <DatePicker Margin="30"
                             Name="dobPicker"
                             materialDesign:HintAssist.Hint="Ngày công chiếu"
@@ -99,7 +119,7 @@
                             Style="{StaticResource MaterialDesignOutlinedDatePicker}"
                             SelectedDate="{Binding MovieRelease}" />
                 <TextBox Margin="30"
-                         Height="80"
+                         Height="50"
                          MinWidth="280"
                          VerticalAlignment="Stretch"
                          materialDesign:HintAssist.Hint="Mô tả"

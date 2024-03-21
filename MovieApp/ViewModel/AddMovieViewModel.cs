@@ -56,6 +56,13 @@ namespace MovieApp.ViewModel
             }
         }
     }
+
+    public class GenreStatus
+    {
+        public string Name { get; set; }
+        public bool IsSelected { get; set; }
+    }
+
     internal class AddMovieViewModel : BaseViewModel
     {
         private Movie _NewMovie;
@@ -85,6 +92,9 @@ namespace MovieApp.ViewModel
 
         private ObservableCollection<string> _CertType;
         public ObservableCollection<string> CertType { get => _CertType; set { _CertType = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<GenreStatus> _ListGenre;
+        public ObservableCollection<GenreStatus> ListGenre { get => _ListGenre; set { _ListGenre = value; OnPropertyChanged(); } }
 
         private string selectedImagePath;
 
@@ -119,6 +129,19 @@ namespace MovieApp.ViewModel
             CertType = new ObservableCollection<string>();
             DisplayedImage = null;
             selectedImagePath = "";
+
+            var genreData = DataProvider.Ins.DB.MovieGenres.Select(x=>x.genre_name).Distinct();
+            ListGenre = new ObservableCollection<GenreStatus>();
+            if (genreData != null)
+            {
+                foreach (var genreItem in genreData)
+                {
+                    GenreStatus newGenre = new GenreStatus() { Name = genreItem, IsSelected=false };
+                    ListGenre.Add(newGenre);
+                }
+            }
+           
+
             var certData = DataProvider.Ins.DB.Certifications;
             if (certData != null)
             {
@@ -131,22 +154,34 @@ namespace MovieApp.ViewModel
 
         private void SaveMovie(Window p)
         {
-            if (MovieName == "" || MovieCert == "" || MovieId == "" || MovieDuration == "" || DisplayedImage==null)
+            if (MovieName == "" || MovieCert == "" || MovieId == "" || MovieDuration == "" || DisplayedImage == null || ListGenre.Count(x=>x.IsSelected)==0)
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin", "Cảnh báo");
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
                 string durationMovie = "";
-                if(MovieDuration.Contains("phút"))
+                if (MovieDuration.Contains("phút"))
                     durationMovie = MovieDuration;
                 else
-                    durationMovie = MovieDuration+ " phút";
+                    durationMovie = MovieDuration + " phút";
                 //Debug.WriteLine($"{MovieName}+{MovieCert}+{MovieId}+{MovieDuration}+{MovieRelease}+{MovieDescription}+{MovieCert}");
                 SaveImageToResourceFolder(selectedImagePath);
-                NewMovie = new Movie() { id = MovieId, name = MovieName, certification=MovieCert, duration = durationMovie, rating = MovieRating, release_date = MovieRelease, status=false, description = MovieDescription, image = null };
+                NewMovie = new Movie() { id = MovieId, name = MovieName, certification = MovieCert, duration = durationMovie, rating = MovieRating, release_date = MovieRelease, status = false, description = MovieDescription, image = null };
                 DataProvider.Ins.DB.Movies.Add(NewMovie);
                 DataProvider.Ins.DB.SaveChanges();
+                foreach (var genre in ListGenre)
+                {
+                    if(genre.IsSelected)
+                    {
+                        Debug.WriteLine(genre.Name);
+                        MovieGenre newMovieGenre = new MovieGenre() { movie_id=MovieId, genre_name = genre.Name };
+                        DataProvider.Ins.DB.MovieGenres.Add(newMovieGenre);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                }
+                
+               
                 MessageBox.Show("Thêm Phim thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 MovieAdmin movieAdminWindow = new MovieAdmin();
                 var data = movieAdminWindow.DataContext as MovieAdminViewModel;
@@ -154,7 +189,7 @@ namespace MovieApp.ViewModel
                 {
                     var listMovie = DataProvider.Ins.DB.Movies.ToList();
                     data.ListMovie = new ObservableCollection<Movie>(listMovie);
-                   
+
                 }
                 NewMovie = new Movie() { name = "", certification = "", id = "", duration = "", rating = null, release_date = DateTime.Today, status = false, description = "", image = "" };
                 MovieName = ""; MovieId = ""; MovieDescription = ""; MovieDuration = ""; MovieRating = 0; MovieRelease = DateTime.Today;
