@@ -129,7 +129,7 @@ namespace MovieApp.ViewModel
 
         private void SearchMovieShowTime()
         {
-            if (SearchText != "")
+            //if (SearchText != "")
             {
                 var showTimeMovieData = DataProvider.Ins.DB.ShowTimes
                                  .Join(DataProvider.Ins.DB.Movies,

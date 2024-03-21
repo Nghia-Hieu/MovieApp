@@ -569,6 +569,23 @@
                     <Frame Name="ShowFrame" />
                 </ScrollViewer>
             </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Width="auto"
+                                Height="auto">
+                        <materialDesign:PackIcon Width="24"
+                                                 Height="24"
+                                                 HorizontalAlignment="Center"
+                                                 Kind="TicketPercent" />
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap"
+                                   Text="Hoạt động" />
+                    </StackPanel>
+                </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <Frame Name="VoucherFrame" />
+                </ScrollViewer>
+            </TabItem>
+
         </TabControl>
     </materialDesign:Card>
 </Window>

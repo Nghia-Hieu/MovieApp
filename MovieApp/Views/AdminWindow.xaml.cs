@@ -26,6 +26,7 @@ namespace MovieApp.Views
             FilmFrame.NavigationService.Navigate(new MovieAdmin());
             AttendantFrame.NavigationService.Navigate(new MovieAttendant());
             ShowFrame.NavigationService.Navigate(new MovieShowTime());
+            VoucherFrame.NavigationService.Navigate(new MovieVoucher());
         }
     }
 }

@@ -25,5 +25,8 @@
     <viewmodel:AddShowTimeViewModel x:Key="AddShowTimeVM"></viewmodel:AddShowTimeViewModel>
     <viewmodel:ShowInfoViewModel x:Key="ShowInfoVM"></viewmodel:ShowInfoViewModel>
     <viewmodel:ShowTicketViewModel x:Key="ShowTicketVM"></viewmodel:ShowTicketViewModel>
+    <viewmodel:MovieVoucherViewModel x:Key="MovieVoucherVM"></viewmodel:MovieVoucherViewModel>
+    <viewmodel:AddVoucherViewModel x:Key="AddVoucherVM"></viewmodel:AddVoucherViewModel>
+    <viewmodel:VoucherInfoViewModel x:Key="VoucherInfoVM"></viewmodel:VoucherInfoViewModel>
 
 </ResourceDictionary>

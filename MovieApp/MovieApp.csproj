@@ -138,6 +138,7 @@
     <Compile Include="ViewModel\AddActorViewModel.cs" />
     <Compile Include="ViewModel\AddDirectorViewModel.cs" />
     <Compile Include="ViewModel\AddMovieViewModel.cs" />
+    <Compile Include="ViewModel\AddVoucherViewModel.cs" />
     <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\AddShowTimeViewModel.cs" />
@@ -151,11 +152,13 @@
     <Compile Include="ViewModel\MovieInfoViewModel.cs" />
     <Compile Include="ViewModel\MovieSearchViewModel.cs" />
     <Compile Include="ViewModel\MovieShowTimeViewModel.cs" />
+    <Compile Include="ViewModel\MovieVoucherViewModel.cs" />
     <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\ShowInfoViewModel.cs" />
     <Compile Include="ViewModel\ShowTicketViewModel.cs" />
     <Compile Include="ViewModel\TicketViewModel.cs" />
+    <Compile Include="ViewModel\VoucherInfoViewModel.cs" />
     <Compile Include="Views\ActorInfoWindow.xaml.cs">
       <DependentUpon>ActorInfoWindow.xaml</DependentUpon>
     </Compile>
@@ -170,6 +173,9 @@
     </Compile>
     <Compile Include="Views\AddShowTimeWindow.xaml.cs">
       <DependentUpon>AddShowTimeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddVoucherWindow.xaml.cs">
+      <DependentUpon>AddVoucherWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
@@ -207,6 +213,9 @@
     <Compile Include="Views\MovieShowTime.xaml.cs">
       <DependentUpon>MovieShowTime.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MovieVoucher.xaml.cs">
+      <DependentUpon>MovieVoucher.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -221,6 +230,9 @@
     </Compile>
     <Compile Include="Views\TicketWindow.xaml.cs">
       <DependentUpon>TicketWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VoucherInfoWindow.xaml.cs">
+      <DependentUpon>VoucherInfoWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="ResourceXAML\MainResource.xaml">
       <SubType>Designer</SubType>
@@ -251,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddShowTimeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddVoucherWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -313,6 +329,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MovieVoucher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -330,6 +350,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TicketWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VoucherInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
