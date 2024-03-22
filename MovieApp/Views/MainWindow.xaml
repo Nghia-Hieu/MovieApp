@@ -28,10 +28,14 @@
                     <RowDefinition Height="70"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Grid VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid VerticalAlignment="Center" Grid.Row="0">
+                       
                         <TextBlock HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
                                    Cursor="Hand"
@@ -115,6 +119,16 @@
 
                         </Menu>
                     </Grid>
+                    <Separator Height="5" Grid.Row="1"
+                            Margin="0,-25,0,0">
+                        <Separator.Effect>
+                            <DropShadowEffect ShadowDepth="1"
+                                              Direction="270"
+                                              Opacity="0.5"
+                                              Color="Orange" />
+                        </Separator.Effect>
+                    </Separator>
+
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -127,17 +141,61 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Frame>
+                   
+                </Grid>
+
+
+                <Grid Grid.Row="2" Margin="0,30,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Separator Height="5"
+                               Grid.Row="0"
+                               Margin="0,-5,0,0">
+                        <Separator.Effect>
+                            <DropShadowEffect ShadowDepth="1"
+                                              Direction="270"
+                                              Opacity="0.5"
+                                              Color="Orange" />
+                        </Separator.Effect>
+                    </Separator>
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center"
+                          Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0"
+                                   Text="CNM Movie"
+                                   Margin="30"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="MediumPurple"
+                                   FontFamily="Verdana">
+                        </TextBlock>
+                        <StackPanel Grid.Column="1" Margin="30,20,30,30">
+                            <TextBlock FontWeight="DemiBold"
+                                       FontSize="15"
+                                       Margin="3">Công ty TNHH CNM MEDIA</TextBlock>
+                            <TextBlock FontWeight="Light"
+                                       Margin="3">Giấy Chứng nhận đăng ký doanh nghiệp: 012345678 đăng ký lần đầu ngày 31/7/2008, được cấp bởi Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh</TextBlock>
+                            <TextBlock FontWeight="Light"
+                                       Margin="3">Địa chỉ: số xx/xx, Đường XYZ, Phường AA, Quận BB, Thành phố Hồ Chí Minh, Việt Nam</TextBlock>
+                            <TextBlock FontWeight="Light"
+                                       Margin="3">Đường dây nóng (Hotline): 1900 10000</TextBlock>
+                            <TextBlock FontWeight="Light"
+                                       Margin="3">COPYRIGHT 2024 CNM CINEMA VIETNAM CO., LTD. ALL RIGHTS RESERVED</TextBlock>
+                        </StackPanel>
+
+                    </Grid>
+                    
 
                 </Grid>
 
 
-                <Grid Grid.Row="2"
-                      VerticalAlignment="Center"
-                      HorizontalAlignment="Center">
-                </Grid>
-
-                <Grid Grid.Row="3">
-                </Grid>
             </Grid>
         </Grid>
     </ScrollViewer>

@@ -70,7 +70,6 @@ namespace MovieApp.ViewModel
 
         public void ShowUp(ShowTime show)
         {
-            Debug.WriteLine(show.time + " " + show.date);
             SelectedShowTime = show;
             TicketWindow ticketWindow = new TicketWindow();
             
@@ -80,8 +79,6 @@ namespace MovieApp.ViewModel
 
         private void LoadingMovie()
         {
-            Debug.WriteLine("Load Detail");
-
             MovieFront movieFront = new MovieFront();
 
             var movieFrontData = movieFront.DataContext as MovieFrontViewModel;
@@ -126,7 +123,8 @@ namespace MovieApp.ViewModel
             ListShowTime1 = new ObservableCollection<ShowTime>();
             ListShowTime2 = new ObservableCollection<ShowTime>();
             ListShowTime3 = new ObservableCollection<ShowTime>();
-            var todayDate = DateTime.Today;
+            //var todayDate = DateTime.Today;
+            var todayDate = DateTime.Parse("03/16/2024 12:00:00 AM");
             Date1 = todayDate;
             Date2 = todayDate.AddDays(1);
             Date3 = todayDate.AddDays(2);

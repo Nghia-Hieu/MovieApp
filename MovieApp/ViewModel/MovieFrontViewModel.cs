@@ -119,7 +119,7 @@ namespace MovieApp.ViewModel
             MovieSet = new ObservableCollection<Movie>();
 
             DateTime limitDate = DateTime.Parse("03/01/2024");
-            var countMovie = DataProvider.Ins.DB.Movies.Where(x => x.release_date < DateTime.Today && x.release_date >= limitDate);
+            var countMovie = DataProvider.Ins.DB.Movies.Where(x => x.release_date < DateTime.Today && x.release_date >= limitDate && x.status == true);
 
             foreach (var i in countMovie)
             {
