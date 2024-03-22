@@ -251,7 +251,7 @@ namespace MovieApp.ViewModel
                 movie.release_date = i.release_date;
                 movie.status = i.status;
                 movie.description = i.description;
-                movie.image = $"/Images/{i.id}.jpg";
+                movie.image = $"{AppDomain.CurrentDomain.BaseDirectory}/Images/{i.id}.jpg";
                 MovieSet.Add(movie);
             }
         }
@@ -274,7 +274,7 @@ namespace MovieApp.ViewModel
                     movie.release_date = i.Movies.release_date;
                     movie.status = i.Movies.status;
                     movie.description = i.Movies.description;
-                    movie.image = $"/Images/{i.Movies.id}.jpg"; Debug.WriteLine(movie.release_date.Year.ToString());
+                    movie.image = $"{AppDomain.CurrentDomain.BaseDirectory}/Images/{i.Movies.id}.jpg"; Debug.WriteLine(movie.release_date.Year.ToString());
 
                     MovieSet.Add(movie);
                 }
@@ -296,7 +296,7 @@ namespace MovieApp.ViewModel
                     movie.release_date = i.release_date;
                     movie.status = i.status;
                     movie.description = i.description;
-                    movie.image = $"/Images/{i.id}.jpg";
+                    movie.image = $"{AppDomain.CurrentDomain.BaseDirectory}/Images/{i.id}.jpg";
                     MovieSet.Add(movie);
                 }
                 //StoredMovieSet = MovieSet;
@@ -355,7 +355,7 @@ namespace MovieApp.ViewModel
                         movie.release_date = i.release_date;
                         movie.status = i.status;
                         movie.description = i.description;
-                        movie.image = $"/Images/{i.id}.jpg";
+                        movie.image = $"{AppDomain.CurrentDomain.BaseDirectory}/Images/{i.id}.jpg";
                         newMovieSet.Add(movie);
                     }
                     MovieSet = new ObservableCollection<Movie>(MovieSet.Intersect(newMovieSet, new MovieComparer()));

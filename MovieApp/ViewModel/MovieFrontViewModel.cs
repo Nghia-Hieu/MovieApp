@@ -29,6 +29,9 @@ namespace MovieApp.ViewModel
     internal class MovieFrontViewModel:BaseViewModel
     {
         public double currentProfile = 0;
+
+        public Movie ChosenMovie { get; set; }
+
         private DispatcherTimer timer;
 
         private BaseViewModel _CurrentPage;
@@ -164,11 +167,12 @@ namespace MovieApp.ViewModel
         }
         private void LoadMainPage()
         {
-            
+           
         }
 
         public void ToMovieDetail()
         {
+            ChosenMovie = SelectedMovie;
             MainWindow mainWindow = new MainWindow();
             var data = mainWindow.DataContext as MainViewModel;
             data.CurrentPage = new MovieDetail();

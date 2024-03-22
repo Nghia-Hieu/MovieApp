@@ -398,6 +398,7 @@
     <Resource Include="Images\ASDV.jpg" />
     <Resource Include="Images\BMA.jpg" />
     <Resource Include="Images\BTBT.jpg" />
+    <Resource Include="Images\BTPA.jpg" />
     <Content Include="Images\demovideo.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -429,6 +430,7 @@
     <Resource Include="Images\KFPA.jpg" />
     <Resource Include="Images\QCPA.jpg" />
     <Resource Include="Images\wallpaper.jpg" />
+    <Resource Include="Images\QMPA.jpg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>

@@ -54,14 +54,14 @@
                    FontSize="18"
                    FontWeight="SemiBold"
                    Margin="0,20,0,20"></TextBlock>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="0,0,0,30">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="600"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0"
                    Source="{Binding MovieInfo.image}"
-                   Height="Auto" />
+                   Height="600" />
             <StackPanel Grid.Column="1"
                         Margin="20,0,0,20">
 

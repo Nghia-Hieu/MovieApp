@@ -117,7 +117,7 @@
 
                     <StackPanel VerticalAlignment="Center">
                         <Image  Name="ImageGrid3"
-                                Source="../Images/KFPA.jpg"
+                                Source="../Images/QMPA.jpg"
                                 Grid.Row="0"
                                 Width="1360"
                                 Height="450"
@@ -135,7 +135,7 @@
 
                     <StackPanel VerticalAlignment="Center">
                         <Image  Name="ImageGrid4"
-                                Source="../Images/QCPA.jpg"
+                                Source="../Images/BTPA.jpg"
                                 Grid.Row="0"
                                 Width="1360"
                                 Height="450"
@@ -240,7 +240,7 @@
                        FontWeight="DemiBold"
                        Margin="30,10,10,50"></TextBlock>
 
-            <ListBox ItemsSource="{Binding MovieSet}" Grid.Row="1"
+            <ListView ItemsSource="{Binding MovieSet}" Grid.Row="1"
                      SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
                      Name="MovieCardSet"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -250,25 +250,25 @@
                      Width="1000"
                      Height="Auto">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
                         <i:InvokeCommandAction Command="{Binding DataContext.MovieClickCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                CommandParameter="{Binding ElementName=MovieCardSet}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <ListBox.Template>
+                <ListView.Template>
                     <ControlTemplate>
                         <!-- Empty template to allow ScrollViewer to capture mouse scroll -->
                         <ItemsPresenter />
                     </ControlTemplate>
-                </ListBox.Template>
+                </ListView.Template>
 
-                <ListBox.ItemsPanel>
+                <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel IsItemsHost="True"
                                    Orientation="Horizontal" />
                     </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <materialDesign:Card Width="200"
                                              Height="450"
@@ -361,8 +361,8 @@
                             </Grid>
                         </materialDesign:Card>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Page>

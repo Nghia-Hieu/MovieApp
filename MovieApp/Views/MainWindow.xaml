@@ -17,11 +17,12 @@
     <Window.Background>
         <ImageBrush ImageSource="../Images/wallpaper.jpg"/>
     </Window.Background>
-    
 
-    <ScrollViewer VerticalScrollBarVisibility="Visible"
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  Name="scrollViewer"
                   HorizontalScrollBarVisibility="Visible"
-                  CanContentScroll="True">
+                  >
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
@@ -106,7 +107,7 @@
                                       Name="AdminMenu"
                                       Cursor="Hand"
                                       Visibility="{Binding AdminMenu}">
-                                <MenuItem Header="Login"
+                                <MenuItem Header="Quản lí"
                                           Cursor="Hand">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">

@@ -76,7 +76,7 @@
                     <TextBox.Text>
                         <Binding Path="VoucherDiscount"
                                  Mode="TwoWay"
-                                 Delay="2500"
+                                 Delay="500"
                                  UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <local:DoubleValidationRule />

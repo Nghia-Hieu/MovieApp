@@ -99,7 +99,7 @@
                      Width="1000"
                      Height="Auto">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
                         <i:InvokeCommandAction Command="{Binding DataContext.MovieClickCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                CommandParameter="{Binding ElementName=MovieCardSet}" />
                     </i:EventTrigger>

@@ -254,6 +254,9 @@ namespace MovieApp.ViewModel
                     connectUser.password = PassEncode(NewPassword);
                     DataProvider.Ins.DB.SaveChanges();
                     MessageBox.Show("Update Password THÀNH CÔNG!", "SUCCESS");
+                    Password = "";
+                    NewPassword = "";
+                    Repassword = "";
 
                 }
             }

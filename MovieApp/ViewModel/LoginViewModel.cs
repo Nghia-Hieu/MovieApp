@@ -72,14 +72,14 @@ namespace MovieApp.ViewModel
                 {
                     isLogin = true;
                     isAdmin = true;
-                    MessageBox.Show("LOGIN SUCCESS", "Đăng nhập");
+                    MessageBox.Show("LOGIN SUCCESS", "Đăng nhập", MessageBoxButton.OK, MessageBoxImage.Information);
                     UserAccount = DataProvider.Ins.DB.Users.Where(x => x.id=="U000").First();
                     p.Close();
                 }
                 else
                 {
                     isLogin = false;
-                    MessageBox.Show("FAILED", "Đăng nhập");
+                    MessageBox.Show("FAILED", "Đăng nhập", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
               
             }

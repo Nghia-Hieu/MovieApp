@@ -85,59 +85,61 @@ namespace MovieApp.ViewModel
 
             //Get Movie Actor
             MovieInfo = movieFrontData.SelectedMovie;
-            var director = DataProvider.Ins.DB.Directors.Where(c => c.movie_id == MovieInfo.id);
-
-            if(director != null )
+            if (MovieInfo != null)
             {
-                MovieDirector = new Director();
-                MovieDirector = director.First();
+                var director = DataProvider.Ins.DB.Directors.Where(c => c.movie_id == MovieInfo.id);
+
+                if (director != null)
+                {
+                    MovieDirector = new Director();
+                    MovieDirector = director.FirstOrDefault();
+                }
+
+                MovieActors = new ObservableCollection<Actor>();
+                var actors = DataProvider.Ins.DB.Actors.Where(c => c.movie_id == MovieInfo.id);
+                foreach (var i in actors)
+                {
+                    Actor actor = new Actor();
+                    actor.id = i.id;
+                    actor.name = i.name;
+                    actor.description = i.description;
+                    actor.movie_id = i.movie_id;
+                    MovieActors.Add(actor);
+                }
+
+                // Get Movie Genres
+                CurrentMovieGenres = new ObservableCollection<MovieGenre>();
+                var genres = DataProvider.Ins.DB.Movies.Join(DataProvider.Ins.DB.MovieGenres, t1 => t1.id, t2 => t2.movie_id, (t1, t2) => new { Id = t1.id, Genre_name = t2.genre_name }).Where(x => x.Id == MovieInfo.id);
+                foreach (var i in genres)
+                {
+                    MovieGenre genre = new MovieGenre();
+                    genre.genre_name = i.Genre_name;
+                    genre.movie_id = i.Id;
+
+                    CurrentMovieGenres.Add(genre);
+                }
+
+                //Get movie ShowTime
+
+
+                ListShowTime1 = new ObservableCollection<ShowTime>();
+                ListShowTime2 = new ObservableCollection<ShowTime>();
+                ListShowTime3 = new ObservableCollection<ShowTime>();
+                //var todayDate = DateTime.Today;
+                var todayDate = DateTime.Parse("03/16/2024 12:00:00 AM");
+                Date1 = todayDate;
+                Date2 = todayDate.AddDays(1);
+                Date3 = todayDate.AddDays(2);
+                var listShowTime1 = DataProvider.Ins.DB.ShowTimes.Where(x => x.date == Date1 && x.movie_id == MovieInfo.id);
+                var listShowTime2 = DataProvider.Ins.DB.ShowTimes.Where(x => x.date == Date2 && x.movie_id == MovieInfo.id);
+                var listShowTime3 = DataProvider.Ins.DB.ShowTimes.Where(x => x.date == Date3 && x.movie_id == MovieInfo.id);
+
+                ListShowTime1 = new ObservableCollection<ShowTime>(listShowTime1);
+
+                ListShowTime3 = new ObservableCollection<ShowTime>(listShowTime3);
+
+                ListShowTime2 = new ObservableCollection<ShowTime>(listShowTime2);
             }
-
-            MovieActors = new ObservableCollection<Actor>();
-            var actors = DataProvider.Ins.DB.Actors.Where(c=>c.movie_id==MovieInfo.id);
-            foreach(var i in actors)
-            {
-                Actor actor = new Actor();
-                actor.id = i.id;
-                actor.name = i.name;
-                actor.description = i.description;
-                actor.movie_id = i.movie_id;
-                MovieActors.Add(actor);
-            }
-            
-            // Get Movie Genres
-            CurrentMovieGenres = new ObservableCollection<MovieGenre>();
-            var genres = DataProvider.Ins.DB.Movies.Join(DataProvider.Ins.DB.MovieGenres, t1 => t1.id, t2 => t2.movie_id, (t1, t2)=> new {Id = t1.id, Genre_name = t2.genre_name}).Where(x => x.Id == MovieInfo.id);
-            foreach (var i in genres)
-            {
-                MovieGenre genre = new MovieGenre();
-                genre.genre_name = i.Genre_name;
-                genre.movie_id = i.Id;
-
-                CurrentMovieGenres.Add(genre);
-            }
-
-            //Get movie ShowTime
-           
-            
-            ListShowTime1 = new ObservableCollection<ShowTime>();
-            ListShowTime2 = new ObservableCollection<ShowTime>();
-            ListShowTime3 = new ObservableCollection<ShowTime>();
-            //var todayDate = DateTime.Today;
-            var todayDate = DateTime.Parse("03/16/2024 12:00:00 AM");
-            Date1 = todayDate;
-            Date2 = todayDate.AddDays(1);
-            Date3 = todayDate.AddDays(2);
-            var listShowTime1 = DataProvider.Ins.DB.ShowTimes.Where(x=> x.date == Date1 && x.movie_id == MovieInfo.id);
-            var listShowTime2 = DataProvider.Ins.DB.ShowTimes.Where(x => x.date == Date2 && x.movie_id == MovieInfo.id);
-            var listShowTime3 = DataProvider.Ins.DB.ShowTimes.Where(x => x.date == Date3 && x.movie_id == MovieInfo.id);
-            
-            ListShowTime1 = new ObservableCollection<ShowTime>(listShowTime1);
-
-            ListShowTime3 = new ObservableCollection<ShowTime>(listShowTime3);
-
-            ListShowTime2 = new ObservableCollection<ShowTime>(listShowTime2);
-
         }
     }
 }

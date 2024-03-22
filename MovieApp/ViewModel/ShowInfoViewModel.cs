@@ -58,7 +58,7 @@ namespace MovieApp.ViewModel
         {
             SelectedMovie = null;
             var limitDate = ShowDate.AddDays(-30);
-            var movies = DataProvider.Ins.DB.Movies.Where(m => m.release_date < ShowDate && m.release_date > limitDate);
+            var movies = DataProvider.Ins.DB.Movies.Where(m => m.release_date <= ShowDate && m.status == true);
 
             MovieList = new ObservableCollection<MovieDataList>();
             foreach (var movie in movies)
